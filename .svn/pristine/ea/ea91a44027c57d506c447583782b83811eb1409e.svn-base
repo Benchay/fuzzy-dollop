@@ -1,0 +1,141 @@
+/**index.wxss**/
+page{
+  background-color: #fff;
+}
+.headers{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #da444f;
+    color: #fff;
+}
+.headers>.top{
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+}
+.headers>.top>.left,.headers>.top>.right{
+    display: flex;
+    align-items: center;
+    padding-top: 10rpx;
+}
+.headers>.top>.left image{
+    width:40rpx;
+    height:40rpx;
+    padding-left:30rpx ;
+}
+.headers>.top>.right image{
+    width:120rpx;
+    height:70rpx;
+}
+.searchContent{
+    margin:10rpx 0 18rpx 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.searchContent>image{
+    width:50rpx;
+    height:50rpx;
+    padding: 0 10rpx 0 30rpx;
+}
+.searchContent>.search{
+    position: relative;
+}
+.search-static{
+    position: absolute;
+    left:232rpx;
+    top:10rpx;
+    z-index:2;
+}
+
+.search>input{
+    color: #c6c6c6;
+    width: 620rpx;
+    height:40rpx;
+    border-radius: 32rpx;
+    background: #ffffff;
+    font-size:24rpx;
+    text-align: center;
+}
+.bannerImg{
+    width: 750rpx;
+    height:360rpx;
+}
+.indexLists{
+    background: #fff;
+}
+.nav{
+    display: flex;
+}
+.nav>view{
+    width:250rpx;
+    text-align: center;
+    height:80rpx;
+    line-height: 80rpx;
+    position: relative;
+    font-weight: bold;
+    color:#888;
+}
+.nav>view>image{
+    width:35rpx;
+    height:35rpx;
+    margin-left: 10rpx;
+}
+.nav>view:last-child{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.nav>view.active{
+    color:#353535;
+}
+.indexStore{
+    border-top: 1px solid #e5e5e5;
+}
+.store{
+    padding: 20rpx;
+    border-bottom: 1rpx solid #e5e5e5;
+
+}
+.storeTop{
+    display: flex;
+    justify-content: space-between;
+}
+.storeTop>.storeFirst{
+    display: flex;
+}
+.storeTop>.storeFirst>image{
+    width:80rpx;
+    height:80rpx;
+    margin-right: 20rpx;
+}
+.storeTop>.storeFirst>.first>view:first-child{
+    color:#000;
+    font-size:34rpx;
+}
+.storeTop>.storeFirst>.first>view:last-child{
+    color:#aaa;
+    font-size:28rpx;
+}
+.storeTop>.collect>image{
+    width:56rpx;
+    height:56rpx;
+}
+.storeImg{
+    display: flex;
+    justify-content: space-around;
+    padding: 20rpx 0 10rpx;
+}
+.storeImg>view>image{
+    width:210rpx;
+    height:210rpx;
+    border: 1rpx solid #e1e1e6;
+    border-radius: 10rpx;
+}
+.storeImg>view>.title{
+    color:#aaa;
+}
+.storeImg>view>.total{
+    color:#da444f;
+}

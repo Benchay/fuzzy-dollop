@@ -1,0 +1,193 @@
+.stallStore{
+
+}
+.stallHeader{
+    padding: 20rpx;
+    background:#da444f;
+    display: flex;
+    color:rgb(255,255,255);
+}
+.stallHeader>.storeFirst{
+    display: flex;
+    align-items: center;
+}
+.stallHeader>.storeFirst>.first{
+    width:299rpx;
+}
+.stallHeader>.storeFirst>image{
+    width:80rpx;
+    height:80rpx;
+    margin-right: 20rpx;
+}
+.stallHeader>.storeFirst>.first>view:first-child{
+    font-size:34rpx;
+}
+.stallHeader>.storeFirst>.first>view:last-child{
+    color:rgb(230,230,230);
+    font-size:28rpx;
+}
+.TencentIcon{
+display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.TencentIcon>image{
+    width:44rpx;
+    height:44rpx;
+    margin-right: 20rpx;
+}
+.goodsNum{
+    border-left:1rpx solid #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding:0 20rpx;
+}
+.goodsNum>view{
+    text-align: center;
+}
+.stallCircular{
+    background: #ee6972;
+    display: flex;
+    align-items: center;
+    height:50rpx;
+}
+.stallCircular>image{
+    width:30rpx;
+    height:30rpx;
+    padding: 0 20rpx 0 30rpx;
+}
+.stallCircular>view{
+    font-size:28rpx;
+    color:rgb(255,255,255)
+}
+.stallClass{
+    display: flex;
+}
+.classLeft{
+    width:200rpx;
+    background: #efeff4;
+ }
+.classLeft>.leftBox{
+    height:924rpx;
+    overflow: auto;
+}
+.classLeft>.leftBox>view{
+    height:86rpx;
+    line-height: 86rpx;
+    text-align: center;
+    border-bottom: 1rpx solid #d1d1d2;
+}
+.menuList.active{
+    background: #fff;
+    border-left:4rpx solid #da444f;
+    border-bottom: none;
+    border-top: none;
+    color:#da444f;
+}
+.classRight{
+    background: #fff;
+    width:550rpx;
+    height:924rpx;
+    overflow: auto;
+}
+.goodsList{
+    box-sizing: border-box;
+    padding: 20rpx;
+    height:140rpx;
+    border-bottom: 1rpx solid #d1d1d2;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.goodsList>.goodsImg>image{
+    width:100rpx;
+    height:100rpx;
+    margin-right: 20rpx;
+}
+.goodsText>view{
+    width:310rpx;
+    display:block;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+.goodsText>view:first-child{
+    font-size:28rpx;
+    color:#585858;
+}
+.goodsText>view:nth-child(2){
+    font-size:22rpx;
+    color:#999;
+}
+.goodsText>view:nth-child(3){
+    font-size:28rpx;
+    color:#da444f;
+}
+.goodsText>view:nth-child(3)>text{
+    font-size:15rpx;
+}
+.addShop>image{
+    width:50rpx;
+    height:50rpx;
+    margin-left: 20rpx;
+}
+.bottonFixed{
+    height:100rpx;
+    display: flex;
+    position: relative;
+}
+.bottonFixed>.left{
+    width:490rpx;
+    background: #3c3c3c;
+    position: relative;
+}
+.bottonFixed>.left>view{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:#fff;
+    width:170rpx;
+    height:54rpx;
+    border:1rpx solid #fff;
+    border-radius: 10rpx;
+    position: absolute;
+    right:30rpx;
+    top:23rpx;
+}
+.bottonFixed>.left>view>image{
+    width:30rpx;
+    height:30rpx;
+    margin-right: 10rpx;
+}
+.bottonFixed>.right{
+    width:260rpx;
+    background: #da444f;
+    color:#fff;
+    font-size:32rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.iconCar{
+    width:100rpx;
+    height:100rpx;
+    position: absolute;
+    top:-50rpx;
+    left:50rpx;
+    z-index: 2;
+}
+.bottonFixed>.num{
+    position: absolute;
+    width:30rpx;
+    height:26rpx;
+    line-height: 26rpx;
+    text-align: center;
+    top:-58rpx;
+    left:130rpx;
+    background:#da444f;
+    z-index: 2222;
+    border-radius: 40%;
+    color:#fff;
+    font-size: 18rpx;
+}

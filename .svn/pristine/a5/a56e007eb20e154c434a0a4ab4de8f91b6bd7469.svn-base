@@ -1,0 +1,35 @@
+Page({
+    data: {
+        items: [{
+            name: "热销",
+            id:0
+        },{
+            name: "新品上架",
+            id:1
+        },{
+            name: "优惠",
+            id:2
+        },{
+            name: "清货",
+            id:3
+        },{
+            name: "全部商品",
+            id:4
+        }],
+        curNav: 0,
+        curIndex: 0
+    },
+    switchRightTab: function(e) {
+        let id = e.target.dataset.id,
+            index = parseInt(e.target.dataset.index);
+        this.setData({
+            curNav: id,
+            curIndex: index
+        })
+    },
+    goOrders:function(){
+        wx.navigateTo({
+            url: "../submitOrders/submitOrders"
+        })
+    },
+})

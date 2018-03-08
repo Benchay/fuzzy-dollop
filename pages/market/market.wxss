@@ -1,0 +1,62 @@
+.market{
+    display: flex;
+}
+.maeketMenu{
+    width:180rpx;
+    color:#a9a9a9;
+    position: fixed;
+    left: 0;
+    overflow: auto;
+    height:1108rpx;
+}
+.maeketMenu>view{
+    background: #fff;
+    height: 100rpx;
+    line-height: 100rpx;
+    background: #fff;
+    border:1rpx solid #d7d7d7;
+    border-bottom: none;
+    border-left:none;
+    text-align: center;
+    font-size:30rpx;
+}
+.maeketMenu>view:last-child{
+    border-bottom:1rpx solid #d7d7d7;
+}
+.maeketMenu>view:first-child{
+    border-top:none;
+}
+.maeketContent{
+    margin-left: 185rpx;
+    flex:1;
+    padding: 20rpx;
+}
+.floorList{
+    width:525rpx;
+    overflow: hidden;
+}
+.floor{
+    height:60rpx;
+    line-height: 60rpx;
+}
+.floorList>view{
+    background: #fff;
+    width:175rpx;
+    height:110rpx;
+    line-height: 110rpx;
+    float: left;
+    text-align: center;
+    color:#333;
+    border:1px solid #d7d7d7;
+    box-sizing: border-box;
+    font-weight: bold;
+    font-size:35rpx;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.menuList.active{
+    color:#333;
+    background:transparent;
+    border-right:none;
+}

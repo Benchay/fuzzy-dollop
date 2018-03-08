@@ -1,0 +1,226 @@
+.stallHeader{
+    padding: 20rpx;
+    background:#da444f;
+    display: flex;
+    color:rgb(255,255,255);
+}
+.stallHeader>.storeFirst{
+    display: flex;
+    align-items: center;
+}
+.stallHeader>.storeFirst>.first{
+    width:299rpx;
+}
+.stallHeader>.storeFirst>image{
+    width:80rpx;
+    height:80rpx;
+    margin-right: 20rpx;
+}
+.stallHeader>.storeFirst>.first>view:first-child{
+    font-size:34rpx;
+}
+.stallHeader>.storeFirst>.first>view:last-child{
+    color:rgb(230,230,230);
+    font-size:28rpx;
+}
+.TencentIcon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.TencentIcon>image{
+    width:44rpx;
+    height:44rpx;
+    margin-right: 20rpx;
+}
+.goodsNum{
+    border-left:1rpx solid #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding:0 20rpx;
+}
+.goodsNum>view{
+    text-align: center;
+}
+.swiper{
+    height:500rpx;
+}
+.slide-image{
+    width:100%;
+    height:100%;
+}
+.detailsTitle{
+    padding: 15rpx;
+    background: #fff;
+}
+.detailsTitle>.titleFirst{
+    display: flex;
+}
+.detailsTitle>.titleFirst>.title{
+    width:610rpx;
+    font-size:34rpx;
+    height:90rpx;
+    line-height: 50rpx;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient: vertical;
+}
+.firstCollect{
+    width:140rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10rpx;
+    border-left:1px solid #efeff4;
+}
+.firstCollect>view{
+    color:#888;
+    font-size:28rpx;
+}
+.firstCollect>image{
+    width:50rpx;
+    height:50rpx;
+}
+.second,.money{
+    margin-top: 8rpx;
+}
+.second{
+    color:#888;
+    font-size:30rpx;
+}
+.money{
+    color:#da444f;
+    font-size:34rpx;
+    font-weight: bold;
+}
+.detailsChose{
+    padding: 20rpx 20rpx 0 20rpx;
+    background: #fcf9fe;
+    border-top: 1rpx solid #efeff4;
+    display: flex;
+    align-items: center;
+}
+.detailsChose>image{
+    width:15rpx;
+    height:27rpx;
+    margin-left: 20rpx;
+}
+.menuList{
+    border:1rpx solid #efeff4;
+    border-radius: 5px 5px 0 0;
+    display: inline-block;
+    width:160rpx;
+    height:60rpx;
+    line-height: 60rpx;
+    text-align: center;
+    background: #f5f5f5;
+}
+.menuList.active{
+    color:#da444f;
+    background: #fff;
+    border-bottom: none;
+}
+.choseNum{
+    background: #fff;
+    padding: 0 25rpx;
+}
+.choseNum>view{
+    display: flex;
+    align-items: center;
+    height:100rpx;
+    border-bottom: 1rpx solid #f5f5f5;
+}
+.choseNum>view>view{
+    width:320rpx;
+}
+
+.numberButton{
+    display: flex;
+    align-items: center;
+}
+.bottonFiexd{
+    position: fixed;
+    bottom: 0;
+    left:0;
+    height:98rpx;
+    display: flex;
+    align-items: center;
+}
+.bottonFiexd>view{
+    width:250rpx;
+    height:98rpx;
+}
+.bottonFiexd>.first{
+   background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size:26rpx;
+}
+.bottonFiexd>.first>view>text{
+    color:#da444f;
+}
+.bottonFiexd>.second{
+    background: #ff9933;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:#fff;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+.bottonFiexd>.Toner{
+    background:#da444f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:#fff;
+}
+
+/*数量加减容器*/
+.stepper {
+    width: 80px;
+    height: 26px;
+    /*给主容器设一个边框*/
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+/*加号和减号*/
+.stepper text {
+    width: 19px;
+    line-height: 26px;
+    text-align: center;
+    float: left;
+    background: #f5f5f5;
+}
+
+/*数值*/
+.stepper input {
+    width: 40px;
+    height: 26px;
+    float: left;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 12px;
+    /*给中间的input设置左右边框即可*/
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+
+/*普通样式*/
+.stepper .normal{
+    coLor:#999;
+    font-size: 40rpx;
+}
+
+/*禁用样式*/
+.stepper .disabled{
+    color: #ccc;
+}

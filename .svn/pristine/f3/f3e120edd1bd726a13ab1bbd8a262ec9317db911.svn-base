@@ -1,0 +1,60 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/index/search/search",
+    "pages/index/searchResult/searchResult",
+    "pages/index/goodsClassification/goodsClassification",
+    "pages/index/getCoupons/getCoupons",
+    "pages/market/market",
+    "pages/cart/cart",
+    "pages/cart/goodsDetail/goodsDetail",
+    "pages/userInfo/userInfo",
+    "pages/userInfo/myOrder/myOrder",
+    "pages/userInfo/bind/bind",
+    "pages/userInfo/myInfo/myInfo",
+    "pages/userInfo/myCollection/myCollection",
+    "pages/userInfo/orderDetail/orderDetail",
+    "pages/userInfo/receivedCoupons/receivedCoupons",
+    "pages/index/stallStore/stallStore",
+    "pages/index/stallStoreDetails/stallStoreDetails",
+    "pages/userInfo/message/message",
+    "pages/index/submitOrders/submitOrders",
+    "pages/index/classSelect/classSelect"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "DA444F",
+    "backgroundTextStyle": "light",
+    "navigationBarTitleText": "拿呗",
+    "navigationBarTextColor": "#fff"
+  },
+  "tabBar": {
+    "selectedColor": "red",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tabbar/home.png",
+        "selectedIconPath": "images/tabbar/home_sel.png"
+      },
+      {
+        "pagePath": "pages/market/market",
+        "text": "逛市场",
+        "iconPath": "images/tabbar/market.png",
+        "selectedIconPath": "images/tabbar/market_sel.png"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "text": "进货车",
+        "iconPath": "images/tabbar/buycar.png",
+        "selectedIconPath": "images/tabbar/buycar_sel.png"
+      },
+      {
+        "pagePath": "pages/userInfo/userInfo",
+        "text": "我的",
+        "iconPath": "images/tabbar/me.png",
+        "selectedIconPath": "images/tabbar/me_sel.png"
+      }
+    ]
+  }
+}

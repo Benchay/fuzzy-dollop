@@ -1,0 +1,41 @@
+<view class="my-container">
+    <view class="head-nav">
+        <block wx:for="{{navTabs}}" wx:key="*this">
+            <view class="{{activeIndex == index ? 'active-item':''}}" id="{{index}}" bindtap="tapNavItem">{{item}}</view>
+        </block>
+    </view>
+    <view>
+        <view>
+            <view class="goodsWrap">
+                <view class="list">
+                    <view class="title">
+                       <view class="first">
+                           <image src="../../../images/index/p4_search_class1.png"></image>
+                           <view>电商大厦555</view>
+                       </view>
+                        <view hidden="{{activeIndex != 0}}" class="payment">去付款</view>
+                        <view hidden="{{activeIndex != 1}}" class="getGoods">待拿货</view>
+                        <view hidden="{{activeIndex != 2}}" class="finish">已完成</view>
+                    </view>
+                    <view hidden="{{activeIndex != 1}}" class="goodsCode">
+                        <view>提货码：556532</view>
+                    </view>
+                    <view class="content">
+                        <view class="comImg"><image src="../../../images/index/p4_search_class1.png"></image></view>
+                        <view class="second">
+                            <view class="second1">我是商品名称我是商品名称我是商品名称我是商品名称</view>
+                            <view class="second2">商品货号：26445465</view>
+                            <view class="second2">颜色：白色；尺码：M码</view>
+                            <view class="second3"><text>￥</text>5.99</view>
+                        </view>
+                        <view class="lastDelete">×20</view>
+                    </view>
+                    <view class="bottomList">
+                        <view>共 <text>20</text>件商品，合计：<text>￥200000.00</text></view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+

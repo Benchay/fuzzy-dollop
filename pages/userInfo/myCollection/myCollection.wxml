@@ -1,0 +1,44 @@
+<!--陈列订单信息的模版End-->
+<view class="my-container">
+    <view class="head-nav">
+        <block wx:for="{{navTabs}}" wx:key="*this">
+            <view class="{{activeIndex == index ? 'active-item':''}}" id="{{index}}" bindtap="tapNavItem">{{item}}</view>
+        </block>
+    </view>
+    <view class="listwrap" wx:if="{{activeIndex == 0}}">
+        <view class="list-item">
+            <view class="goodimgwrap">
+                <image src="../../../images/index/p1_banner.png"></image>
+            </view>
+            <view class="gooddetail">
+                <text class="title">司机星座 B4011</text>
+                <text class="mainsell">主营: 女装</text>
+                <text class="onsell">在售: 27</text>
+            </view>
+        </view>
+        <view class="list-item">
+            <view class="goodimgwrap">
+                <image src="../../../images/index/p1_banner.png"></image>
+            </view>
+            <view class="gooddetail">
+                <text class="title">司机星座 B4011</text>
+                <text class="mainsell">主营: 女装</text>
+                <text class="onsell">在售: 27</text>
+            </view>
+        </view>
+    </view>
+    <view class="sellgoodwrap" wx:else>
+        <view class="list-item">
+            <view class="goodimgwrap">
+                <image src="../../../images/index/p1_banner.png"></image>
+            </view>
+            <view class="gooddetail">
+                <text class="title">韩系刺绣拼接立领夹克外套</text>
+                <text class="mainsell">JH33</text>
+                <text class="onsell">颜色: 白  尺码: xl</text>
+                <text class="price">$196</text>
+            </view>
+        </view>
+    </view>
+</view>
+

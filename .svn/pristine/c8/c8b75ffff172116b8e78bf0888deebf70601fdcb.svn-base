@@ -1,0 +1,68 @@
+<!--market.wxml-->
+<!--逛市场-->
+<view class="wrap-content">
+  <view class="market">
+    <view class="maeketMenu">
+      <view wx:for="{{items}}" class="menuList {{curIndex == index? 'active' : ''}}" bindtap="switchRightTab" data-index="{{index}}" data-id="{{item.id}}">{{item.name}}</view>
+      <!--<view wx:for="{{items}}" bindtap="menuTap">{{item.name}}</view>-->
+    </view>
+    <view class="maeketContent" scroll-y>
+      <view>
+        <view class="floor">1楼</view>
+        <view class="floorList">
+          <view  wx:for="{{floors}}">
+            {{item.name}}
+          </view>
+        </view>
+      </view>
+      <view>
+        <view class="floor">1楼</view>
+        <view class="floorList">
+          <view  wx:for="{{floors}}">
+            {{item.name}}
+          </view>
+        </view>
+      </view>
+      <view>
+        <view class="floor">1楼</view>
+        <view class="floorList">
+          <view  wx:for="{{floors}}">
+            {{item.name}}
+          </view>
+        </view>
+      </view>
+      <view>
+        <view class="floor">1楼</view>
+        <view class="floorList">
+          <view  wx:for="{{floors}}">
+            {{item.name}}
+          </view>
+        </view>
+      </view>
+      <view>
+        <view class="floor">1楼</view>
+        <view class="floorList">
+          <view  wx:for="{{floors}}">
+            {{item.name}}
+          </view>
+        </view>
+      </view>
+      <view>
+        <view class="floor">1楼</view>
+        <view class="floorList">
+          <view  wx:for="{{floors}}">
+            {{item.name}}
+          </view>
+        </view>
+      </view>
+      <view>
+        <view class="floor">1楼</view>
+        <view class="floorList">
+          <view  wx:for="{{floors}}">
+            {{item.name}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,337 @@
+// pages/cart/cart.js
+const {
+  http,
+  arryToMap,
+  mapToArray
+} = require('../../utils/util.js');
+const {
+  findProductVariantByParams
+} = require('../../utils/date.js');
+
+Page({
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    cart: [],                       // 购物车商品列表
+    companys: [],                   //购物车档口列表
+    has_list: true,                      // 购物车是否有数据
+    total_price: 0,                       // 总价，初始为0
+    select_all_status: true,              // 全选状态,默认全选
+    startX: 0,                            // 开始坐标X
+    startY: 0,                            // 开始坐标Y
+    // shop_select_status: true,             // 商店选择状态
+    discount_price: 0,                    // 优惠价格
+    total_num: 0                          // 选择商品总数
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    this.getCartData();
+    this.getTotalPrice();
+  },
+  onShow: function () {
+    this.getCartData();
+    this.getTotalPrice();
+  },
+  /**
+  * 自定义方法
+  */
+  getCartData: function () {
+    //刷新购物车商品信息
+    let carts = wx.getStorageSync("cart");
+    if (carts.size == 0) {
+      return;
+    }
+    //获取购物车内变体id集合
+    let idIn = "";
+    for (let i in carts) {
+      idIn += "," + carts[i].id;
+    }
+    idIn = idIn.substring(1, idIn.length);
+    http({
+      url: findProductVariantByParams,
+      method: "POST",
+      data: {
+        idIn: idIn
+      },
+      method: "POST",
+      func: (data) => {
+        let products = data.result;
+
+        let cs = arryToMap(carts, "id");
+        for (let i in products) {
+          products[i].num = cs[products[i].id].num;
+        }
+
+        //刷新后的变体信息重新放入缓存中
+        wx.setStorage("cart", products);
+        //将变体集合转换Wie[档口.变体]格式的集合
+        let companys = new Array();
+        for (let i in products) {
+          let product = products[i];
+          let company = companys[product.companyId]
+          if (!company) {
+            company = {
+              id: product.companyId,
+              name: product.companyName,
+              products: new Array()
+            }
+          }
+          let ps = company.products;
+          ps.push(product);
+          companys[product.companyId] = company;
+        }
+
+        //加载数据
+        this.setData({
+          has_list: true,
+          companys: mapToArray(companys),
+          cart: products
+        });
+      }
+    });
+  },
+  // 手指触摸动作开始 记录起点X坐标
+  touchstart(e) {
+    // 开始触摸时 重置所有删除
+    this.data.cart.forEach(function (v, i) {
+      if (v.is_touch_move)    // 只操作为true的
+        v.is_touch_move = false;
+    });
+    this.setData({
+      startX: e.changedTouches[0].clientX,
+      startY: e.changedTouches[0].clientY,
+      cart: this.data.cart
+    })
+  },
+
+  // 滑动事件处理
+  touchmove(e) {
+    var that = this,
+      index = e.currentTarget.dataset.index,          // 当前索引
+      startX = that.data.startX,                      // 开始X坐标
+      startY = that.data.startY,                      // 开始Y坐标
+      touchMoveX = e.changedTouches[0].clientX,       // 滑动变化坐标
+      touchMoveY = e.changedTouches[0].clientY,       // 滑动变化坐标
+      // 获取滑动角度
+      angle = that.angle({ X: startX, Y: startY }, { X: touchMoveX, Y: touchMoveY });
+    that.data.cart.forEach(function (v, i) {
+      v.is_touch_move = false;
+      // 滑动超过30度角 return
+      if (Math.abs(angle) > 30) return;
+      if (i == index) {
+        if (touchMoveX > startX) // 右滑
+          v.is_touch_move = false
+        else // 左滑
+          v.is_touch_move = true
+      }
+    });
+    this.setData({
+      cart: this.data.cart
+    })
+  },
+
+  /**
+  * 计算滑动角度
+  * @param {Object} start 起点坐标
+  * @param {Object} end 终点坐标
+  */
+  angle(start, end) {
+    var _X = end.X - start.X,
+      _Y = end.Y - start.Y
+    //返回角度 /Math.atan()返回数字的反正切值
+    return 360 * Math.atan(_Y / _X) / (2 * Math.PI);
+  },
+  // 获取手动输入数量的值
+  getInputVal(e) {
+    const index = e.currentTarget.dataset.index;
+    let carts = this.data.cart;
+    let num = parseInt(e.detail.value);
+    if (num == 0) {
+      carts[index].count = 1;
+    } else {
+      carts[index].count = num;
+    }
+    this.setData({
+      cart: carts
+    });
+    try {
+      wx.setStorageSync('cart', carts)
+    } catch (e) {
+      console.log(e)
+    }
+    this.getTotalPrice();
+  },
+  // 计算总额
+  getTotalPrice() {
+    let companys = this.data.companys;                                         // 获取购物车档口列表
+    let total_price = 0;
+    let total_num = 0;
+    for (let i = 0; i < companys.length; i++) {                            // 遍历所有档口的商品
+      let products = companys[i].products;
+      for (let j = 0; j < products.length; j++) {
+        let product = products[j];
+        if (product.is_selected) {                                       // 判断选中才会计算价格
+          total_num += parseInt(product.num);                          // 所有商品总数
+          total_price += product.num * parseFloat(product.sellPrice);   // 所有价格加起来                           
+        }
+      }
+    }
+    this.setData({                                                      // 最后赋值到data中渲染到页面
+      companys: companys,
+      total_price: total_price.toFixed(2),
+      total_num: total_num
+    });
+  },
+  // 选择商品
+  selectList(e) {
+    let indexs = e.currentTarget.dataset.index.split(",");    // 获取data- 传进来的index
+    let companys = this.data.companys;
+    let product = companys[[indexs[0]]]["products"][[indexs[1]]];
+    product.is_selected = !product.is_selected;
+
+    this.setData({
+      companys: companys
+    });
+    this.getTotalPrice();                            // 重新获取总价
+  },
+  // 全选
+  selectAll: function (e) {
+    let companys = this.data.companys;
+    let select_all_status = this.data.select_all_status;       // 是否全选状态
+    select_all_status = !select_all_status;
+    for (let i in companys) {
+      let company = companys[i];
+      company.is_selected = select_all_status;
+      for (let j in company.products) {
+        company.products[j].is_selected = select_all_status;
+      }
+    }
+    this.setData({
+      select_all_status: select_all_status,
+      companys: companys
+    });
+    this.getTotalPrice();                                   // 重新获取总价
+  },
+
+  /**
+   * 绑定加数量事件
+   */
+  addCount(e) {
+    const index = e.currentTarget.dataset.index;
+    let carts = this.data.cart;
+    let num = parseInt(carts[index].count);
+    num = num + 1;
+    carts[index].count = num;
+    this.setData({
+      cart: carts
+    });
+    try {
+      wx.setStorageSync('cart', carts)
+    } catch (e) {
+      console.log(e)
+    }
+    this.getTotalPrice();
+  },
+
+  /**
+   * 绑定减数量事件
+   */
+  minusCount(e) {
+    const index = e.currentTarget.dataset.index;
+    let carts = this.data.cart;
+    let num = parseInt(carts[index].count);
+    if (num <= 1) {
+      return false;
+    }
+    num = num - 1;
+    carts[index].count = num;
+    this.setData({
+      cart: carts
+    });
+    try {
+      wx.setStorageSync('cart', carts)
+    } catch (e) {
+      console.log(e)
+    }
+    this.getTotalPrice();
+  },
+
+  // 选择商店里的所有商品
+  shopSelectAll(e) {
+    let companys = this.data.companys;
+    let company = companys[e.currentTarget.dataset.index];
+
+    company.is_selected = !company.is_selected;
+    for (let i in company.products) {
+      company.products[i].is_selected = company.is_selected;
+    }
+    this.setData({
+      companys: companys
+    });
+    this.getTotalPrice();
+  },
+
+  // 删除商品列表 
+  delGoods(e) {
+    var that = this;
+    wx.showModal({
+      content: '是否确认删除此商品？',
+      success: function (res) {
+        if (res.confirm) {
+          const index = e.currentTarget.dataset.index;
+          let carts = that.data.cart;
+          carts.splice(index, 1);
+          that.setData({
+            cart: carts
+          });
+          try {
+            wx.setStorageSync('cart', carts)
+          } catch (e) {
+            console.log(e)
+          }
+          if (!carts.length) {
+            that.setData({
+              has_list: false
+            });
+          }
+          that.getTotalPrice();
+        }
+      }
+    })
+  },
+  goDetail(e) {
+    wx.navigateTo({
+      //将该商品的id传到详情页
+      url: `goods_detail/goods_detail?product_id=${e.currentTarget.dataset.id}`
+    })
+  },
+  //添加测试数据
+  addCart(e) {
+    // wx.navigateTo({
+    //   //将该商品的id传到详情页
+    //   url: 'goodsDetail/goodsDetail?product_id=8a8694b760747724016076fc5dd2058d'
+    // })
+    wx.removeStorageSync("cart");
+    let cartArry = new Array();
+    http({
+      url: findProductVariantByParams,
+      method: "POST",
+      data: {
+        idIn: "457d938d3d72097cb49e836acfba809a,c9902a908f22b8a090c79ec50d1411f2,5bb189858c4c31373f8afceaf19cfdbc,14f74f21bf552dd6148b5c251ed2a2fb"
+      },
+      func: data => {
+        let products = data.result;
+        for (let i in products) {
+          let p = products[i];
+          p.num = 2;
+          cartArry.push(p);
+        }
+        wx.setStorageSync("cart", cartArry);
+      }
+    });
+
+  }
+})

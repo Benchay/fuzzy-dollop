@@ -1,0 +1,252 @@
+/* pages/user_info/my_order/my_order.wxss */
+.my-container {
+    width: 100%;
+}
+.head-nav {
+    width: 100%;
+    height: 94rpx;
+    background-color: white;
+    border-top: 2rpx solid #e9e8ed;
+    border-bottom: 2rpx solid #e9e8ed;
+    display: flex;
+    flex-direction: row;
+}
+.head-nav > view {
+    flex: 1;
+    text-align: center;
+    line-height: 94rpx;
+}
+.active-item {
+    color: #D74053;
+    border-bottom: 4rpx solid #D74053;
+}
+.goodsWrap {
+    background:#fcf9fe;
+    margin-bottom: 20rpx;
+    height:1126rpx;
+    overflow: auto;
+}
+.goodsWrap>.list{
+    background: #fff;
+    border-bottom: 20rpx solid #fcf9fe;
+}
+.goodsWrap>.list>.title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height:70rpx;
+    border-bottom: 1rpx solid #e5e5e5;
+    padding-left: 20rpx;
+}
+.goodsWrap>.list>.title>.first{
+    display: flex;
+    align-items: center;
+}
+.goodsWrap>.list>.title>.first>view{
+    padding-left: 10rpx;
+}
+.goodsWrap>.list>.title>.first>image{
+    width:30rpx;
+    height:30rpx;
+}
+.list>.content{
+    padding-left: 20rpx;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height:190rpx;
+    border-bottom: 1rpx solid #e5e5e5;
+}
+.comImg>image{
+    width:140rpx;
+    height:140rpx;
+    border: 1rpx solid #e5e5e5;
+    border-radius: 10rpx;
+    margin-right:20rpx;
+}
+.second{
+    width:460rpx;
+}
+.second>view{
+    margin-bottom: 6rpx;
+}
+.second1{
+    color:#000;
+    font-size:34rpx;
+    display:block;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+.second2{
+    color:#aaa;
+    font-size: 26rpx;
+}
+.second3{
+    color:#da444f;
+    font-size: 28rpx;
+}
+.second3>text{
+    font-size: 15rpx;
+}
+.lastDelete{
+    font-size: 26rpx;
+    color:#353535;
+    text-align: right;
+    width:80rpx;
+    margin-top: 120rpx;
+    font-weight: bold;
+}
+.bottomList{
+    text-align: right;
+    color:#666;
+    font-size: 26rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    padding:0 30rpx;
+}
+.bottomList>view>text{
+    color:#da444f;
+}
+.payment{
+    height:60rpx;
+    line-height: 60rpx;
+    width:150rpx;
+    text-align: center;
+    border:1rpx solid #c53b46;
+    background: #da444f;
+    color:#fff;
+    border-radius: 10rpx;
+    margin-right: 20rpx;
+}
+.getGoods{
+    color:#de5660;
+    font-size: 34rpx;
+    margin-right: 20rpx;
+}
+.goodsCode{
+    height:80rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #e5e5e5;
+}
+.goodsCode>view{
+    background:#fff4f2;
+    color:#de5660;
+    border-radius: 10rpx;
+    font-size: 34rpx;
+    height:60rpx;
+    line-height: 60rpx;
+    text-align: center;
+    border:1rpx solid #de5660;
+    padding: 0 20rpx;
+}
+.finish{
+    color:#888;
+    font-size: 34rpx;
+    margin-right: 20rpx;
+}
+/*搜索*/
+.search-title{
+    display: flex;
+    padding: 20rpx;
+    align-items: center;
+    justify-content: flex-start;
+}
+.search-title>view{
+    margin-right: 8rpx;
+}
+.search-bar{
+    width:335rpx;
+    display: flex;
+    position: relative;
+    border:2rpx solid #e8e8ec;
+}
+.search{
+    position: absolute;
+    z-index: 2;
+    left:16rpx;
+    top:16rpx;
+}
+.cancel-icon{
+    position: absolute;
+    right:30rpx;
+    z-index:2;
+    top:16rpx;
+}
+.search-bar>input{
+    width:408rpx;
+    height:64rpx;
+    border-radius:10rpx;
+    background-color:#fff;
+    padding-left: 60rpx;
+}
+.placeholder{
+    font-size:26rpx;
+    color: #d6d6d9;
+}
+
+.phone_personal{
+    color:#666;
+    font-size:26rpx;
+    padding-left: 10rpx;
+}
+.phone_personal:before{
+    content: '';
+    width: 14rpx;
+    height: 14rpx;
+    border-bottom: 1px solid #666;
+    border-right:1px solid #666;
+    position: absolute;
+    top:18rpx;
+    right:14rpx;
+    transform:rotate(45deg);
+    font-size: 26rpx;
+
+}
+.phone_one{
+    display: flex;
+    position: relative;
+    justify-content:flex-start;
+    align-items: center;
+    background-color:#fff;
+    width:170rpx;
+    height:56rpx;
+    line-height: 56rpx;
+    margin:0 auto;
+    border-radius: 10rpx;
+    border:2rpx solid #e8e8ec;
+    padding: 5rpx;
+    text-align: center;
+}
+.phone_one>image{
+    width:40rpx;
+    height:40rpx;
+    margin-right: 10rpx;
+}
+.person_box{
+    position: relative;
+}
+.phone_select{
+    margin-top:0;
+    z-index: 100;
+    position: absolute;
+    width:168rpx;
+    left:0rpx;
+    top:0rpx;
+    padding: 5rpx;
+    background: #fff;
+    border:1rpx solid #eee;
+}
+.select_one{
+    text-align: center;
+    background-color:#fff;
+    height:56rpx;
+    line-height:56rpx;
+    padding:0 5%;
+    border-bottom:1rpx solid #eee;
+}
+.select_one:last-child{
+    border-bottom: none;
+}

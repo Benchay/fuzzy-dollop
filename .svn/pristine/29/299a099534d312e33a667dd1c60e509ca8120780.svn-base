@@ -1,0 +1,137 @@
+<view class="orderDetailwrap">
+    <view class="header">
+        <view class="statewrap">
+            <view class="stateitem">
+                <view class="mainwrap">
+                    <view class="mainImgwrap">
+                        <image src="../../../images/userInfo/p10_flow1.png"></image>
+                    </view>
+                    <text>订单提交</text>
+                </view>
+                <view class="arroWrap">
+                    <image src="../../../images/userInfo/p10_flow.png"></image>
+                </view>
+            </view>
+            <view class="stateitem">
+                <view class="mainwrap">
+                    <view class="mainImgwrap">
+                        <image src="../../../images/userInfo/p10_flow2_a.png"></image>
+                    </view>
+                    <text>订单提交</text>
+                </view>
+                <view class="arroWrap">
+                    <image src="../../../images/userInfo/p10_flow.png"></image>
+                </view>
+            </view>
+            <view class="stateitem">
+                <view class="mainwrap">
+                    <view class="mainImgwrap">
+                        <image src="../../../images/userInfo/p10_flow3_a.png"></image>
+                    </view>
+                    <text>订单提交</text>
+                </view>
+                <view class="arroWrap">
+                    <image src="../../../images/userInfo/p10_flow.png"></image>
+                </view>
+            </view>
+            <view class="stateitem">
+                <view class="mainwrap">
+                    <view class="mainImgwrap">
+                        <image src="../../../images/userInfo/p10_flow4_a.png"></image>
+                    </view>
+                    <text>订单提交</text>
+                </view>
+            </view>
+        </view>
+        <view class="bottomImgwrap">
+            <image src="../../../images/userInfo/p10_topbg.png"></image>
+        </view>
+    </view>
+    <view class="main">
+        <view class="top">
+            <text>订单编号: 98481845851552154115</text>
+            <text>下单时间: 2017/10/20 20:20:20</text>
+            <text>付款时间: 2017/10/20 20:20:20</text>
+        </view>
+        <view class="ladingcode">
+            <view class="ladingwrap">
+                <view class="toptitle">
+                    <text>请凭提货码或二维码到档口提货</text>
+                </view>
+                <view class="orderLading">
+                    <view class="ladingword">
+                        <text class="yard">522666</text>
+                        <text class="describe">订单提货码</text>
+                    </view>
+                    <view class="ladingImg">
+                        <image src="../../../images/userInfo/p11_code.png"></image>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="shopgoods">
+            <view class="good-item">
+                <view class="giHeader">
+                    <view class="left">
+                        <view class="shopicon">
+                            <image src="../../../images/userInfo/p10_shop.png"></image>
+                        </view>
+                        <text>电商大厦0555</text>
+                    </view>
+                    <view class="right">
+                        <view class="phone">
+                            <image src="../../../images/userInfo/p10_contact1.png"></image>
+                        </view>
+                        <view class="qq">
+                            <image src="../../../images/userInfo/p10_contact2.png"></image>
+                        </view>
+                        <view class="weixi">
+                            <image src="../../../images/userInfo/p10_contact3.png"></image>
+                        </view>
+                    </view>
+                </view>
+                <view class="giList">
+                    <view class="List-item">
+                        <view class="goodavatar">
+                            <image src="../../../images/userInfo/p11_code.png"></image>
+                        </view>
+                        <view class="goodes">
+                            <text class="title">我是商品的名称我是...</text>
+                            <text>商品货号: 12341545</text>
+                            <text>颜色: 白色; 尺码: M码</text>
+                            <view class="goodesprinum">
+                                <text class="price">￥5.99</text>
+                                <text class="num">X20</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="gifoot">
+                    共
+                    <text>20</text>件商品
+                </view>
+            </view>
+        </view>
+        <view class="ordersettlement">
+            <view class="settlementdescribe">
+                <view>
+                    <text>订单总金额:</text>
+                    <text>￥20.00</text>
+                </view>
+                <view>
+                    <text>优惠金额:</text>
+                    <text>￥2.00</text>
+                </view>
+                <view>
+                    <text>实付款:</text>
+                    <text class="realprice">￥81.00</text>
+                </view>
+            </view>
+            <view class="gettingoods">
+                <text>拿货方式:</text>
+                <text>上门自提</text>
+            </view>
+        </view>
+        <button class="gofree">去付款</button>
+    </view>
+</view>

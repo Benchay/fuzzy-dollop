@@ -1,0 +1,50 @@
+<view class="my-container">
+   
+    <view class="info-items">
+        <navigator class="item-detail" url="../userInfo/myOrder/myOrder?activeIndex=0">
+            <view class="detail-info">
+                <text class="item-name">图像</text>
+                <image class="right-array" src="../../images/userInfo/left_grey_array.png"></image>
+                <text class="item-num">{{allOrders}}</text>
+            </view>
+        </navigator>
+        <navigator class="item-detail" url="../userInfo/myCollection/myCollection?activeIndex=1">
+            <view class="detail-info">
+                <text class="item-name">用户名</text>
+                <image class="right-array" src="../../images/userInfo/left_grey_array.png"></image>
+                <text class="item-num">{{unpaidOrder}}</text>
+            </view>
+        </navigator>
+        
+        <navigator class="item-detail" url="../userInfo/myOrder/myOrder?activeIndex=2">
+            <view class="detail-info">
+                <text class="item-name">性别</text>
+                <image class="right-array" src="../../../images/userInfo/left_grey_array.png"></image>
+                <text class="item-num">{{notReceivedOrder}}</text>
+            </view>
+        </navigator>
+        <navigator class="item-detail" url="../../userInfo/myOrder/myOrder?activeIndex=2">
+            <view class="detail-info">
+                <text class="item-name">生日</text>
+                <image class="right-array" src="../../../images/userInfo/left_grey_array.png"></image>
+                <text class="item-num">{{notReceivedOrder}}</text>
+            </view>
+        </navigator>
+        <!--
+		    <navigator class="item-detail" url="../userInfo/myOrder/myOrder?activeIndex=2">
+            <view class="detail-info">
+                <text class="item-name">地区</text>
+                <image class="right-array" src="../../../images/userInfo/left_grey_array.png"></image>
+                <text class="item-num">{{notReceivedOrder}}</text>
+            </view>
+        </navigator>-->
+		    <navigator class="item-detail" url="../userInfo/myOrder/myOrder?activeIndex=2">
+            <view class="detail-info">
+                <text class="item-name">绑定手机号</text>
+                <image class="right-array" src="../../images/userInfo/left_grey_array.png"></image>
+                <text class="item-num">{{notReceivedOrder}}</text>
+            </view>
+        </navigator>
+    </view>
+	
+</view>

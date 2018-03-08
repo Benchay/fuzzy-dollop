@@ -1,0 +1,66 @@
+<!--pages/cart/cart.wxml-->
+<view class="my-container">
+<!-- <button bindtap='addCart'>添加测试数据</button> -->
+  <view class="goodsWrap" wx:if="{{hasList}}" >
+    <view class="list" wx:for="{{companys}}" wx:for-item="citem" wx:for-index="cindex">
+      <view class="title">
+        <icon wx:if="{{citem.isSelected}}" type="success" color="#f23030" bindtap="shopSelectAll" data-index="{{cindex}}"/>
+        <icon wx:else type="circle" color="#000" bindtap="shopSelectAll" data-index="{{cindex}}"/>
+        <view>{{citem.name}}</view>
+      </view>
+      <view class="content" wx:for="{{citem.products}}">
+        <view>
+          <icon wx:if="{{item.isSelected}}" type="success" color="#f23030" bindtap="selectList" data-index="{{cindex}},{{index}}"/>
+          <icon wx:else type="circle" color="#000" bindtap="selectList" data-index="{{cindex}},{{index}}" />
+        </view>
+        <view class="comImg"><image src="{{item.imgUrl_main}}"></image></view>
+        <view class="second">
+          <view class="second1">{{item.title}}</view>
+          <view class="second2">商品货号：{{item.productCode}}</view>
+          <view class="second2">颜色:{{item.color}} 尺码:{{item.size}}</view>
+          <view class="second3">￥{{item.sellPrice}}</view>
+        </view>
+        <view class="lastDelete">
+          <view class="fitst">
+            <image src="../../images/buycar/p7_delete.png"></image>
+            <view>删除</view>
+          </view>
+          <view>
+            <view class="numberButton">
+              <view class="stepper">
+                <text class="normal" bindtap="minusNum" data-index="{{cindex}},{{index}}">-</text>
+                <input type="number" bindchange="bindManual" value="{{item.orderNum}}" />
+                <text class="normal" bindtap="addNum" data-index="{{cindex}},{{index}}">+</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="bottomList">
+        <view>共 <text>{{citem.totalNum}}</text>件商品，合计：<text>￥{{citem.totalFee}}</text></view>
+      </view>
+    </view>
+  </view>
+  <view wx:else class="cartElseImg">
+    <image src="../../images/buycar/p14.png"></image>
+  </view>
+  <view class="bottom-wrap" wx:if="{{hasList}}">
+    <view class="choose-all">
+      <icon wx:if="{{select_all_status}}" type="success" color="#f23030" bindtap="selectAll" />
+      <icon wx:else type="circle" color="#000" bindtap="selectAll" />
+      <text>全选</text>
+    </view>
+    <view class="total-price-wrap">
+      <view class="total-txt">
+        总计:
+        <text class="jd-main-color">￥{{totalFee}}</text>
+      </view>
+    </view>
+    <view class="go-pay" bindtap='goSubmitOrder'>
+      <text>立即下单</text>
+    </view>
+  </view>
+  <view wx:else>
+
+  </view>
+</view>

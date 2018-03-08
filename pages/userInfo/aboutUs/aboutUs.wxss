@@ -1,0 +1,21 @@
+.aboutUs{
+    padding: 30rpx;
+    background: #fff;
+    border-top:  20rpx solid #efeff4;
+}
+.aboutUs>view>image{
+    width:160rpx;
+    height:160rpx;
+    float: left;
+    margin:10rpx 20rpx 0 0;
+    border:1rpx solid #b4b4b4;
+    border-radius: 10rpx;
+}
+.aboutUs>view>view{
+    float: left;
+}
+.aboutUs>view{
+    color:#353535;
+    font-size: 26rpx;
+    line-height: 50rpx;
+}

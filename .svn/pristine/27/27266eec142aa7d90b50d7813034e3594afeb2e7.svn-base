@@ -1,0 +1,96 @@
+<!--index.wxml-->
+<!--首页-->
+<view class="wrap-content">
+  <!-- 头部搜索部分 -->
+  <view class="headers">
+    <view class="top">
+      <view class="left">
+        <image src="../../images/index/p1_location.png"></image>
+        <view>{{weatherData.currentCity}}</view>
+      </view>
+      <view class="right">
+        <view>{{weatherData.temperature}} {{weatherData.weatherDesc}}</view>
+        <image src="../../images/index/p1_weather2.png"></image>
+      </view>
+    </view>
+    <!-- 点击事件，跳转搜索页面 -->
+    <view class="searchContent">
+      <view class="search" bindtap="goSearchPage">
+        <icon class="search-static" type="search" size="16" />
+        <input placeholder="搜索" />
+      </view>
+      <image src="../../images/index/p1_scan.png" bindtap="bindScan"></image>
+    </view>
+    <image class="bannerImg" src="../../images/index/p1_banner.png"></image>
+  </view>
+  <view class="indexLists">
+    <view class="nav">
+      <view wx:for="{{items}}" class="menuList {{curNav == index? 'active' : ''}}" bindtap="switchRightTab" data-index="{{index}}" data-id="{{item.id}}">
+        {{item.name}}
+        <image wx:if="{{item.id == 2}}" src="../../images/index/p1_screen.png" bindtap='goClassSelect'></image>
+      </view>
+    </view>
+    <view class="indexStore">
+      <view class="store"  wx:for="{{stalls}}">
+        <view class="storeTop">
+         <view class="storeFirst">
+           <image src="../../images/index/p1_shoplogo.png"></image>
+           <view class="first" bindtap="toStore">
+             <view>{{item.name}}</view>
+             <view>主营：{{item.businessScopeName}}</view>
+           </view>
+         </view>
+          <view class="collect" bindtap="screenChange">
+            <image src="../../images/index/p1_love1.png" hidden="{{choseCollect ? true : false}}"></image>
+            <image src="../../images/index/p1_love2.png" hidden="{{choseCollect ? false : true}}"></image>
+          </view>
+        </view>
+        <view class="storeImg">
+          <view>
+            <image src="{{item.products[0].imgUrl_main}}"></image>
+            <view class="title">MHB1231</view>
+            <view class="total">￥200.00</view>
+          </view>
+          <view>
+            <image src="{{item.products[1].imgUrl_main}}"></image>
+            <view class="title">MHB1231</view>
+            <view class="total">￥200.00</view>
+          </view>
+          <view>
+            <image src="{{item.products[2].imgUrl_main}}"></image>
+            <view class="title">MHB1231</view>
+            <view class="total">￥200.00</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+ 
+
+  <!--下拉加载更多-->
+  <!--todo 上拉加载更多只能渲染一次，之后无法继续渲染-->
+  <!-- <block wx:for="{{products_data}}" wx:key="{{index}}">
+    <view class="goods_item" data-id="{{item.id}}" bindtap="goDetail" hidden="{{is_hide_loadmore}}">
+      <view class="goods_item01">
+        <image src="{{item.src}}"></image>
+      </view>
+      <view class="goods_item01_pro">
+        <text>{{item.description}}</text>
+        <text>{{item.product_name}}</text>
+        <view class="now-price">
+          <text>￥</text>{{item.now_price}}
+          <text>￥{{item.old_price}}</text>
+        </view>
+        <view>
+          <text class="percent">已售 {{item.sold}}</text>
+          <progress percent="17" activeColor="#f35a5f" active="{{true}}"></progress>
+          <view></view>
+        </view>
+        <view class="immediately-btn">
+          <text>立即抢购</text>
+
+        </view>
+      </view>
+    </view>
+  </block> -->
+</view>

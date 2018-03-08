@@ -1,0 +1,16 @@
+//根据id获取商品信息
+const getProductByCodeOrId = "/stock/api/getProductByCodeOrId.do";
+//查询商品分页列表
+const queryProduct = "/stock/api/queryProduct.do";
+//查询变体分页列表
+const findProductVariantByParams = "/stock/api/findProductVariantByParams.do";
+//提交订单
+const createByWx = "/cws/order/createByWx.do";
+
+
+module.exports = {
+  getProductByCodeOrId,
+  queryProduct,
+  findProductVariantByParams,
+  createByWx
+};

@@ -1,0 +1,91 @@
+<view class="my-container" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
+    <view class="head-info">
+        <view wx:if="{{order.status == '50'}}" class="cancel-note">
+            <text>您的订单已取消!</text>
+            <text>订单取消成功</text>
+        </view>
+    </view>
+    <view class="status-info">
+        <view>
+            状态：
+            <text wx:if="{{order.status == '20'}}" class="unpaid-color">待支付</text>
+            <text wx:elif="{{order.status == '50'}}">已取消</text>
+            <text wx:else>已支付</text>
+        </view>
+        <view>
+            订单编号：
+            <text>{{order.orderCode}}</text>
+        </view>
+        <view>
+            下单时间：
+            <text>{{order.orderTime}}</text>
+        </view>
+    </view>
+    <view wx:if="{{order.status == '50'}}" class="buy-again">
+        <button>再次购买</button>
+    </view>
+    <view wx:if="{{order.status == '20'}}" class="two-btn">
+        <button bindtap="goPay">去支付</button>
+        <button bindtap="cancelOrderDlg">申请取消订单</button>
+    </view>
+    <view class="user-info">
+        <view>
+            商品金额：
+            <text class="goods-amount-color">￥{{order.totalFee}}</text>
+        </view>
+        <view>
+            收货地址：
+            <text>{{order}}</text>
+        </view>
+        <view>
+            收货人：
+            <text class="consignee-name">{{order}}</text>
+        </view>
+        <view>
+            发票信息：
+            <text>{{order}}</text>
+        </view>
+    </view>
+    <view class="goods-info">
+        <view class="goods-info-head">
+            <text>{{order.companyName}}</text>
+            <text>共计{{order.totalNum}}件商品</text>
+        </view>
+        <view class="goods-info-body" wx:for="{{order.detailsVO}}" data-id="{{item.productId}}" bindtap="goGoodsDetail">
+            <view>
+                <image src="{{item.imgUrl_main}}"></image>
+            </view>
+            <view class="goods-detail">
+                <view>
+                  <view class="second1">{{item.productName}}</view>
+                  <view class="second2">商品货号：{{item.productCode}}</view>
+                  <view class="second2">颜色：{{item.color}}；尺码：{{item.size}}</view>
+                </view>
+                <view class="price-quantity">
+                  <text>￥{{item.price}}</text>
+                  <text>X{{item.orderNum}}</text>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view>
+        <view class="money-count">
+            <view class="money-item">
+                <text>商品总额：</text>
+                <text>￥ {{order.totalFee}}</text>
+            </view>
+            <view class="money-item">
+                <text>返现：</text>
+                <text>- ￥ 0</text>
+            </view>
+            <view class="money-item">
+                <text>运费：</text>
+                <text>+ ￥ 0</text>
+            </view>
+        </view>
+        <view class="actual-amount">
+            实付金额：
+            <text>￥{{order.totalFee}}</text>
+        </view>
+    </view>
+</view>

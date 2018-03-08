@@ -1,0 +1,293 @@
+.header {
+    width: 100%;
+    position: relative;
+}
+
+.statewrap {
+    height: 160rpx;
+    padding: 20rpx 40rpx;
+    box-sizing: border-box;
+    display: flex;
+    color: #ffffff;
+}
+
+.stateitem {
+    flex: 1;
+    display: flex;
+    margin-right: 15rpx;
+}
+
+.mainwrap {
+    flex: 1;
+    text-align: center;
+}
+
+.mainwrap text {
+    font-size: 18rpx;
+}
+
+.mainImgwrap {
+    width: 84rpx;
+    height: 84rpx;
+    overflow: hidden;
+}
+
+.mainImgwrap image {
+    width: 100%;
+    height: 100%;
+}
+
+.arroWrap {
+    width: 80rpx;
+    height: 20rpx;
+    margin-left: 15rpx;
+    margin-top: 22rpx;
+}
+
+.arroWrap image,
+.bottomImgwrap image,
+.ladingImg image,
+.shopicon image,
+.phone image,
+.qq image,
+.weixi image,
+.goodavatar image {
+    width: 100%;
+    height: 100%;
+}
+
+.bottomImgwrap {
+    width: 100%;
+    height: 160rpx;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.main {
+    padding-top: 30rpx;
+}
+
+.top {
+    background-color: #ffffff;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    color: #888888;
+    padding: 25rpx 20rpx;
+    box-sizing: border-box;
+}
+
+.top text {
+    display: block;
+    margin-bottom: 25rpx;
+}
+
+.top text:last-child {
+    margin-bottom: 0;
+}
+
+.ladingcode {
+    padding: 20rpx 0;
+    text-align: center;
+}
+
+.ladingwrap {
+    margin: 0 auto;
+    width: 600rpx;
+    height: 250rpx;
+    border: 6rpx solid #f7d1cb;
+    border-radius: 8rpx;
+    display: flex;
+    flex-direction: column;
+}
+
+.toptitle {
+    width: 100%;
+    height: 60rpx;
+    background-color: #f0f0f8;
+}
+
+.toptitle text {
+    color: #888888;
+    font-size: 28rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+}
+
+.orderLading {
+    background-color: #ffffff;
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.ladingword {
+    flex: 1;
+}
+
+.ladingword text {
+    display: block;
+}
+
+.yard {
+    color: #da444f;
+    font-size: 60rpx;
+    margin-bottom: 10rpx;
+}
+
+.describe {
+    color: #888888;
+    font-size: 34rpx;
+}
+
+.ladingImg {
+    width: 150rpx;
+    height: 150rpx;
+    margin-right: 60rpx;
+}
+
+.shopicon {
+    width: 34rpx;
+    height: 34rpx;
+    margin: 0 16rpx;
+    margin-top: 5rpx;
+}
+
+.phone,
+.qq,
+.weixi {
+    width: 44rpx;
+    height: 44rpx;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 20rpx;
+    margin-top: 12rpx;
+}
+
+.giHeader {
+    width: 100%;
+    height: 70rpx;
+    line-height: 70rpx;
+    overflow: hidden;
+    border-bottom: 1rpx solid #e5e5e5;
+    padding-right: 10rpx;
+}
+
+.good-item {
+    background-color: #ffffff;
+}
+
+.giHeader .left {
+    float: left;
+}
+
+.giHeader .left .shopicon,
+.giHeader .left text {
+    display: inline-block;
+    vertical-align: top;
+    color: #000000;
+    font-size: 34rpx;
+}
+
+.giHeader .right {
+    float: right;
+}
+
+.List-item {
+    padding: 24rpx 0;
+    display: flex;
+    font-size: 0;
+    border-bottom: 1rpx solid #e5e5e5;
+}
+
+.goodavatar {
+    width: 140rpx;
+    height: 140rpx;
+    margin-left: 30rpx;
+    margin-right: 20rpx;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.goodes {
+    flex: 1;
+    font-size: 26rpx;
+    color: #aaaaaa;
+}
+
+.goodes text {
+    display: block;
+}
+
+.goodes .title {
+    font-size: 30rpx;
+    color: #000000;
+}
+
+.goodesprinum {
+    overflow: hidden;
+}
+
+.goodesprinum .price {
+    float: left;
+    font-size: 28rpx;
+    color: #da444f;
+}
+
+.goodesprinum .num {
+    float: right;
+    margin-right: 30rpx;
+    font-size: 26rpx;
+    color: #353535;
+}
+
+.gifoot {
+    height: 60rpx;
+    line-height: 60rpx;
+    text-align: right;
+    margin-right: 30rpx;
+    color: #666666;
+    font-size: 26rpx;
+}
+
+.gifoot text {
+    color: #da444f;
+}
+
+.ordersettlement {
+    padding-top: 20rpx;
+    margin-bottom: 60rpx;
+}
+
+.settlementdescribe {
+    background: #ffffff;
+    margin-bottom: 20rpx;
+    padding: 30rpx 0;
+}
+
+.settlementdescribe>view,
+.gettingoods {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 18rpx;
+    font-size: 28rpx;
+    color: #353535;
+    margin-bottom: 10rpx;
+}
+
+.realprice {
+    color: #da444f;
+}
+
+.gettingoods {
+    background: #ffffff;
+    height: 88rpx;
+    line-height: 88rpx;
+}
+
+.gofree {
+    background-color: #da444f;
+    border-radius: 0;
+    color: #ffffff;
+}

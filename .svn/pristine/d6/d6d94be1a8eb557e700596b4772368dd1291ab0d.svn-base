@@ -1,0 +1,32 @@
+<view class="submitOrders">
+    <view class="goodsWrap">
+        <view class="list" wx:for="{{companys}}" wx:for-item="citem" wx:for-index="cindex">
+          <view class="title">
+              <image src="../../../images/index/p4_search_class1.png"></image>
+              <view>{{citem.name}}</view>
+          </view>
+          <view class="content" wx:for="{{citem.products}}">
+              <view class="comImg"><image src="{{item.imgUrl_main}}"></image></view>
+              <view class="second">
+                  <view class="second1">{{item.title}}</view>
+                  <view class="second2">商品货号：{{item.productCode}}</view>
+                  <view class="second2">颜色:{{item.color}} 尺码:{{item.size}}</view>
+                  <view class="second3"><text>￥</text>{{item.sellPrice}}</view>
+              </view>
+              <view class="lastDelete">×{{item.orderNum}}</view>
+          </view>
+          <view class="bottomList">
+              <view>共 <text>{{citem.totalNum}}</text>件商品，合计：<text>￥{{citem.totalFee}}</text></view>
+          </view>
+        </view>
+        <view class="shippingMethod">
+            <view>配送方式</view>
+            <view>上门自提</view>
+        </view>
+        
+    </view>
+    <view class="bottomFixed">
+        <view class="first">合计：<text>￥{{totalFee}}</text></view>
+        <view class="two" bindtap='submitOrder'>提交订单</view>
+    </view>
+</view>

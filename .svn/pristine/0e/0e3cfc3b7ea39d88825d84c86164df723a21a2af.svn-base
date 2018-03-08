@@ -1,0 +1,71 @@
+<view class="stallStore">
+    <scroll-view scroll-y style="height:1108rpx">
+        <view class="stallHeader">
+            <view class="storeFirst">
+                <image src="../../../images/index/p1_shoplogo.png"></image>
+                <view class="first" bindtap="toStore">
+                    <view>{{stallName}}</view>
+                    <view>主营：{{businessScopeName==undefined?"":businessScopeName}}</view>
+                </view>
+            </view>
+            <view class="TencentIcon">
+                <image src="../../../images/index/p10_contact1.png" alt=""></image>
+                <image src="../../../images/index/p10_contact2.png" alt=""></image>
+                <image src="../../../images/index/p10_contact3.png" alt=""></image>
+            </view>
+            <view class="goodsNum">
+                <view>{{sellProductNum}}</view>
+                <view>在售</view>
+            </view>
+        </view>
+        <view>
+            <swiper class="swiper" indicator-dots="true" autoplay="true" interval="5000" duration="1000">
+                <block wx:for="{{images}}" wx:for-index="index">
+                    <swiper-item>
+                        <image src="{{item.url}}" class="slide-image" mode="aspectFill"/>
+                    </swiper-item>
+                </block>
+            </swiper>
+        </view>
+        <view class="detailsTitle">
+            <view class="titleFirst">
+                <view class="title">{{product.title}}</view>
+                <view class="firstCollect">
+                    <image src="../../../images/index/p1_love1.png" alt=""></image>
+                    <view>收藏</view>
+                </view>
+            </view>
+            <view class="second">商品货号：{{product.productCode}}</view>
+            <view class="money">￥{{product.sellPrice}}</view>
+        </view>
+        <view class="detailsChose">
+            <scroll-view scroll-x class="choseList" style="width:660rpx;overflow: auto;white-space:nowrap;"  bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+                <view wx:for="{{colors}}" class="menuList {{curIndex == index? 'active' : ''}}" bindtap="switchRightTab" data-index="{{index}}" data-id="{{item}}">
+                    {{item}}
+                </view>
+            </scroll-view>
+            <image src="../../../images/index/right.png" alt=""></image>
+        </view>
+        <view class="choseNum" >
+            <view wx:for="{{sizes}}">
+                <view>尺码：{{item.name}}</view>
+                <view class="numberButton">
+                  <view>数量：</view>
+                  <view class="stepper"> 
+                    <text class="normal" bindtap="bindMinus" data-index="{{index}}" data-id="{{item.id}}">-</text>
+                    <input type="number" bindchange="bindManual" value="{{item.num}}" />  
+                    <text class="normal" bindtap="bindPlus" data-index="{{index}}" data-id="{{item.id}}">+</text>  
+                  </view>  
+                </view>
+            </view>
+        </view>
+    </scroll-view>
+    <view class="bottonFiexd">
+        <view class="first">
+            <view>已选  <text>20</text> 件商品</view>
+            <view>合计：<text>￥2000.00</text></view>
+        </view>
+        <view class="second">加入进货车</view>
+        <view class="Toner">去结算</view>
+    </view>
+</view>

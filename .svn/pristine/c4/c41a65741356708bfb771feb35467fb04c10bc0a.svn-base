@@ -1,0 +1,12 @@
+/*
+*   系统常设定
+*/
+const NABEI_AUTH_TOKEN = "NABEI_AUTH_KEY";
+
+
+
+
+export default
+{
+    NABEI_AUTH_TOKEN
+}

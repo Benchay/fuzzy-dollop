@@ -1,0 +1,16 @@
+<view class="my-container">
+  <view class="has-message" wx:for="{{messages}}">
+    <view>{{item.createTime}}</view>
+    <view class="detail-info">
+      <view>
+        <!-- <image class="message-icon" src=""></image> -->
+        <text class="item-name">系统公告</text>
+      </view>
+      <view>
+        <text class="item-num">{{item.content}}</text>
+      </view>
+    </view>
+    </view>
+</view>
+
+

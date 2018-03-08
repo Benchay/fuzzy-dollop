@@ -1,0 +1,69 @@
+<view class="stallStore">
+    <view class="stallHeader">
+        <view class="storeFirst">
+            <image src="../../../images/index/p1_shoplogo.png"></image>
+            <view class="first" bindtap="toStore">
+                <view>四季星座A110</view>
+                <view>主营：女装</view>
+            </view>
+        </view>
+        <view class="TencentIcon">
+            <image src="../../../images/index/p10_contact1.png" alt=""></image>
+            <image src="../../../images/index/p10_contact2.png" alt=""></image>
+            <image src="../../../images/index/p10_contact3.png" alt=""></image>
+        </view>
+        <view class="goodsNum">
+            <view>20000</view>
+            <view>在售</view>
+        </view>
+    </view>
+    <view class="stallCircular">
+        <image src="../../../images/index/p2_radio.png" alt=""></image>
+        <view>欢迎光临，拿货高峰请提前下单，谢谢惠顾！</view>
+    </view>
+    <view class="stallClass">
+        <view class="classLeft">
+            <view class="leftBox">
+                <view wx:for="{{items}}" class="menuList {{curNav == index? 'active' : ''}}" bindtap="switchRightTab" data-index="{{index}}" data-id="{{item.id}}">{{item.name}}</view>
+            </view>
+        </view>
+        <view class="classRight">
+            <view class="goodsList">
+                <view class="goodsImg">
+                    <image src="../../../images/index/p1_shoplogo.png" alt=""></image>
+                </view>
+                <view class="goodsText">
+                    <view>我是商品名称我是商品名称我是商品名称我是商品名称</view>
+                    <view>货号：123456</view>
+                    <view><text>￥</text>5.12</view>
+                </view>
+                <view class="addShop" bindtap="goDetails">
+                    <image src="../../../images/index/p4_purchased.png" alt=""></image>
+                </view>
+            </view>
+            <view class="goodsList">
+                <view class="goodsImg">
+                    <image src="../../../images/index/p1_shoplogo.png" alt=""></image>
+                </view>
+                <view class="goodsText">
+                    <view>我是商品名称我是商品名称我是商品名称我是商品名称</view>
+                    <view>货号：123456</view>
+                    <view><text>￥</text>5.12</view>
+                </view>
+                <view class="addShop">
+                    <image src="../../../images/index/p4_purchased.png" alt=""></image>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="bottonFixed">
+        <image class="iconCar" src="../../../images/index/p2_shopping_cart.png" alt=""></image>
+        <view class="left">
+            <view>
+                <image src="../../../images/index/p1_love2.png" alt=""></image>
+                <view>收藏档口</view>
+            </view>
+        </view>
+        <view class="right" bindtap="goOrders">去结算</view>
+    </view>
+</view>

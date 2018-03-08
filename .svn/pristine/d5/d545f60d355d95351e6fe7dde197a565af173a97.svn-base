@@ -1,0 +1,87 @@
+
+import {http} from '../../utils/util'
+Page({
+    data: {
+        items: [{
+            name: "收藏档口",
+            id:0
+        },{
+            name: "四季星座",
+            id:1
+        },{
+            name: "钱塘男装",
+            id:2
+        },{
+            name: "电商基地",
+            id:3
+        },{
+            name: "精品男装",
+            id:4
+        },{
+            name: "中星外贸",
+            id:5
+        },{
+            name: "置地国际",
+            id:6
+        },{
+            name: "九天国际",
+            id:7
+        }],
+        floors: [{
+            name: "100"
+        },{
+            name: "101"
+        },{
+            name: "102"
+        },{
+            name: "103"
+        },{
+            name: "104"
+        },{
+            name: "105"
+        },{
+            name: "106"
+        }],
+        curNav: 0,
+        curIndex: 0
+    },
+    onLoad(){
+      var that = this;
+      http({
+        url: 'cws/market/queryMarket.do',
+        data:{pageIndex:1,pageSize:100},
+        func:function(data){
+          //console.log(data);
+          const market = data.result.market;
+          that.setData({ items: market.results});
+          that.getMarketDetail(market.results[0].id);
+        }
+      })
+    },
+    switchRightTab: function(e) {
+        //console.log(e);
+        let id = e.target.dataset.id,
+            index = parseInt(e.target.dataset.index);
+        
+        this.setData({
+            curNav: id,
+            curIndex: index
+        })
+    },
+    getMarketDetail(marketId){
+      const that = this;
+      http({
+        url: 'cws/market/queryMarketDetail.do?marketId='+marketId,
+        func: function (data) {
+          that.groupStalls(data);
+        },
+      })
+    },
+    groupStalls(data){
+      console.log(data);
+      let stallList = data.stallList;
+      for(let stall in stallList){
+        
+      }
+    },
+})

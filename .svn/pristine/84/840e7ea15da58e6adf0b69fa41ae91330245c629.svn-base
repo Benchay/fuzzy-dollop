@@ -1,0 +1,24 @@
+<view class="container">
+  
+  <view class="login-from">
+    
+    <view class="inputView">
+      <label class="loginLab"></label>
+      <input class="inputText" placeholder="请输入手机号" bindinput="phoneInput" />
+      <button class="buttongetRed" disabled="{{disabled}}" data-id="{{phoneNub}}" bindtap="getCode">{{time}}</button>
+    </view>
+    <view class="line"></view>
+   
+    <view class="inputView">
+      <label class="loginLab"></label>
+      <input class="inputText" placeholder="请输入验证码" bindinput="passwordInput" />
+    </view>
+    <view class="viewTip">
+    <text class="textTip">温馨提示：未注册拿呗账号的手机号，登录时将自动注册，且代表您已同意</text><text class="textTipRed">《用户注册授权》</text>
+    </view>
+    
+    <view class="loginBtnView">
+      <button class="loginBtn" style="background:#DA444F"  type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}" bindtap="login">登录</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,84 @@
+/**app.wxss**/
+
+/*全局共通样式均放在这里*/
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+}
+
+/*页面基本样式
+* 背景色 #f0f2f5(灰色)
+* 字体：14px
+* 字体颜色：#232326（基本上是标题）其余是#848689(灰色字体)
+* 首页button等同色调使用color-pink，其余红色都使用color-red
+*/
+page {
+  background-color: #f0f2f5;
+  font-family: PingFangSC-Regular, Helvetica, "Droid Sans", Arial, sans-serif;
+  font-size: 28rpx;
+  color: #232326;
+}
+::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+/*showToast*/  
+.toast-bg {  
+  position: fixed;  
+  top: 0;  
+  bottom: 0;  
+  z-index: 999999;  
+  width: 100%;  
+  height: 100%;  
+  background: rgba(0, 0, 0, .2);  
+}  
+/*水平居中必备样式*/  
+.toast-center {  
+  position: fixed;  
+  z-index: 9999999;  
+  width: 100%;  
+  height: 100%;  
+  text-align: center;  
+}  
+.toast {  
+  display: inline-block;  
+  padding: 20rpx 40rpx;  
+  max-width: 600rpx;  
+  font-size: 28rpx;  
+  color: #fff;  
+  background: rgba(0, 0, 0, .5);  
+  border-radius: 10rpx;  
+  text-align: center;  
+}  
+/*垂直居中必备样式*/  
+.toast-center::after{  
+  content: '';  
+  display: inline-block;  
+  width: 0;  
+  height: 100%;  
+  vertical-align: middle;  
+}  
+.toast .toast-icon {  
+  display: block;  
+  margin: 0 auto 10rpx auto;  
+  width: 50rpx;  
+  height: 50rpx;  
+}
+/*复制弹窗*/
+.copyWechat,.copyWechat2{
+  font-size:34rpx;
+  font-weight: bold;
+  color:#000;
+  text-align: center;
+}
+.copyWechat2{
+  color:#9c9c9c;
+  font-weight:100;
+  margin-top: 30rpx;
+}

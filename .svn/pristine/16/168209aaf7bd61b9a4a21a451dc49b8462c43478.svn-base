@@ -1,0 +1,54 @@
+<view class="my-container">
+    <view class="user-wechat-info">
+        <image src="{{userPicPath}}" data-id="{{nabeiInfo}}"  bindtap='goMyInfo'></image>
+        <view class="words-info">
+            <view class="nick-name" wx:if="{{nabeiInfo==null}}" bindtap='goBindPage'>登录/注册</view>
+            <view class="nick-name" wx:else></view>
+            <view class="tipinfo" wx:if="{{nabeiInfo==null}}">
+                <label> </label>
+                <text>登录后可享受更多特权</text>
+            </view>
+        </view>
+    </view>
+    
+    <view class="order-details">
+        <navigator class="order-detail" url="../userInfo/myOrder/myOrder?activeIndex=0">
+            <view class="detail-info">
+                <image class="order-icon" src="../../images/userInfo/user_info_myorder.png"></image>
+                <text class="item-name">我的订单</text>
+                <image class="right-array" src="../../images/userInfo/left_grey_array.png"></image>
+                <text class="item-num">{{allOrders}}</text>
+            </view>
+        </navigator>
+        
+        <navigator class="order-detail" url="../userInfo/myCollection/myCollection?activeIndex=1">
+            <view class="detail-info">
+                <image class="order-icon" src="../../images/userInfo/user_info_mycollection.png"></image>
+                <text class="item-name">我的收藏</text>
+                <image class="right-array" src="../../images/userInfo/left_grey_array.png"></image>
+                <text class="item-num">{{unpaidOrder}}</text>
+            </view>
+        </navigator>
+        
+        <navigator class="order-detail" url="../userInfo/message/message?activeIndex=2">
+            <view class="detail-info">
+                <image class="order-icon" src="../../images/userInfo/user_info_mymessage.png"></image>
+                <text class="item-name">消息</text>
+                <image class="right-array" src="../../images/userInfo/left_grey_array.png"></image>
+                <text class="item-num">{{notReceivedOrder}}</text>
+            </view>
+        </navigator>
+		
+        <navigator class="order-detail" url="../userInfo/aboutUs/aboutUs?activeIndex=2">
+            <view class="detail-info">
+                <image class="order-icon" src="../../images/userInfo/user_info_about.png"></image>
+                <text class="item-name">关于我们</text>
+                <image class="right-array" src="../../images/userInfo/left_grey_array.png"></image>
+                <text class="item-num">{{notReceivedOrder}}</text>
+            </view>
+        </navigator>
+        
+    </view>
+	<view>
+	</view>
+</view>

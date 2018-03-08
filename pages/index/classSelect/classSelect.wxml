@@ -1,0 +1,13 @@
+<import src="gridCellTemplate.wxml" /> 
+<view class="pages-container"> 
+ <text class="text-class-name">分类</text>
+ <scroll-view scroll-y="true" class="pages-wrapper"> 
+  <view wx:for="{{pageItems}}" wx:key="{{index}}"> 
+   <view class="pages-row"> 
+    <template is="gridCellTemplate" data="{{...item[0],cellHeight}}" /> 
+    <template is="gridCellTemplate" data="{{...item[1],cellHeight}}" /> 
+    <template is="gridCellTemplate" data="{{...item[2],cellHeight}}" />
+   </view> 
+  </view> 
+ </scroll-view> 
+</view>

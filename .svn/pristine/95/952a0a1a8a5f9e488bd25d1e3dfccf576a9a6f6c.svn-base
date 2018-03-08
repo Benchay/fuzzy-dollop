@@ -1,0 +1,142 @@
+const {
+  http,
+  formatDate
+} = require('../../../utils/util.js');
+const {
+  getOrderById
+} = require('../../../utils/date.js');
+
+Page({
+
+    /**
+     * 页面的初始数据
+     */
+    data: {
+        // 初始化当前订单详情
+        order: {}
+    },
+
+    /**
+     * 生命周期函数--监听页面加载
+     */
+    onLoad: function (options) {
+      this.setData({
+        order:{
+          id:options.id
+          }
+      });
+      this.getOrder();  //加载订单详情
+    },
+
+    /**
+     * tap申请取消订单
+     */
+    cancelOrderDlg: function(){
+        const that = this;
+        // 获取data中的cur_order_detail
+        const cur_order_detail = this.data.cur_order_detail;
+        // 将order_status状态设为1，即订单取消的状态
+        cur_order_detail.order_status = "1";
+        wx.showModal({
+            title: `是否申请取消订单？`,
+            confirmText: "确定",
+            confirmColor: "#E45050",
+            success: function (res) {
+                // 点确定将页面设为订单取消的状态
+                if (res.confirm) {
+                    that.setData({
+                        cur_order_detail: cur_order_detail
+                    });
+                }
+            }
+        });
+    },
+
+    /**
+     * 生命周期函数--监听页面初次渲染完成
+     */
+    onReady: function () {
+
+    },
+
+    /**
+     * 生命周期函数--监听页面显示
+     */
+    onShow: function () {
+
+    },
+
+    /**
+     * 生命周期函数--监听页面隐藏
+     */
+    onHide: function () {
+
+    },
+
+    /**
+     * 生命周期函数--监听页面卸载
+     */
+    onUnload: function () {
+
+    },
+
+    /**
+     * 页面相关事件处理函数--监听用户下拉动作
+     */
+    onPullDownRefresh: function () {
+
+    },
+
+    /**
+     * 页面上拉触底事件的处理函数
+     */
+    onReachBottom: function () {
+
+    },
+
+    /**
+     * 用户点击右上角分享
+     */
+    onShareAppMessage: function () {
+
+    },
+
+    /**
+     * 加载订单详情信息
+     */
+    getOrder(){
+      let that = this;
+      let id = this.data.order.id;
+      http({
+        url: getOrderById,
+        data: {
+          id: id
+        },
+        func: data => {
+          let order = data.result;
+          order.orderTime = formatDate(order.orderTime);  //格式化时间
+          that.setData({
+            order: data.result
+          });
+        }
+      });
+    },
+
+    /**
+     * 去支付
+     */
+   goPay(){
+    
+   },
+
+    /**
+     * 点击某一商品链接到该商品的详情页
+     */
+    goGoodsDetail: (e) => {
+      // 获取当前订单的ID作为值传入url中
+      const goodsId = e.currentTarget.dataset.id;
+      wx.navigateTo({
+        url: `../../cart/goodsDetail/goodsDetail?goods_id=${goodsId}`
+      })
+    },
+})

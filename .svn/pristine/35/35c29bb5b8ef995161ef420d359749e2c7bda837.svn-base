@@ -1,0 +1,18 @@
+<template name="message-template">
+    <view class="has-message">
+    <view>2018-03-05 11:20</view>
+    <view class="detail-info">
+      <view>
+        <image class="message-icon" src="../../../images/userInfo/user_info_messag_noread.png"></image>
+        <text class="item-name">消息类型</text>
+      </view>
+      <view>
+        <text class="item-num">消息说明</text>
+      </view>
+    </view>
+    </view>
+</template>
+
+<view class="my-container">
+  <template is="message-template" ></template>
+</view>

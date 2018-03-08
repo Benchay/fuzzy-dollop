@@ -1,0 +1,57 @@
+//获取应用实例，请求数据的方法
+import { http } from '../../../utils/util'
+Page({
+    data: {
+        items: [{
+            name: "热销",
+            id:0
+        },{
+            name: "新品上架",
+            id:1
+        },{
+            name: "优惠",
+            id:2
+        },{
+            name: "清货",
+            id:3
+        },{
+            name: "全部商品",
+            id:4
+        }],
+        curNav: 0,
+        curIndex: 0
+    },
+    switchRightTab: function(e) {
+        let id = e.target.dataset.id,
+            index = parseInt(e.target.dataset.index);
+        this.setData({
+            curNav: id,
+            curIndex: index
+        })
+    },
+    goDetails: function() {
+        wx.navigateTo({
+            url: '../stallStoreDetails/stallStoreDetails'
+        })
+    },
+    onLoad:function(options) {
+      var stallId = options.id;
+      http({
+        url: "cws/stall/getStall.do",
+        data: { stallId: stallId },
+        func: (data) => {
+          var stall = data.result.stall;
+          if(stall!=undefined){
+            console.log(data.result.stall.name);
+          }
+        }
+      });
+
+    },
+
+    goOrders:function(){
+        wx.navigateTo({
+            url: "../submitOrders/submitOrders"
+        })
+    },
+})
