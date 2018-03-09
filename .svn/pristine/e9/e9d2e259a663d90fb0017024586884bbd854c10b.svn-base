@@ -1,0 +1,142 @@
+const app = getApp();
+const tapItemArray = [];
+const {http} = require('../../utils/util.js');
+const storage = require('../../utils/storage.js');
+const constant = require("../../utils/constant.js");
+const {getBulletinUserCountByParams} = require('../../utils/date.js');
+Page({
+  /**
+   * 页面的初始数据
+   */
+  data: {
+      wechatInfo: {},       // 初始化账户信息，包括头像、昵称等
+      nabeiInfo:null,
+      userPicPath:'../../images/userInfo/user_info_nologin.png',
+      allOrders: "",        // 初始化订单数量
+      unpaidOrder: "",      // 初始化待付款订单数量
+      notReceivedOrder: "", // 初始化待收货订单数量
+      discountCard: "",      // 初始化优惠券数量
+      messageCount:0    //未读消息数
+  },
+    /**
+     * 点击弹出售后订单后台设置提示
+     */
+    tapPaidOrder: () => {
+        wx.showModal({
+            title: `请至"微信-发现-购物-个人中心"进行售后订单管理`,
+            confirmText: "知道了",
+            confirmColor: "#E45050",
+            showCancel: false,
+            success: function (res) {
+
+            }
+        });
+    },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function () {
+      const _this = this;
+      app.getWechatInfo(function (userInfo) {
+          //console.log(userInfo);
+        _this.setData({
+              wechatInfo: userInfo
+          });
+      });
+      //获取用户未读消息数
+      this.getMessageCount();
+  },
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    this.setData({ nabeiInfo: app.globalData.nabeiInfo });
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  },
+
+  /**
+   * 查询未读消息数
+   */
+  getMessageCount(){
+    let that = this;
+    let userInfo = app.globalData.userInfo;
+    if(userInfo) {
+      http({
+        url: getBulletinUserCountByParams,
+        data: {
+          userId: userInfo.getUserId,
+          readFlag:0
+        },
+        func: function (data) {
+          let messageCount = data.result;
+          if (messageCount){
+            that.setData({
+              messageCount: messageCount,
+            });
+          }
+        }
+      });
+    }
+  },
+  goBindPage: (e) => {
+    var obj = { "url": '../userInfo', "type": 2, "from": ''};
+    app.globalData.goUrl = obj;
+    wx.navigateTo({
+      url: `../userInfo/bind/bind`
+    })
+  },
+  goMyInfo: (e) => {
+    const _this = this;
+    //if (e.currentTarget.dataset.id==null) return;
+    wx.navigateTo({
+      url: `../userInfo/myInfo/myInfo`
+    })
+  },
+  loginOut:function(){
+    app.globalData.nabeiInfo=null;
+    storage.setStore(constant.NABEI_AUTH_TOKEN, null);
+    this.setData({ nabeiInfo:null});
+    //this.onLoad();
+  }
+})
