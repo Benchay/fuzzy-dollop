@@ -33,7 +33,7 @@ function getOpenId (code) {
   console.log("end")
 };
 //下单
-function xiadan (openId) {
+function xiadan(openId,orderids, orderTotalFee) {
   console.log("统一下单开始");
   var that = this;
   wx.request({
@@ -42,7 +42,7 @@ function xiadan (openId) {
     header: {
       'content-type': 'application/x-www-form-urlencoded'
     },
-    data: { 'openid': openId },
+    data: { 'openid': openId, 'orderids': orderids, 'orderTotalFee': orderTotalFee},
     success: function (res) {
       var prepay_id = res.data.prepay_id;
       console.log(JSON.stringify(res))

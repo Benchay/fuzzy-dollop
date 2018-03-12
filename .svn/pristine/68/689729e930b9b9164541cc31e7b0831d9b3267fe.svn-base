@@ -1,0 +1,85 @@
+.market {
+    display: flex;
+}
+
+.maeketMenu {
+    width: 180rpx;
+    min-height: 100%;
+    background-color: #fff;
+    position: fixed;
+    left: 0;
+    overflow: auto;
+    height: 100%;
+}
+
+.maeketMenu>view {
+    background: #fff;
+    color: #a9a9a9;
+    height: 100rpx;
+    line-height: 100rpx;
+    background: #fff;
+    border: 1rpx solid #d7d7d7;
+    border-bottom: none;
+    border-left: none;
+    text-align: center;
+    font-size: 30rpx;
+}
+
+.maeketMenu>view:last-child {
+    border-bottom: 1rpx solid #d7d7d7;
+}
+
+.maeketMenu>view:first-child {
+    border-top: none;
+}
+
+.maeketContent {
+    margin-left: 185rpx;
+    flex: 1;
+    padding: 20rpx;
+}
+
+.maeketContent>.noCollect {
+    height: 800rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.maeketContent>.noCollect>image {
+    width: 400rpx;
+    height: 400rpx;
+}
+
+.floorList {
+    width: 525rpx;
+    overflow: hidden;
+}
+
+.floor {
+    height: 60rpx;
+    line-height: 60rpx;
+}
+
+.floorList>view {
+    background: #fff;
+    width: 175rpx;
+    height: 110rpx;
+    line-height: 110rpx;
+    float: left;
+    text-align: center;
+    color: #333;
+    border: 1px solid #d7d7d7;
+    box-sizing: border-box;
+    font-weight: bold;
+    font-size: 26rpx;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.menuList.active {
+    color: #333;
+    background: #f0eff5;
+    border-right: none;
+}

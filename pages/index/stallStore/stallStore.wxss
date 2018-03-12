@@ -1,6 +1,3 @@
-.stallStore{
-
-}
 .stallHeader{
     padding: 20rpx;
     background:#da444f;
@@ -67,10 +64,13 @@ display: flex;
 .classLeft{
     width:200rpx;
     background: #efeff4;
+     height:100%;
+    overflow: auto;
+    position: relative;
+    
  }
 .classLeft>.leftBox{
-    height:100%;
-    overflow: auto;
+   width:200rpx;
 }
 .classLeft>.leftBox>view{
     height:86rpx;
@@ -88,8 +88,6 @@ display: flex;
 .classRight{
     background: #fff;
     width:550rpx;
-    height:100%;
-    overflow: auto;
 }
 .goodsList{
     box-sizing: border-box;

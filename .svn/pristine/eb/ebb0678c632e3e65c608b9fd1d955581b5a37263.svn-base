@@ -1,0 +1,94 @@
+  page {
+      height: 100%;
+  }
+
+  .container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      box-sizing: border-box;
+  }
+  /*登录图片*/
+
+  .login-icon {
+      flex: none;
+  }
+
+  .login-img {
+      width: 750rpx;
+  }
+  /*表单内容*/
+
+  .login-from {
+      margin-top: 20px;
+      flex: auto;
+      height: 100%;
+      width: 100%;
+  }
+
+  .inputView {
+      background-color: #fff;
+      height: 88rpx;
+      line-height: 88rpx;
+      width: 100%;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+  }
+
+  .inputView:first-child {
+      box-sizing: border-box;
+      border-bottom: 1px solid #e5e5e5;
+  }
+  /*输入框*/
+
+  .nameImage,
+  .keyImage {
+      margin-left: 22px;
+      width: 14px;
+      height: 14px
+  }
+
+  .inputText {
+      flex: block;
+      float: left;
+      text-align: left;
+      margin-left: 34rpx;
+      margin-top: 20rpx;
+      color: #353535;
+      font-size: 34rpx
+  }
+  /*按钮*/
+    
+.loginBtn {
+      margin: 0 34rpx;
+      height: 88rpx;
+      line-height: 88rpx;
+      font-size: 36rpx;
+  }
+
+  .viewTip {
+      margin: 30rpx 34rpx 60rpx;
+      color: #9b9b9b;
+      font-size: 26rpx;
+  }
+
+  .textTipRed {
+      color: red;
+  }
+
+  .buttongetRed {
+      background-color: #DA444F;
+      display: inline-block;
+      font-size: 26rpx;
+      color: #fff;
+      border-radius: 8rpx;
+      line-height: 70rpx;
+      position: absolute;
+      top: 20rpx;
+      right: 34rpx;
+      height: 54rpx;
+      line-height: 54rpx;
+      width: 200rpx;
+  }

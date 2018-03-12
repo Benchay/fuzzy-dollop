@@ -22,7 +22,7 @@
     <view class="history" wx:for="{{searchList}}" bindtap="clickHistoryPanel" data-index="{{index}}" data-name="{{item}}">
         <view>{{item}}</view>
     </view>
-    <view hidden="{{commodity &&  stalls}}" class="clearAway" bindtap="clearHistorySearch">
+    <view hidden="{{searchList.length <1}}" class="clearAway" bindtap="clearHistorySearch">
         <view>清除历史记录</view>
     </view>
 </view>

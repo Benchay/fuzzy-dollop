@@ -1,13 +1,7 @@
 // pages/cart/cart.js
-const {
-  http,
-  arrayToMap,
-  mapToArray,
-  copyProperty
-} = require('../../utils/util.js');
-const {
-  findProductVariantByParams
-} = require('../../utils/date.js');
+const {http} = require('../../utils/util.js');
+const {arrayToMap, mapToArray, copyProperty} = require('../../utils/convert.js');
+const {findProductVariantByParams} = require('../../utils/date.js');
 
 Page({
   /**
@@ -18,7 +12,6 @@ Page({
     startY: 0,                            // 开始坐标Y
     cart: [],                       // ...
     companys: [],                   //购物车档口、商品列表列表
-    hasList: true,                      // 购物车是否有数据=
     select_all_status: true,              // 全选状态,默认全选
     totalFee: 0,                       // 总价，初始为0
     totalNum: 0                          // 选择商品总数
@@ -27,15 +20,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getCompanysData();
   },
 
   /**
+   * 显示页面
+  */
   onShow: function () {
     this.getCompanysData();
-    this.getTotalFee();
   },
- */
 
   /**
     * 自定义方法
@@ -45,7 +37,7 @@ Page({
     let companys = wx.getStorageSync("cart");
     if (!companys) {
       this.setData({
-        hasList:false
+        companys:new Array()
       });
       return;
     }
@@ -76,7 +68,6 @@ Page({
         wx.setStorage("cart", companys);
         //加载数据
         this.setData({
-          hasList: true,
           companys: companys
         });
         //计算价格
@@ -85,7 +76,7 @@ Page({
     });
   },
 
-  // 手指触摸动作开始 记录起点X坐标
+  /** 手指触摸动作开始 记录起点X坐标
   touchstart(e) {
     // 开始触摸时 重置所有删除
     this.data.cart.forEach(function (v, i) {
@@ -97,9 +88,9 @@ Page({
       startY: e.changedTouches[0].clientY,
       cart: this.data.cart
     })
-  },
+  },*/
 
-  // 滑动事件处理
+  /** 滑动事件处理
   touchmove(e) {
     var that = this,
       index = e.currentTarget.dataset.index,          // 当前索引
@@ -123,13 +114,13 @@ Page({
     this.setData({
       cart: this.data.cart
     })
-  },
+  },*/
 
   /**
   * 计算滑动角度
   * @param {Object} start 起点坐标
   * @param {Object} end 终点坐标
-  */
+
   angle(start, end) {
     var _X = end.X - start.X,
       _Y = end.Y - start.Y
@@ -155,7 +146,7 @@ Page({
       console.log(e)
     }
     this.getTotalFee();
-  },
+  },  */
 
   /**
    * 计算总额
@@ -185,6 +176,8 @@ Page({
       totalFee: totalFee.toFixed(2),
       totalNum: totalNum
     });
+
+    wx.setStorageSync("cart", companys);
   },
 
   /**
@@ -269,43 +262,28 @@ Page({
   },
 
   // 删除商品列表 
-  delGoods(e) {
+  delProduct(e) {
     var that = this;
     wx.showModal({
       content: '是否确认删除此商品？',
       success: function (res) {
         if (res.confirm) {
-          let hasList = true;
           let indexs = e.currentTarget.dataset.index.split(",");    // 获取data- 传进来的index
-          let companys = this.data.companys;
+          let companys = that.data.companys;
           let products = companys[indexs[0]].products;
           products.splice(indexs[1], 1);      //删除商品
           if(products.length == 0){       //商品为0就删档口
             companys.splice(indexs[0], 1);
           }
-          if (companys.length == 0) {
-            hasList = false;
-          }
           that.setData({
-            companys: companys,
-            hasList:hasList
+            companys: companys
           });
-          wx.setStorageSync('cart', companys);
           that.getTotalFee();
         }
       }
     })
   },
 
-  /**
-   * 跳转商品详情页
-   */
-  goDetail(e) {
-    wx.navigateTo({
-      //将该商品的id传到详情页
-      url: `goods_detail/goods_detail?product_id=${e.currentTarget.dataset.id}`
-    })
-  },
 
   /**
    * 跳转至下单页面
@@ -321,7 +299,7 @@ Page({
 
   /**
    * 添加测试数据
-   */
+  
   addCart(e) {
     // wx.navigateTo({
     //   //将该商品的id传到详情页
@@ -362,7 +340,7 @@ Page({
         }
         wx.setStorageSync("cart", mapToArray(companys));
       }
-    });
+    }); 
+  }*/
 
-  }
 })

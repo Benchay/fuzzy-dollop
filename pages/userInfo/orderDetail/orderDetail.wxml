@@ -1,3 +1,8 @@
+<import src="../../../template/showContact.wxml" />
+<import src="../../../template/showToast.wxml" />
+<template is="showContact" data="{{showContact:showContact}}" />
+<template is="showToast" data="{{showToast: showToast}}" />
+
 <view class="orderDetailwrap">
     <view class="header">
         <view class="statewrap">
@@ -66,7 +71,8 @@
         <view class="top">
             <text>订单编号:{{order.orderCode}}</text>
             <text>下单时间:{{order.orderTime}}</text>
-            <text>付款时间:{{order.payTime}}</text>
+            <text wx:if="{{order.payTime}}">付款时间:{{order.payTime}}</text>
+            <text wx:if="{{order.takeTime}}">拿货时间:{{order.takeTime}}</text>
         </view>
         <view class="ladingcode" wx:if="{{order.status != '20'}}">
             <view class="ladingwrap">
@@ -79,7 +85,7 @@
                         <text class="describe">订单提货码</text>
                     </view>
                     <view class="ladingImg">
-                        <image src="../../../images/userInfo/p11_code.png"></image>
+                        <image src="{{qrcode}}"></image>
                     </view>
                 </view>
             </view>
@@ -95,13 +101,13 @@
                     </view>
                     <view class="right">
                         <view class="phone">
-                            <image src="../../../images/userInfo/p10_contact1.png"></image>
+                            <image src="../../../images/userInfo/p10_contact1.png" data-type="phone" bindtap='showContactFun'></image>
                         </view>
                         <view class="qq">
-                            <image src="../../../images/userInfo/p10_contact2.png"></image>
+                            <image src="../../../images/userInfo/p10_contact2.png" data-type="qq" bindtap='showContactFun'></image>
                         </view>
                         <view class="weixi">
-                            <image src="../../../images/userInfo/p10_contact3.png"></image>
+                            <image src="../../../images/userInfo/p10_contact3.png" data-type="wx" bindtap='showContactFun'></image>
                         </view>
                     </view>
                 </view>

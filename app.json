@@ -7,7 +7,6 @@
     "pages/index/getCoupons/getCoupons",
     "pages/market/market",
     "pages/cart/cart",
-    "pages/cart/goodsDetail/goodsDetail",
     "pages/userInfo/userInfo",
     "pages/userInfo/myOrder/myOrder",
     "pages/userInfo/bind/bind",

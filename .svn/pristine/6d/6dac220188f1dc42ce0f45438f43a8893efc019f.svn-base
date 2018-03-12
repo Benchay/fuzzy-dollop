@@ -1,0 +1,295 @@
+//获取应用实例，请求数据的方法
+const app = getApp();
+import { http } from '../../../utils/util'
+const commonFun = require('../../../utils/common.js');
+Page({
+  data: {
+    curNav: 0,
+    curIndex: 0,
+    stall: {},
+    stallId: '',
+    stallCollectType: 2,
+    companyId: '',
+    spreadLabel: [],
+    pageIndex: 1,
+    pageSize: 10,
+    products: [],
+    showContact: { isShow: false },
+    cartNum: 0
+  },
+  switchRightTab: function (e) {
+    let id = e.target.dataset.id,
+      index = parseInt(e.target.dataset.index);
+    this.setData({
+      curNav: id,
+      curIndex: index,
+      pageIndex: 1
+    });
+    this.loadForProducts(this.data.curNav);
+  },
+  goDetails: function (e) {
+    let id = e.currentTarget.dataset.id,
+      index = parseInt(e.currentTarget.dataset.index);
+    if (this.data.products == undefined) {
+      return;
+    } else {
+      let productId = id;
+      wx.navigateTo({
+        url: '../stallStoreDetails/stallStoreDetails?stallId=' + this.data.stallId + '&' + 'productId=' + productId
+      });
+    }
+
+  },
+  onLoad: function (options) {
+    this.setData({
+      stallId: options.stallId,
+      companyId: options.companyId
+    });
+    //请求档口数据
+    http({
+      url: "cws/stall/getStall.do",
+      method: "GET",
+      data: { "stallId": options.stallId },
+      func: (data) => {
+        var obj = data.result.stall;
+        if (obj != undefined) {
+          this.setData({
+            stall: obj,
+            collectStatus: obj.collectStatus
+          });
+        }
+      }
+    });
+
+    //请求推广标签数据
+    this.loadForSpreadLabel();
+  },
+
+  /**
+   * 页面显示
+   */
+  onShow: function () {
+    //计算购物车总数
+    this.getCartNum();
+  },
+
+  //请求推广标签数据
+  loadForSpreadLabel: function () {
+    if(this.data.companyId==undefined||this.data.companyId==""){
+      return;
+    }
+      http({
+        url: "stock/api/querySpreadLabel.do",
+        data: { companyId: this.data.companyId, pageIndex: 1, pageSize: 10 },
+        func: (data) => {
+          if (data.isSuccess) {
+            this.setData({
+              spreadLabel: data.result.results
+            });
+            if (this.data.spreadLabel == undefined && this.data.spreadLabel.length == 0) {
+              let table = [];
+              table.push({ id: "", name: "全部商品" });
+              this.setData({
+                spreadLabel: table
+              });
+            } else {
+              let vo = this.data.spreadLabel;
+              vo.push({ id: "", name: "全部商品" });
+              this.setData({
+                spreadLabel: vo
+              });
+            }
+            //默认查询热销商品
+            this.loadForProducts(this.data.spreadLabel[0].id);
+          }
+
+        }
+      });
+   
+  },
+
+  //请求对应标签的商品数据
+  loadForProducts: function (data) {
+    http({
+      url: "stock/api/querySpreadLabelProduct.do",
+      data: { companyId: this.data.companyId, spreadLabelId: data, saleState: 1, pageIndex: this.data.pageIndex, pageSize: this.data.pageSize },
+      func: (data) => {
+        this.setData({
+          products: data.result.results
+        })
+      }
+    });
+  },
+
+  collectStall: function () {
+    if (app.globalData.nabeiInfo == null) {
+      var stallId = this.data.stallId == null? '' : this.data.stallId;
+      var companyId = this.data.companyId == null ? '' : this.data.companyId;
+      var obj = {
+        "url": '../../index/stallStore/stallStore?stallId =' + stallId + "&companyId="+companyId, "type": 1, "from": '' };
+      app.globalData.goUrl = obj;
+      wx.navigateTo({
+        url: `../../userInfo/bind/bind`
+      })
+      return;
+    }
+    console.log(this.data.stall.id);
+    let userid = app.globalData.nabeiInfo.user.id;
+    http({
+      url: 'cws/api/addCollect.do',
+      data: { createUserId: userid, stallId: this.data.stall.id, status: 2 },
+      func: (data) => {
+        if (data.isSuccess) {
+          this.setData({
+            collectStatus: 1
+          });
+        }
+      }
+    });
+  },
+
+  cancelCollectStall: function () {
+    if (app.globalData.nabeiInfo == null) {
+      var stallId = this.data.stallId == null ? '' : this.data.stallId;
+      var companyId = this.data.companyId == null ? '' : this.data.companyId;
+      var obj = { "url": '../../index/stallStore/stallStore?stallId=' + stallId + "&companyId="+companyId, "type": 1, "from": '' };
+      app.globalData.goUrl = obj;
+      wx.navigateTo({
+        url: `../userInfo/bind/bind`
+      })
+      return;
+    }
+    console.log(this.data.stall.id);
+    let userid = app.globalData.nabeiInfo.user.id;
+    http({
+      url: 'cws/api/cancelCollect.do',
+      data: { createUserId: userid, stallId: this.data.stall.id, status: 2 },
+      func: (data) => {
+        if (data.isSuccess) {
+          this.setData({
+            collectStatus: 2
+          });
+        }
+      }
+    });
+  },
+
+  goOrders: function () {
+    wx.navigateTo({
+      url: "../submitOrders/submitOrders"
+    })
+  },
+  goBuyCar: function () {
+    wx.switchTab({
+      url: "../../cart/cart"
+    })
+  },
+  confirmCopy: function (e) {
+    let seleData = e.currentTarget.dataset.id;
+    var ontactNub = '';
+    if (seleData && seleData.contactNub) {
+      ontactNub = seleData.contactNub;
+    }
+    wx.setClipboardData({
+      data: ontactNub,
+      success: function (res) {
+      }
+    });
+    let showContact = { isShow: false, title: '', contactNub: '' };
+    this.setData({ showContact: showContact });
+  },
+
+  showContactFun: function (e) {
+    let stall = e.currentTarget.dataset.id;
+    let types = e.currentTarget.dataset.types;
+    if (stall) {
+      var contactNub = '';
+      var title = '联系电话';
+      if (types == 'phone') {
+        title = '联系电话';
+        contactNub = stall.linkTel;
+      } else if (types == 'qq') {
+        title = '联系QQ';
+        contactNub = stall.qq;
+      } else if (types == 'wx') {
+        title = '联系微信';
+        contactNub = stall.weixin;
+      }
+      var isShow = true;
+      if (contactNub == null || contactNub == '') {
+        isShow = false;
+        commonFun.showToast({ title: '档口还没有设置联系方式 !' });
+        return;
+      }
+      let showContact = { isShow: isShow, title: title, contactNub: contactNub };
+      this.setData({ showContact: showContact });
+    }
+  },
+
+  /**
+   * 下拉刷新
+   */
+  onPullDownRefresh: function () {
+    if (this.data.curNav == undefined || this.data.curNav == "") {
+      this.setData({
+        curNav: this.data.spreadLabel[this.data.curIndex].id
+      });
+    }
+    this.setData({
+      pageIndex: 1,
+      products: []
+    });
+    this.loadForProducts(this.data.curNav);
+  },
+
+  /**
+     * 上拉加载更多
+     */
+  onBottom: function (e) {
+    console.log("bottom")
+    var num = this.data.pageIndex;
+    num++;
+    this.setData({
+      pageIndex: num
+    });
+    let vo = this.data.products;
+    http({
+      url: "stock/api/querySpreadLabelProduct.do",
+      data: { companyId: this.data.companyId, spreadLabelId: this.data.curNav, saleState: 1, pageIndex: this.data.pageIndex, pageSize: this.data.pageSize },
+      func: (data) => {
+        if (vo != undefined && vo.length != 0) {
+          this.setData({
+            products: data.result.results
+          });
+        } else {
+          let table = data.result.results;
+          for (let i = 0; i < table.length; i++) {
+            vo.push(table[i]);
+          }
+          this.setData({
+            products: vo
+          })
+        }
+
+      }
+    });
+  },
+
+  /**
+    * 计算购物车商品总数
+    */
+  getCartNum() {
+    let companys = wx.getStorageSync("cart");// 获取购物车档口列表                               
+    let totalNum = 0;   //所有商品数量合计
+    for (let i in companys) {                            // 遍历所有档口的商品
+      let products = companys[i].products;
+      for (let j in products) {
+        totalNum += parseInt(products[j].orderNum);      //追加商品数量
+      }
+    }
+    this.setData({                                                      // 最后赋值到data中渲染到页面
+      cartNum: totalNum
+    });
+  }
+
+})

@@ -1,0 +1,58 @@
+<view class="my-container">
+   
+    <view class="info-items">
+        <view class="item-pic-detail" >
+            <view class="detail-info-pic">
+                <text class="item-name">图像</text>
+                <image class="right-picpath" src="{{picPath}}"></image>
+                <text class="item-num">{{allOrders}}</text>
+            </view>
+        </view>
+        <view class="item-detail" url="../userInfo/myCollection/myCollection?activeIndex=1">
+            <view class="detail-info">
+                <text class="item-name">用户名</text>
+                <image class="right-array" src="../../images/userInfo/left_grey_array.png"></image>
+                <text class="item-num">{{unpaidOrder}}</text>
+            </view>
+        </view>
+        
+        <view class="item-detail">
+            <view class="section">
+                <view class="section__title">性别</view>
+                <picker bindchange="bindSexChange" value="{{index}}" range="{{gender}}" range-key="name">
+                    <view class="picker">
+                      {{gender[index].name}}
+                    </view>
+                </picker>
+                <image class="right-array" src="../../../images/userInfo/left_grey_array.png"></image>
+            </view>
+        </view>
+        <view class="item-detail">
+            <view class="section">
+            <view class="section__title">生日</view>
+            <picker mode="date" value="{{date}}" start="1990-09-01" end="2018-03-01" bindchange="bindDateChange">
+                <view class="picker">
+                    {{date}}
+                </view>
+            </picker>
+            <image class="right-array" src="../../../images/userInfo/left_grey_array.png"></image>
+        </view>
+        </view>
+        <!--
+		    <view class="item-detail" url="../userInfo/myOrder/myOrder?activeIndex=2">
+            <view class="detail-info">
+                <text class="item-name">地区</text>
+                <image class="right-array" src="../../../images/userInfo/left_grey_array.png"></image>
+                <text class="item-num">{{notReceivedOrder}}</text>
+            </view>
+        </view>-->
+		    <view class="item-detail" >
+            <view class="detail-info">
+                <text class="item-name">绑定手机号</text>
+                <!-- <image class="right-array" src="../../images/userInfo/left_grey_array.png"></image> -->
+                <text class="item-num">{{mobile}}</text>
+            </view>
+        </view>
+    </view>
+	
+</view>

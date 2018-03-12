@@ -90,4 +90,5 @@
       right: 34rpx;
       height: 54rpx;
       line-height: 54rpx;
+      width: 200rpx;
   }

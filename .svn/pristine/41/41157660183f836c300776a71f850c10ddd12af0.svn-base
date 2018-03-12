@@ -1,0 +1,71 @@
+<!--pages/index/search/search.wxml-->
+<!-- 搜索页面 -->
+<view class="search-title">
+    <view class="phone_one" bindtap="clickPerson">
+        <image src="../../../images/index/p4_search_class2.png" alt=""></image>
+        <view class="phone_personal">{{firstPerson}}</view>
+    </view>
+    <view class="person_box">
+        <view class="phone_select" hidden="{{selectPerson}}">
+            <view class="select_one" wx:for="{{selectList}}" bindtap="mySelect" data-name="{{item.name}}"  data-id="{{item.id}}" data-index="{{item.type}}">{{item.name}}</view>
+        </view>
+    </view>
+    <view class="search-bar">
+        <icon type="search" size="16" class="search"/>
+        <input placeholder="请输入关键词" placeholder-class="placeholder" bindinput="inputShow" bindconfirm="finishSearch" value="{{input_value}}"/>
+        <!-- 点击取消返回上一页 -->
+        <icon hidden="{{cancel_icon}}" type="cancel"  color="grey" size="16" class="cancel-icon" bindtap="clearInput"/>
+    </view>
+</view>
+<!--历史记录-->
+<view hidden="{{history}}">
+    <view class="history" wx:for="{{searchList}}" bindtap="clickHistoryPanel" data-index="{{index}}" data-name="{{item}}">
+        <view>{{item}}</view>
+    </view>
+    <view hidden="{{searchList.length <1}}" class="clearAway" bindtap="clearHistorySearch">
+        <view>清除历史记录</view>
+    </view>
+</view>
+<view hidden="{{commodity}}" class="commodity">
+    <view class="commodityFirst">
+        <view wx:for="{{items}}" class="menuList {{sortType == item.id? 'active' : ''}}" bindtap="switchRightTab" data-index="{{index}}" data-id="{{item.id}}">{{item.name}}</view>
+    </view>
+    <block wx:for="{{productList}}" wx:key="*this">
+      <view class="commodityList" bindtap="toProductDetail" data-id="{{item.id}}" data-name="{{item.stallId}}">
+        <view>
+            <image wx:if="{{item.imgUrl_main == undefined}}" src="../../../images/index/p4_search_class2.png"></image>
+            <image wx:else src="{{item.imgUrl_main}}"></image>
+        </view>
+        <view class="lists">
+            <view>{{item.title}}</view>
+            <view>商品货号：{{item.productCode}}</view>
+            <view>￥{{item.sellPrice}}</view>
+        </view>
+        <view class="lastImg" bindtap="goDetails">
+            <image src="../../../images/index/p4_purchased.png" alt=""></image>
+        </view>
+    </view>
+    </block>
+    
+</view>
+<view hidden="{{stalls}}">
+  <view class="stalls">
+    <block wx:for="{{stallList}}" wx:key="*this">
+      <view class="stallsList" bindtap="toStall" data-id="{{item.id}}">
+          <view>
+              <image src="../../../images/index/p4_search_class2.png" alt=""></image>
+          </view>
+          <view class="lists">
+              <view>{{item.name}}</view>
+              <view>主营：{{item.businessScopeName}}</view>
+              <view>在售商品：{{item.sellProductNum}}</view>
+          </view>
+          <view class="lastImg">
+              <image src="../../../images/index/p10_contact1.png" alt=""></image>
+              <image src="../../../images/index/p10_contact2.png" alt=""></image>
+              <image src="../../../images/index/p10_contact3.png" alt=""></image>
+          </view>
+      </view>
+    </block>
+  </view>
+</view>

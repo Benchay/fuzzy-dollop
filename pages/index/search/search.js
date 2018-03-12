@@ -15,8 +15,8 @@ Page({
       searchType:1,
     cancel_icon: true,
     input_value: "",
-      history:true,
-      commodity:false,
+      history:false,
+      commodity:true,
       stalls:true,
       selectList: [{
         name: "商品",
@@ -73,6 +73,8 @@ Page({
     if(value!=undefined&&value!=""){
       this.setData({
         history:false,
+        commodity:true,
+        stalls:true,
         cancel_icon: false
       })
     }else{
@@ -82,7 +84,15 @@ Page({
         searchList: []
       })
     }
-    let list = wx.getStorageSync('searchHistory');;
+    this.setData({
+      searchList: []
+    })
+    let list = [];
+    if (this.data.searchType == 1) {
+      list = wx.getStorageSync('searchProductHistory');
+    }else{
+      list = wx.getStorageSync('searchStallHistory');
+    }
     
     if(list!=undefined&&list.length>0){
       let vo = [];
@@ -101,35 +111,53 @@ Page({
    * 搜索输入结束，相当于键盘的完成键
    */
   finishSearch:function(e){
+    console.log(this.data.searchType);
+    let key = e.detail.value;
+    this.search(key);
+  },
+
+  search:function(key){
     //获取输入的值
     this.setData({
-      input_value: e.detail.value,
-      history:true
+      input_value: key,
+      history: true
     });
     //搜索返回接口调用
     this.searchFunc();
-
-    let table = wx.getStorageSync('searchHistory');
-    if(table.length==0){
-      let firstvo = [];
-      firstvo.push(e.detail.value);
-      wx.setStorageSync('searchHistory', firstvo);
-      return;
-    }
-    let flag = false;
-    for (let i = 0; i < table.length;i++){
-     if(table[i] == e.detail.value){
-       flag = true;
-     }
-    }
-
-    if(!flag){
-      let vo = [];
-      vo.push(e.detail.value);
-      for(let j = 0;j<table.length;j++){
-        vo.push(table[j]);
+    if (this.data.searchType == 1) {
+      this.setData({
+        commodity: false,
+        stalls: true
+      });
+      let table = [];
+      table.push(key);
+      let oldtable = wx.getStorageSync('searchProductHistory');
+      if (oldtable != null) {
+        for (let i = 0; i < oldtable.length; i++) {
+          if (oldtable[i] != key && i < 9) {
+            table.push(oldtable[i]);
+          }
+        }
       }
-      wx.setStorageSync('searchHistory',vo);
+      wx.setStorageSync('searchProductHistory', table);
+      return;
+    } else {
+      this.setData({
+        commodity: true,
+        stalls: false
+      });
+      let table = [];
+      table.push(key);
+      let oldtable = wx.getStorageSync('searchStallHistory');
+      if (oldtable != null) {
+        for (let i = 0; i < oldtable.length; i++) {
+          if (oldtable[i] != key && i < 9) {
+            table.push(oldtable[i]);
+          }
+        }
+      }
+      wx.setStorageSync('searchStallHistory', table);
+      return;
     }
   },
 
@@ -166,27 +194,33 @@ Page({
   clickHistoryPanel:function(e){
     let name = e.currentTarget.dataset.name,
         index = parseInt(e.currentTarget.dataset.index);
+        console.log(name);
     this.setData({
-      input_value:this.data.searchList[index],
+      input_value: name,
       history:true
     });
-    //搜索功能
-    this.searchFunc();
-    let table = wx.getStorageSync("searchHistory");
-    let vo = [];
-    vo.push(name);
-    table.splice(index,1);
-    for(let i = 0 ;i<table.length;i++){
-      vo.push(table[i]);
+    if (this.data.searchType == 1){
+      this.setData({
+        productList: []
+      });
+    }else{
+      this.setData({
+        stallsList : []
+      });
     }
-    wx.setStorageSync("searchHistory", vo);
+    //搜索功能
+    this.search(name);
   },
 
   /**
    * 点击清除隐藏历史搜索
    */
   clearHistorySearch() {
-    wx.clearStorageSync("searchHistory");
+    if (this.data.searchType == 1) {
+      wx.clearStorageSync("searchProductHistory");
+    }else{
+      wx.clearStorageSync("searchStallHistory");
+    }
     this.setData({
       searchList:[],
       history:true
@@ -306,7 +340,8 @@ Page({
     mySelect:function(e){
             let index = parseInt(e.target.dataset.index);
             this.setData({
-              searchType: index
+              searchType: index,
+              input_value:''
             }) 
             if(index == 1){
                 this.setData({
@@ -323,10 +358,24 @@ Page({
             firstPerson:e.target.dataset.name,
             selectPerson:true,
         })
-        this.searchFunc();
+        //this.searchFunc();
     },
     onLoad:function(options){
-        // 页面初始化 options为页面跳转所带来的参数
+        this.setData({
+          history: false,
+          commodity: true,
+          stalls: true,
+        });
+        
+        let list = [];
+        if (this.data.searchType == 1) {
+          list = wx.getStorageSync('searchProductHistory');
+        } else {
+          list = wx.getStorageSync('searchStallHistory');
+        }
+        this.setData({
+          searchList: list
+        })
     },
     onReady:function(){
         // 页面渲染完成

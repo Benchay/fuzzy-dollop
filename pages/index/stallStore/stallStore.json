@@ -1,3 +1,4 @@
 {
-  "navigationBarTitleText": "档口"
+  "navigationBarTitleText": "档口",
+  "enablePullDownRefresh": true
 }

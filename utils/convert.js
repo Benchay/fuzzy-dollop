@@ -74,6 +74,73 @@ function isInArray(arr, value) {
   return false;
 }
 
+
+/**
+ * array转map
+ */
+function arrayToMap(obj, key) {
+  let map = new Array();
+  for (let i in obj) {
+    map[obj[i][key]] = obj[i];
+  }
+  return map;
+}
+
+/**
+ * map转array
+ */
+function mapToArray(map) {
+  let arry = new Array();
+  for (let i in map) {
+    arry.push(map[i]);
+  }
+  return arry;
+}
+
+/**
+ * 复制属性
+ */
+function copyProperty(to, form) {
+  for (let i in form) {
+    to[i] = form[i];
+  }
+}
+
+/**
+ * 格式化时间
+ */
+function formatDate(date, fmt = 'Y-M-D h:m:s') {
+  if (date == null) {
+    return "";
+  }
+  if (typeof (date) == "number") {
+    date = new Date(date);
+  }
+  var formateArr = ['Y', 'M', 'D', 'h', 'm', 's'];
+  var returnArr = [];
+
+  returnArr.push(date.getFullYear());
+  returnArr.push(formatNumber(date.getMonth() + 1));
+  returnArr.push(formatNumber(date.getDate()));
+
+  returnArr.push(formatNumber(date.getHours()));
+  returnArr.push(formatNumber(date.getMinutes()));
+  returnArr.push(formatNumber(date.getSeconds()));
+
+  for (var i in returnArr) {
+    fmt = fmt.replace(formateArr[i], returnArr[i]);
+  }
+  return fmt;
+};
+
+/**
+ * 数据转化  
+ */
+function formatNumber(n) {
+  n = n.toString()
+  return n[1] ? n : '0' + n
+}
+
 module.exports = {
   stringToJson: stringToJson,
   jsonToString: jsonToString,
@@ -83,4 +150,8 @@ module.exports = {
   objToStrMap: objToStrMap,
   map2UrlString: map2UrlString,
   isInArray: isInArray,
+  arrayToMap:arrayToMap,
+  mapToArray:mapToArray,
+  copyProperty:copyProperty,
+  formatDate:formatDate
 } 

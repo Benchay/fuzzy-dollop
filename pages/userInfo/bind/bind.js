@@ -84,6 +84,7 @@ Page({
     var suc = commonFun.isMobileNub(phonev,true);
     if(!suc) return;
     var that = this;
+    that.setData({disabled: true});
     http({
       url: "ums/api/getMobileCode.do",
       method: "GET",
@@ -111,6 +112,13 @@ Page({
               })
             }
           }, 1000);
+        }else{
+          if (!data.isSuccess){
+            commonFun.showToast({ title: data.errorMsg });
+          }else{
+            commonFun.showToast({ title: '短信发送错误，请稍后再试!' });
+          }
+          that.setData({ disabled: false });
         }
 
       }

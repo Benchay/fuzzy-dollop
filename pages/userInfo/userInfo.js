@@ -16,8 +16,7 @@ Page({
       unpaidOrder: "",      // 初始化待付款订单数量
       notReceivedOrder: "", // 初始化待收货订单数量
       discountCard: "",      // 初始化优惠券数量
-      messageCount:0 ,   //未读消息数
-      messageMark:''
+      messageCount:0    //未读消息数
   },
     /**
      * 点击弹出售后订单后台设置提示
@@ -40,14 +39,14 @@ Page({
     const _this = this;
     this.setData({nabeiInfo: app.globalData.nabeiInfo });
     app.getWechatInfo(function (userInfo) {
+      //console.log(userInfo);
       _this.setData({
           wechatInfo: userInfo
       });
+
       if (app.globalData.nabeiInfo && userInfo) {
         _this.setData({ userPicPath: userInfo.avatarUrl });
       }
-      //获取用户未读消息数
-      _this.getMessageCount();
     });
   },
   /**
@@ -62,9 +61,9 @@ Page({
    */
   onShow: function () {
     this.setData({ nabeiInfo: app.globalData.nabeiInfo });
-	  if (this.nabeiInfo && this.data.wechatInfo){
-      this.setData({ userPicPath: this.data.wechatInfo.avatarUrl});
-    }
+    //获取用户未读消息数
+    this.getMessageCount();
+
   },
 
   /**
@@ -106,23 +105,19 @@ Page({
    * 查询未读消息数
    */
   getMessageCount(){
-    let that = this; //console.log(app.globalData.userInfo);
-    let userInfo = app.globalData.userInfo;
-    if(userInfo) {
+    let that = this;
+    let nabeiInfo = app.globalData.nabeiInfo;
+    if (nabeiInfo) {
       http({
         url: getBulletinUserCountByParams,
         data: {
-          userId: userInfo.getUserId,
+          userId: nabeiInfo.user.id,
           readFlag:0
         },
         func: function (data) {
-          let messageCount = data.result;
-          if (messageCount && messageCount>0){
-            that.setData({
-              messageCount: messageCount,
-              messageMark:'message'
-            });
-          }
+          that.setData({
+            messageCount: data.result
+          });
         }
       });
     }
@@ -135,13 +130,11 @@ Page({
     })
   },
   goMyInfo: (e) => {
-    console.log(e);
     let userinfo = e.currentTarget.dataset.id;
     let picPath = e.currentTarget.dataset.picpath;
-    console.log(userinfo);
     if (userinfo == null) return;
     wx.navigateTo({
-      url: `../userInfo/myInfo/myInfo?userId=` + userinfo.user.id + '&userName=' + userinfo.user.userName + '&birthday=' + userinfo.user.birthday + '&gender=' + userinfo.user.gender + "&picPath=" + picPath + "&mobile=" + userinfo.mobile
+      url: `../userInfo/myInfo/myInfo?userid=` + userinfo.user.id + '&userName=' + userinfo.user.userName + '&birthday=' + userinfo.user.birthday + '&gender=' + userinfo.user.gender + "&picPath=" + picPath + "&mobile=" + userinfo.mobile
     });
   },
   loginOut:function(){

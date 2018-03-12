@@ -1,6 +1,8 @@
 // pages/userInfo/myinfo/myinfo.js
 const app = getApp();
 const { http } = require('../../../utils/util.js');
+const storage = require("../../../utils/storage.js")
+const constant = require("../../../utils/constant.js");
 Page({
 
   /**
@@ -26,7 +28,11 @@ Page({
       this.setData({ mobile: options.mobile});
     }
     if (options.picPath){
-      this.setData({ picPath: options.picPath});
+      if (options.picPath =='http://cws.nabei.net:26880/undefined'){
+        this.setData({ picPath: '../../../images/userInfo/user_info_nologin.png' });
+      }else{
+        this.setData({ picPath: options.picPath });
+      }
     }else{
       this.setData({ picPath: '../../../images/userInfo/user_info_nologin.png' });
     }
@@ -39,9 +45,14 @@ Page({
       }
     }
     this.setData({
-      userId: options.userId,
-      date: app.formatDate(options.birthday * 1, 'yyyy-MM-dd')
+      userId: options.userid,
+      //date: app.formatDate(options.birthday * 1, 'yyyy-MM-dd')
     });
+    if (options.birthday){
+      this.setData({ date:options.birthday});
+    }else{
+      this.setData({ date: '' });
+    }
   },
 
   bindDateChange: function(e){
@@ -53,7 +64,12 @@ Page({
       url: "ums/api/saveUser.do",
       data: { id: this.data.userId, birthday: e.detail.value },
       func: (data) => {
-        
+        if (data.isSuccess){
+          var newobj = app.globalData.nabeiInfo.user;
+          newobj.birthday = e.detail.value;
+          app.globalData.nabeiInfo.user = newobj;
+          storage.setStore(constant.NABEI_AUTH_TOKEN, app.globalData.nabeiInfo);
+        }
       }
     });
   },
@@ -67,7 +83,10 @@ Page({
       url: "ums/api/saveUser.do",
       data: { id: this.data.userId, gender: this.data.gender[e.detail.value].type },
       func: (data) => {
-       
+        var newobj = app.globalData.nabeiInfo.user;
+        newobj.gender = this.data.gender[e.detail.value].type;
+        app.globalData.nabeiInfo.user = newobj;
+        storage.setStore(constant.NABEI_AUTH_TOKEN, app.globalData.nabeiInfo);
       }
     });
   },

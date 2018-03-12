@@ -1,0 +1,12 @@
+<template name="showContact">
+<block wx:if="{{showContact.isShow? showContact.isShow:false}}">
+    <modal class="modal" hidden="" no-cancel bindconfirm="confirmCopy" confirmText="点击复制" data-id="{{showContact}}" >
+        <block>
+            <view>
+                <view class="copyContactWechat">{{showContact.title}}</view>
+                <view class="copyWechat2">{{showContact.contactNub}}</view>
+            </view>
+        </block>
+    </modal>
+</block>
+</template> 

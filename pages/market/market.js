@@ -48,6 +48,11 @@ Page({
         data: { pageIndex: this.data.currentPage, pageSize: this.data.pageSize, status: 2, createUserId: userid },
         func: (data) => {
           if(data.isSuccess){
+            let re=data.result.results;
+            if(re){
+              that.setData({ showNoCollect:false});
+              that.convertStall(re);
+            }
             that.setData({
               collectStallList: data.result.results
             });
@@ -79,6 +84,7 @@ Page({
           that.setData({ showNoCollect:true});
         }else{
           that.setData({ showNoCollect: false });
+          that.getMyCollection();
         }
         return;
       }
@@ -106,7 +112,7 @@ Page({
         newobj.marketId = stall.marketId;
         newobj.floorNum = stall.floorNum;
         newobj.serialNub = stall.serialNub;
-        newobj.route = '../index/stallStore/stallStore?stallId=' + stall.marketId;
+        newobj.route = '../index/stallStore/stallStore?stallId=' + stall.id + "&companyId=" + stall.companyId;
         if (!convertFun.isInArray(foorArray, stall.floorNum)){
           foorArray.push(stall.floorNum);
         }
@@ -116,7 +122,7 @@ Page({
       for (var i = 0; i < foorArray.length;i++){
         var fnub = foorArray[i];
         var jt1 = new Object;
-        jt1.floorNum=''+ fnub;
+        jt1.floorNum=''+ fnub +'楼';
         jt1.children = [];
         for (var j = 0; j < tempDate.length;j++){
           var fnub2 = tempDate[j].floorNum;
@@ -126,10 +132,27 @@ Page({
         }
         floorArray.push(jt1);
       }
-      //console.log(floorArray);
       this.setData({ floorArraySelect: floorArray});
     },
-    convertStall(){
-      
+    convertStall(stallArray){
+      if (stallArray){
+        var floorArray = [];
+        for(var i=0;i<stallArray.length;i++){
+          var stall = stallArray[i];
+          var newobj = { "id": '', "marketId": '', "floorNum": 0, "serialNub": '', "route": '' };
+          newobj.id = stall.id;
+          newobj.marketId = stall.stallId;
+          newobj.floorNum = stall.stallName;
+          newobj.serialNub = stall.serialNub;
+          newobj.route = '../index/stallStore/stallStore?stallId=' + stall.stallId + "&companyId=" + stall.companyId;
+          var jt1 = new Object;
+          jt1.floorNum = stall.stallName;
+          jt1.children = [];
+          jt1.children.push(newobj);
+          floorArray.push(jt1);
+        }
+        this.setData({ floorArraySelect: floorArray });
+      }
+     
     },
 })

@@ -10,7 +10,7 @@
               <view class="second">
                   <view class="second1">{{item.title}}</view>
                   <view class="second2">商品货号：{{item.productCode}}</view>
-                  <view class="second2">颜色:{{item.color}} 尺码:{{item.size}}</view>
+                  <view class="second2">颜色:{{item.colour}} 尺码:{{item.size}}</view>
                   <view class="second3"><text>￥</text>{{item.sellPrice}}</view>
               </view>
               <view class="lastDelete">×{{item.orderNum}}</view>

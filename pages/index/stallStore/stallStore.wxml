@@ -1,3 +1,7 @@
+<import src="../../../template/showContact.wxml" />
+<import src="../../../template/showToast.wxml" />
+<template is="showContact" data="{{showContact:showContact}}" />
+<template is="showToast" data="{{showToast: showToast}}" />
 <view class="stallStore">
     <view class="stallHeader">
         <view class="storeFirst">
@@ -8,9 +12,9 @@
             </view>
         </view>
         <view class="TencentIcon">
-            <image src="../../../images/index/p10_contact1.png" alt=""></image>
-            <image src="../../../images/index/p10_contact2.png" alt=""></image>
-            <image src="../../../images/index/p10_contact3.png" alt=""></image>
+            <image src="../../../images/index/p10_contact1.png" data-id="{{stall}}" data-type="phone" alt="" bindtap='showContactFun'></image>
+            <image src="../../../images/index/p10_contact2.png" data-id="{{stall}}" data-type="qq" bindtap='showContactFun' alt=""></image>
+            <image src="../../../images/index/p10_contact3.png" data-id="{{stall}}" data-type="wx" bindtap='showContactFun' alt=""></image>
         </view>
         <view class="goodsNum">
             <view>{{stall.sellProductNum}}</view>
@@ -21,12 +25,14 @@
         <image src="../../../images/index/p2_radio.png" alt=""></image>
         <view>欢迎光临，拿货高峰请提前下单，谢谢惠顾！</view>
     </view>
-    <view class="stallClass">
+    <view class="stallClass" >
         <view class="classLeft">
+
             <view class="leftBox">
                 <view wx:for="{{spreadLabel}}" class="menuList {{curIndex == index? 'active' : ''}}" bindtap="switchRightTab" data-index="{{index}}" data-id="{{item.id}}">{{item.name}}</view>
             </view>
         </view>
+        <!-- <scroll-view scroll-y="true" bindscrolltolower="toBottom" class="classRight"> -->
         <view class="classRight">
             <view class="goodsList" wx:for="{{products}}">
                 <view class="goodsImg">
@@ -43,12 +49,17 @@
                 </view>
             </view>
         </view>
+        <!-- </scroll-view> -->
     </view>
     <view class="bottonFixed">
-        <view class="num">12</view>
-        <image class="iconCar" src="../../../images/index/p2_shopping_cart.png" alt=""></image>
+        <view class="num">{{cartNum}}</view>
+        <image class="iconCar" src="../../../images/index/p2_shopping_cart.png" bindtap='goBuyCar' alt=""></image>
         <view class="left">
-            <view>
+            <view wx:if="{{collectStatus==1}}" bindtap="cancelCollectStall">
+                <image src="../../../images/index/p1_love1.png" alt=""></image>
+                <view>取消收藏</view>
+            </view>
+            <view wx:else bindtap="collectStall">
                 <image src="../../../images/index/p1_love2.png" alt=""></image>
                 <view>收藏档口</view>
             </view>

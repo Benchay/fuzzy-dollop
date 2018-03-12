@@ -1,13 +1,8 @@
 // pages/userInfo/message/message.js
 const app = getApp();
-const {
-  http,
-  formatDate
-} = require('../../../utils/util.js');
-const {
-  readBulletinUser,
-  queryBulletinUserByParams
-} = require('../../../utils/date.js');
+const {http} = require('../../../utils/util.js');
+const {formatDate} = require('../../../utils/convert.js');
+const {readBulletinUser,queryBulletinUserByParams} = require('../../../utils/date.js');
 
 Page({
 
@@ -35,8 +30,6 @@ Page({
       this.setData({
         example: example
       });
-      //设置消息为已读
-      this.readMessage();
       //查询消息分页列表
       this.queryMessage();
     }
@@ -47,7 +40,7 @@ Page({
    */
   readMessage(){
     http({
-      url: queryBulletinUserByParams,
+      url: readBulletinUser,
       data: this.data.example,
       func: (data) => {
       }
@@ -67,10 +60,12 @@ Page({
         for(let i in messages) {
           messages[i].createTime = formatDate(messages[i].createTime);
         }
-
         this.setData({
           messages: messages
         });
+
+        //设置消息为已读
+        this.readMessage();
       }
     });
   }

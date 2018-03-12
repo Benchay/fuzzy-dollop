@@ -1,12 +1,8 @@
 // pages/user_info/my_order/my_order.js
 const app = getApp();
-const {
-  http
-} = require('../../../utils/util.js');
-const {
-  queryOrderByParams
-} = require('../../../utils/date.js');
-
+const {http} = require('../../../utils/util.js');
+const {mapToArray} = require('../../../utils/convert.js');
+const {queryOrderByParams,findMarketSearch} = require('../../../utils/date.js');
 
 Page({
 
@@ -15,46 +11,50 @@ Page({
      */
     data: {
       nabeiInfo: app.globalData.nabeiInfo,
-        navTabs: [{
-            title:"待付款",
-            status:"20"
-          },
-          {
-            title: "待拿货",
-            status: "2"
-          },
-          {
-            title: "已完成",
-            status: "99"
-          }],
+      navTabs: [{
+          title:"待付款",
+          status:"20"
+        },
+        {
+          title: "待拿货",
+          status: "2"
+        },
+        {
+          title: "已完成",
+          status: "99"
+        }],
         // 初始化将activeIndex置为0
         activeIndex: 0,
         //当前显示的订单数组
         orders:[],
         //筛选
-        selectPerson:true,
-        firstPerson:'四季星座',
-        cancel_icon: true,
-        input_value: "",
-        history:true,
-        commodity:false,
-        stalls:true,
-        selectList: [{
-            name: "四季星座",
-        },{
-            name: "火车站头",
-        }],
+        markets:[],
+        stalls:[],
+        marketId: "",
+        marketName: "全部",
+        floorNum: "",
+        floorName: "全部",
+        allFloor:[],
+        hideMarket:true,
+        hideFloor:true,
+        keywords:""
     },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+     
+    },
+
+    onShow:function(){
       //在data中赋值为空
       this.setData({
         nabeiInfo: app.globalData.nabeiInfo
       });
       this.getOrder(this.data.activeIndex);
+      this.findMarketSearch();
     },
+
     /**
      * nav item的tap事件
      */
@@ -66,10 +66,10 @@ Page({
     /**
      * 根据当前选项加载订单信息
      */
-    getOrder(activeIndex){
+    getOrder(activeIndex, isReolad=false){
       let that = this;
       let orders = this.data.orders;
-      if(orders[activeIndex]){   //有加载过订单数据就直接切换
+      if (orders[activeIndex] && !isReolad){   //有加载过订单数据就直接切换
         this.setData({
           activeIndex: activeIndex
         });
@@ -79,16 +79,19 @@ Page({
           activeIndex: activeIndex
         });
         let tab = this.data.navTabs[activeIndex];
-        let nabeiInfo = this.data.nabeiInfo; console.log(this.data);
+        let nabeiInfo = this.data.nabeiInfo;
         //let order
         http({
           url: queryOrderByParams,
           data: {
-            pageIndex: 0,
+            pageIndex: 1,
             pageSize: 100,
             companyId: nabeiInfo.compId,
             createUserId: nabeiInfo.user.id,
-            status: tab.status
+            status: tab.status,
+            marketId: this.data.marketId,
+            floorNum: this.data.floorNum,
+            keywords: this.data.keywords
           },
           func: data => {
              orders[activeIndex] = data.result.results;
@@ -100,6 +103,156 @@ Page({
       }
     },
 
+    /**
+     * 查询筛选条件
+     */
+    findMarketSearch(){
+      let that = this;
+      let nabeiInfo = this.data.nabeiInfo;
+      http({
+        url: findMarketSearch,
+        data: {
+          createUserId: nabeiInfo.user.id
+        },
+        func: data => {
+          let markets = data.result;
+          let map = new Map();
+          for (let i in markets) {
+            for(let j in markets[i].stallList) {
+              let floorNum = parseInt(markets[i].stallList[j].floorNum)
+              map[floorNum]={
+                floorNum: floorNum
+              };
+            }
+          }
+          let allFloor = mapToArray(map);
+          this.setData({
+            stalls: allFloor,
+            allFloor:allFloor
+          });
+          // markets.unshift(
+          //   {
+          //     id:"",
+          //     name:"全部",
+          //     stallList: allFloor
+          //     }
+          // );
+          that.setData({
+            markets:markets
+          });
+        }
+      });
+    },
+
+    /**
+     * 点击市场
+     */
+    clickMarket(e) {
+      this.setData({
+        hideMarket: !this.data.hideMarket
+      });
+    },
+
+  /**
+   * 选择市场
+   */
+    selectMarket(e){
+      let index = e.currentTarget.dataset.index;
+      if(index === "") {   //选择全部市场，就列出所有楼层
+        this.setData({
+          marketId: "",
+          marketName: "全部",
+          stalls: this.data.allFloor,
+          hideMarket: true,
+          hideFloor: false
+        })
+      } else {  //选择某个市场，就列出该市场楼层
+        let market = this.data.markets[index];
+        this.setData({
+          marketId:market.id,
+          marketName: market.name,
+          stalls: market.stallList,
+          hideMarket: true,
+          hideFloor:false  
+        })
+      }
+    },
+
+    /**
+     * 点击楼层
+     */
+    clickFloor(e) {
+      this.setData({
+        hideFloor: !this.data.hideFloor
+      });
+    },
+
+    /**
+     * 选择楼层
+     */
+    selectFloor(e) {
+      let index = e.currentTarget.dataset.index;
+      if(index === "") {    //选择全部楼层
+        this.setData({
+          floorNum: "",
+          floorName: "全部",
+          hideFloor: true
+        })
+      } else {
+        let stall = this.data.stalls[index];
+        this.setData({
+          floorNum: stall.floorNum,
+          floorName: stall.floorNum + "楼",
+          hideFloor: true
+        })
+      }
+    },
+
+    /**
+     * 输入关键词
+     */
+    inputKeywords(e){
+      this.data.keywords = e.detail.value
+    },
+
+    /**
+     * 清除选项
+     */
+    clearInput(){
+      this.setData({
+        keywords:""
+      });
+    },
+
+    /**
+     * 查询
+     */
+    search(){
+      this.getOrder(this.data.activeIndex, true);
+    },
+
+
+  /**
+   * 市场选择失焦
+   
+    blurMarket(e){
+      this.setData({
+        hideMarket:true
+      });
+    },*/
+
+  /**
+   * 楼层选择失焦
+  
+    blurFloor(e) {
+      this.setData({
+        hideFlorr: false
+      });
+    }, */
+
+    /**
+     * 去支付
+     */
     goPay(){
       //弹出支付页面
     },
@@ -113,36 +266,16 @@ Page({
         url: `../orderDetail/orderDetail?id=${orderId}`
       })
     },
-    clickPerson:function(){
-        var selectPerson = this.data.selectPerson;
-        if(selectPerson == true){
-            this.setData({
-                selectPerson:false,
-            })
-        }else{
-            this.setData({
-                selectPerson:true,
-            })
-        }
-    } ,
-    //点击切换
-    mySelect:function(e){
-        let index = parseInt(e.target.dataset.index);
-        console.log(index);
-        if(index == 0){
-            this.setData({
-                commodity:false,
-                stalls:true,
-            })
-        }else{
-            this.setData({
-                commodity:true,
-                stalls:false,
-            })
-        }
-        this.setData({
-            firstPerson:e.target.dataset.me,
-            selectPerson:true,
-        })
-    },
+
+    /**
+     * 跳转至档口主页
+     */
+    goStallStore(e) {
+      let stallId = e.currentTarget.dataset.stallId;
+      let companyId = e.currentTarget.dataset.companyId;
+      wx.redirectTo({
+        url: `../../index/stallStore/stallStore?stallId=${stallId}&companyId=${companyId}`
+      })
+    }
+    
 })

@@ -1,3 +1,7 @@
+<import src="../../../template/showContact.wxml" />
+<import src="../../../template/showToast.wxml" />
+<template is="showContact" data="{{showContact:showContact}}" />
+<template is="showToast" data="{{showToast: showToast}}" />
 <view class="stallStore">
     <scroll-view scroll-y style="height:100%;">
         <view class="stallHeader">
@@ -9,9 +13,9 @@
                 </view>
             </view>
             <view class="TencentIcon">
-                <image src="../../../images/index/p10_contact1.png" alt=""></image>
-                <image src="../../../images/index/p10_contact2.png" alt=""></image>
-                <image src="../../../images/index/p10_contact3.png" alt=""></image>
+                <image src="../../../images/index/p10_contact1.png" data-id="{{stall}}" data-type="phone" alt="" bindtap='showContactFun'></image>
+            <image src="../../../images/index/p10_contact2.png" data-id="{{stall}}" data-type="qq" bindtap='showContactFun' alt=""></image>
+            <image src="../../../images/index/p10_contact3.png" data-id="{{stall}}" data-type="wx" bindtap='showContactFun' alt=""></image>
             </view>
             <view class="goodsNum">
                 <view>{{sellProductNum}}</view>
@@ -30,8 +34,9 @@
         <view class="detailsTitle">
             <view class="titleFirst">
                 <view class="title">{{product.title}}</view>
-                <view class="firstCollect">
-                    <image src="../../../images/index/p1_love1.png" alt=""></image>
+                <view class="firstCollect" bindtap="collectProduct">
+                  <image wx:if="{{product.collectStatus==1}}" src="../../../images/index/p1_love2.png"></image>
+                  <image wx:else="{{product.collectStatus==2}}" src="../../../images/index/p1_love1.png"></image>
                     <view>收藏</view>
                 </view>
             </view>
@@ -62,10 +67,10 @@
     </scroll-view>
     <view class="bottonFiexd">
         <view class="first">
-            <view>已选  <text>20</text> 件商品</view>
-            <view>合计：<text>￥2000.00</text></view>
+            <view>已选  <text>{{totalNum}}</text> 件商品</view>
+            <view>合计：<text>￥{{totalFee}}</text></view>
         </view>
-        <view class="second">加入进货车</view>
-        <view class="Toner">去结算</view>
+        <view class="second" data-company-id="{{stall.companyId}}" data-product-id="{{index}}" bindtap='addToCart' >加入进货车</view>
+        <view class="Toner" bindtap="goSubmitOrder">去结算</view>
     </view>
 </view>

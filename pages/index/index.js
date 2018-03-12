@@ -38,7 +38,8 @@ Page({
         this.setData({
             curNav: id,
             curIndex: index,
-            stalls:[]
+            stalls:[],
+            pageIndex: 1
         });
         if (this.data.curIndex==0){
           this.data.sortType = 2;//综合排序
@@ -69,8 +70,9 @@ Page({
     toStore: function(e) {
       let id = e.currentTarget.dataset.id,
         index = parseInt(e.currentTarget.dataset.index);
+      console.log(this.data.stalls[index].companyId);
     wx.navigateTo({
-        url: 'stallStore/stallStore?stallId='+id
+      url: 'stallStore/stallStore?stallId=' + id + '&companyId=' + this.data.stalls[index].companyId
     });
 },
 
@@ -83,13 +85,16 @@ Page({
       app.globalData.inviteUserId = options.inviteUserId;
     }
     _this.getUserInfo();
-    _this.loadForData();
+    _this.loadForData(); 
     
   },
   onShow:function(){
     if (app.globalData.goUrl && app.globalData.goUrl.para){
       this.setData({ businessScope: app.globalData.goUrl.para.businessScope});
     }
+    this.setData({
+      pageIndex: 1
+    });
     this.getUserInfo();
     this.loadForData();
   },
@@ -295,6 +300,7 @@ cancelCollectData:function(param){
    */
   onReachBottom: function () {
     //保存this对象
+    wx.showNavigationBarLoading();
     const _this = this;
     let num = this.data.pageIndex;
     num++;
@@ -329,6 +335,9 @@ cancelCollectData:function(param){
             duration: 1000
           });
         }
+      },
+      complete:function(){
+        wx.hideNavigationBarLoading();
       }
     });
           
@@ -368,7 +377,7 @@ cancelCollectData:function(param){
       }
     });
   },
-
+  
 
   getUserInfo:function(){
     if (app.globalData.nabeiInfo == null) {

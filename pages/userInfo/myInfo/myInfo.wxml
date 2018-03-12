@@ -30,7 +30,7 @@
         <view class="item-detail">
             <view class="section">
             <view class="section__title">生日</view>
-            <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+            <picker mode="date" value="{{date}}" start="1990-09-01" end="2018-03-01" bindchange="bindDateChange">
                 <view class="picker">
                     {{date}}
                 </view>
@@ -49,7 +49,7 @@
 		    <view class="item-detail" >
             <view class="detail-info">
                 <text class="item-name">绑定手机号</text>
-                <image class="right-array" src="../../images/userInfo/left_grey_array.png"></image>
+                <!-- <image class="right-array" src="../../images/userInfo/left_grey_array.png"></image> -->
                 <text class="item-num">{{mobile}}</text>
             </view>
         </view>

@@ -7,7 +7,8 @@ function http(options) {
     // 获取全局对象并进行解构
     let {globalData:{baseUrl}} = getApp();
     let nabeiinfo = getApp().globalData.nabeiInfo;
-    let _token = (nabeiinfo == null || nabeiinfo.user==null) ? '': nabeiinfo.user.token;
+    console.log(nabeiinfo);
+    let _token = (nabeiinfo == null || nabeiinfo.user == null) ? '' : nabeiinfo.token;
     if (options.loading) {
       /*
         wx.showLoading({
@@ -26,8 +27,8 @@ function http(options) {
         url: `${baseUrl}${options.url}` + para,
         header: {
             'content-type': 'application/json',
-            'onTest':'hmj',
-            //"token": _token
+            //'onTest':'hmj',
+            "token": _token
         },
         data: options.data,
         //传参使用pss
@@ -48,104 +49,6 @@ function http(options) {
     })
 }
 
-
-
-/**
- * array转map
- */
-function arrayToMap(obj, key) {
-  let map = new Array();
-  for (let i in obj) {
-    map[obj[i][key]] = obj[i];
-  }
-  return map;
-}
-
-/**
- * map转array
- */
-function mapToArray(map) {
-  let arry = new Array();
-  for (let i in map) {
-    arry.push(map[i]);
-  }
-  return arry;
-}
-
-/**
- * 复制属性
- */
-function copyProperty(to, form) {
-  for (let i in form) {
-    to[i] = form[i];
-  }
-}
-
-/**
- * 格式化时间
- */
-function formatDate(date, fmt ='Y-M-D h:m:s') {
-  // if (date == null) {
-  //   return "";
-  // }
-  // if (typeof (date) == "number") {
-  //   date = new Date(date);
-  // }
-  // if (/(y+)/.test(fmt)) {
-  //   fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
-  // }
-  // let o = {
-  //   'M+': date.getMonth() + 1,
-  //   'd+': date.getDate(),
-  //   'h+': date.getHours(),
-  //   'm+': date.getMinutes(),
-  //   's+': date.getSeconds()
-  // };
-  // for (let k in o) {
-  //   if (new RegExp(`(${k})`).test(fmt)) {
-  //     let str = o[k] + '';
-  //     fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : padLeftZero(str));
-  //   }
-  // }
-  // return fmt;
-
-  if (date == null) {
-    return "";
-  }
-  if (typeof (date) == "number") {
-    date = new Date(date);
-  }
-  var formateArr = ['Y', 'M', 'D', 'h', 'm', 's'];
-  var returnArr = [];
-
-  returnArr.push(date.getFullYear());
-  returnArr.push(formatNumber(date.getMonth() + 1));
-  returnArr.push(formatNumber(date.getDate()));
-
-  returnArr.push(formatNumber(date.getHours()));
-  returnArr.push(formatNumber(date.getMinutes()));
-  returnArr.push(formatNumber(date.getSeconds()));
-
-  for (var i in returnArr) {
-    fmt = fmt.replace(formateArr[i], returnArr[i]);
-  }
-  return fmt;  
-};
-
-/**
- * 数据转化  
- */
-function formatNumber(n) {
-  n = n.toString()
-  return n[1] ? n : '0' + n
-}
-
-
-
 module.exports = {
-  http,
-  arrayToMap,
-  mapToArray,
-  copyProperty,
-  formatDate
+  http
 };

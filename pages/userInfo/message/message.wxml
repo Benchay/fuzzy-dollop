@@ -3,7 +3,7 @@
     <view wx:for="{{messages}}">
       <view class="date">{{item.createTime}}</view>
       <view class="second">
-        <view class="system">系统通知</view>
+        <view class="{{item.readFlag === 0 ? 'system' : ''}}">系统通知</view>
         <view>{{item.content}}</view>
       </view>
     </view>

@@ -10,7 +10,7 @@
       <view wx:if="{{showNoCollect}}" class="noCollect"><image src="../../images/index/p18.png"></image></view>
       <view wx:if="{{showNoCollect==false}}">
       <view wx:for="{{floorArraySelect}}" >
-        <view class="floor">{{item.floorNum}}楼</view>
+        <view class="floor">{{item.floorNum}}</view>
             <view class="floorList">
               <view  wx:for="{{item.children}}" data-id="{{item.route}}" bindtap='goStall'>
                 {{item.serialNub}}

@@ -1,0 +1,158 @@
+<import src="../../../template/showContact.wxml" />
+<import src="../../../template/showToast.wxml" />
+<template is="showContact" data="{{showContact:showContact}}" />
+<template is="showToast" data="{{showToast: showToast}}" />
+
+<view class="orderDetailwrap">
+    <view class="header">
+        <view class="statewrap">
+            <view class="stateitem">
+                <view class="mainwrap">
+                    <view class="mainImgwrap">
+                        <image src="../../../images/userInfo/p10_flow1.png"></image>
+                    </view>
+                    <text>订单提交</text>
+                </view>
+                <view class="arroWrap">
+                    <image src="../../../images/userInfo/p10_flow.png"></image>
+                </view>
+            </view>
+            <view class="stateitem">
+                <view class="mainwrap">
+                    <view class="mainImgwrap">
+                      <block wx:if="{{order.status == '2' || order.status=='99'}}">
+                        <image src="../../../images/userInfo/p10_flow2_b.png"></image>
+                      </block>
+                      <block wx:else>
+                        <image src="../../../images/userInfo/p10_flow2_a.png"></image>
+                      </block>
+                    </view>
+                    <text>已付款</text>
+                </view>
+                <view class="arroWrap">
+                    <image src="../../../images/userInfo/p10_flow.png"></image>
+                </view>
+            </view>
+            <view class="stateitem">
+                <view class="mainwrap">
+                    <view class="mainImgwrap">
+                      <block wx:if="{{order.status=='99'}}">
+                        <image src="../../../images/userInfo/p10_flow3_b.png"></image>
+                      </block>
+                      <block wx:else>
+                        <image src="../../../images/userInfo/p10_flow3_a.png"></image>
+                      </block>
+                    </view>
+                    <text>已拿货</text>
+                </view>
+                <view class="arroWrap">
+                    <image src="../../../images/userInfo/p10_flow.png"></image>
+                </view>
+            </view>
+            <view class="stateitem">
+                <view class="mainwrap">
+                    <view class="mainImgwrap">
+                      <block wx:if="{{order.status=='99'}}">
+                        <image src="../../../images/userInfo/p10_flow4_b.png"></image>
+                      </block>
+                      <block wx:else>
+                        <image src="../../../images/userInfo/p10_flow4_a.png"></image>
+                      </block>
+                    </view>
+                    <text>订单完成</text>
+                </view>
+            </view>
+        </view>
+        <view class="bottomImgwrap">
+            <image src="../../../images/userInfo/p10_topbg.png"></image>
+        </view>
+    </view>
+    <view class="main">
+        <view class="top">
+            <text>订单编号:{{order.orderCode}}</text>
+            <text>下单时间:{{order.orderTime}}</text>
+            <text wx:if="{{order.payTime}}">付款时间:{{order.payTime}}</text>
+            <text wx:if="{{order.takeTime}}">拿货时间:{{order.takeTime}}</text>
+        </view>
+        <view class="ladingcode" wx:if="{{order.status != '20'}}">
+            <view class="ladingwrap">
+                <view class="toptitle">
+                    <text>请凭提货码或二维码到档口提货</text>
+                </view>
+                <view class="orderLading">
+                    <view class="ladingword">
+                        <text class="yard">{{order.pickUpCode}}</text>
+                        <text class="describe">订单提货码</text>
+                    </view>
+                    <view class="ladingImg">
+                        <image src="{{qrcode}}"></image>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="shopgoods">
+            <view class="good-item">
+                <view class="giHeader">
+                    <view class="left">
+                        <view class="shopicon">
+                            <image src="../../../images/userInfo/p10_shop.png"></image>
+                        </view>
+                        <text>{{order.companyName}}</text>
+                    </view>
+                    <view class="right">
+                        <view class="phone">
+                            <image src="../../../images/userInfo/p10_contact1.png" data-type="phone" bindtap='showContactFun'></image>
+                        </view>
+                        <view class="qq">
+                            <image src="../../../images/userInfo/p10_contact2.png" data-type="qq" bindtap='showContactFun'></image>
+                        </view>
+                        <view class="weixi">
+                            <image src="../../../images/userInfo/p10_contact3.png" data-type="wx" bindtap='showContactFun'></image>
+                        </view>
+                    </view>
+                </view>
+                <view class="giList" wx:for="{{order.detailsVO}}" data-id="{{item.productId}}" bindtap="goGoodsDetail">
+                    <view class="List-item">
+                        <view class="goodavatar">
+                            <image src="{{item.imgUrl_main}}"></image>
+                        </view>
+                        <view class="goodes">
+                            <text class="title">{{item.productName}}</text>
+                            <text>商品货号:{{item.productCode}}</text>
+                            <text>颜色：{{item.color}}；尺码：{{item.size}}</text>
+                            <view class="goodesprinum">
+                                <text class="price">￥{{item.price}}</text>
+                                <text class="num">X{{item.orderNum}}</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="gifoot">
+                    共
+                    <text></text>件商品
+                </view>
+            </view>
+        </view>
+        <view class="ordersettlement">
+            <view class="settlementdescribe">
+                <view>
+                    <text>订单总金额:</text>
+                    <text>￥{{order.totalFee}}</text>
+                </view>
+                <view>
+                    <text>优惠金额:</text>
+                    <text>￥0.0</text>
+                </view>
+                <view>
+                    <text>实付款:</text>
+                    <text class="realprice">￥{{order.totalFee}}</text>
+                </view>
+            </view>
+            <view class="gettingoods">
+                <text>拿货方式:</text>
+                <text>上门自提</text>
+            </view>
+        </view>
+        <button wx:if="{{order.status==20}}" class="gofree" bindtap="goPay">去付款</button>
+    </view>
+</view>

@@ -33,8 +33,8 @@
         <navigator  wx:if="{{nabeiInfo !=null}}" class="order-detail" url="../userInfo/message/message?activeIndex=2">
             <view class="detail-info">
                 <image class="order-icon" src="../../images/userInfo/user_info_mymessage.png"></image>
-                <text class="item-name {{messageMark}}">消息</text>
-                <image class="right-array" src="../../images/userInfo/left_grey_array.png"></image>
+                <text class="item-name {{messageCount > 0 ? 'message' : ''}}">消息</text>
+                <image class="right-array" src="../../images/userInfo/left_grey_array.png" ></image>
                 <text class="item-num">{{notReceivedOrder}}</text>
             </view>
         </navigator>
@@ -47,11 +47,11 @@
                 <text class="item-num">{{notReceivedOrder}}</text>
             </view>
         </navigator>
-        <view class="loginBtnView" wx:if="{{nabeiInfo !=null}}" >
-      <button class="loginBtn" style="background:#DA444F"  type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}" disabled="{{bntDisabeled}}" bindtap="loginOut">退出登录</button>
-    </view>
         
     </view>
+        <view class="loginBtnView" wx:if="{{nabeiInfo !=null}}" >
+          <button class="loginBtn" style="background:#DA444F"  type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}" disabled="{{bntDisabeled}}" bindtap="loginOut">退出登录</button>
+        </view>
 	<view>
 	</view>
 </view>

@@ -1,10 +1,6 @@
 const app = getApp();
-const {
-  http
-} = require('../../../utils/util.js');
-const {
-  createOrderByWx
-} = require('../../../utils/date.js');
+const {http} = require('../../../utils/util.js');
+const {createOrderByWx} = require('../../../utils/date.js');
 const { payoff, getOpenId, xiadan, sign, requestPayment} = require('../../../utils/pay.js');
 
 
@@ -18,9 +14,14 @@ Page({
      * 加载事件
      */
     onLoad: function (options) {
+    },
+
+    /**
+     * 显示页面
+    */
+    onShow: function () {
       //加载档口商品信息
       this.getCompanysData();
-
     },
 
     /**
@@ -73,13 +74,11 @@ Page({
           //跳转绑定页面
           url: '../../userInfo/bind/bind'
         })
-        
         //测试数据
         // userInfo = {
         //   id:"8a8694b76071a5dc01607210f7200029",
         //   companyId:"8a8694b760771272016078053e8c011a"
         // }
-
       }
 
       //拼接订单提交数据
@@ -113,14 +112,15 @@ Page({
               icon: 'success',
               duration: 2000
             });
+            //移除购物车中的商品
+            wx.removeStorageSync("cart");
             //弹出支付界面
+            that.orderids = []//订单ids
+            that.orderTotalFee = 0.00// 传入订单金额
             that.payoff(that);
-           
           }
-          
         }
       });
     },
     payoff, getOpenId, xiadan, sign, requestPayment
-
 })
