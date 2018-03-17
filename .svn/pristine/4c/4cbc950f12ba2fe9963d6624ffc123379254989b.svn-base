@@ -1,0 +1,83 @@
+const app = getApp();
+const {http} = require('../../../utils/util.js');
+Page({
+
+    /**
+     * ҳ��ĳ�ʼ����
+     */
+    data: {
+      navTabs: [{ name: "档口", type: 2 }, { name: "商品", type: 1 }],
+        activeIndex: 2,
+        currentPage:1,
+        pageSize:10,
+        stallist: [],
+        goodslist: []
+
+    },
+    /**
+     * �������ں���--����ҳ�����
+     */
+    onLoad: function () {
+        this.loadForData();
+    },
+    //网络请求
+    loadForData: function () {
+      const that = this;
+      let userid = app.globalData.nabeiInfo.user.id;
+      console.log(userid);
+      http({
+        url: "cws/api/queryCollect.do",
+        data: { pageIndex: this.data.currentPage, pageSize: this.data.pageSize, status: this.data.activeIndex, createUserId: userid},
+        func: (data) => {
+          if (this.data.activeIndex == 2) {
+            that.setData({
+              stallist: data.result.results
+            });
+          } else {
+            that.setData({
+              goodslist: data.result.results
+            });
+          }
+        }
+      });
+    },
+
+    toStall: function (e) {
+      let stallId = e.currentTarget.dataset.stallId,
+        companyId = e.currentTarget.dataset.companyId;
+      wx.navigateTo({
+        url: '../../index/stallStore/stallStore?stallId=' + stallId+'&companyId='+companyId
+      });
+    },
+
+    toProductDetail: function(e) {
+      let productId = e.currentTarget.dataset.id,
+      stallId = e.currentTarget.dataset.name;
+      console.log(stallId);
+      wx.navigateTo({
+        url: '../../index/stallStoreDetails/stallStoreDetails?productId=' + productId + '&' + 'stallId=' + stallId
+      });
+
+    },
+    /**
+     * nav item��tap�¼�
+     */
+    tapNavItem: function (e) {
+      this.setData({
+        activeIndex: e.currentTarget.id
+      });
+      this.loadForData();
+        console.log(e.currentTarget.id)
+    },
+
+    /**
+     * tap��ǰ����ȥ��ǰ��������ҳ
+     */
+    showOrderDetail: function (e) {
+        // ��ȡ��ǰ������ID��Ϊֵ����url��
+        const order_id = e.currentTarget.id;
+        wx.redirectTo({
+            url: `../order_detail/order_detail?order_id=${order_id}`
+        })
+    }
+})

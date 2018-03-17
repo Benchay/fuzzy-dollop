@@ -1,0 +1,71 @@
+<import src="../../../template/showContact.wxml" />
+<import src="../../../template/showToast.wxml" />
+<template is="showContact" data="{{showContact:showContact}}" />
+<template is="showToast" data="{{showToast: showToast}}" />
+<view class="stallStore">
+    <view class="storeTop">
+        <view class="stallHeader">
+            <view class="storeFirst">
+                <image src="../../../images/index/p1_shoplogo.png"></image>
+                <view class="first" bindtap="toStore">
+                    <view wx:if="{{stall.marketName != null}}">{{stall.marketName+stall.serialNub}}</view>
+                    <view wx:else>{{stall.name}}</view>
+                    <view>主营：{{stall.businessScopeName==undefined?"":stall.businessScopeName}}</view>
+                </view>
+                <view class="TencentIcon">
+                    <image src="../../../images/index/p10_contact1.png" data-id="{{stall}}" data-type="phone" alt="" bindtap='showContactFun'></image>
+                    <image src="../../../images/index/p10_contact2.png" data-id="{{stall}}" data-type="qq" bindtap='showContactFun' alt=""></image>
+                    <image src="../../../images/index/p10_contact3.png" data-id="{{stall}}" data-type="wx" bindtap='showContactFun' alt=""></image>
+                </view>
+                <view class="goodsNum">
+                    <view>{{stall.sellProductNum}}</view>
+                    <view>在售</view>
+                </view>
+            </view>
+        </view>
+        <view class="stallCircular">
+            <image src="../../../images/index/p2_radio.png" alt=""></image>
+            <view>欢迎光临，拿货高峰请提前下单，谢谢惠顾！</view>
+        </view>
+    </view>
+    <view class="stallClass" >
+        <view class="classLeft">
+
+            <view class="leftBox">
+                <view wx:for="{{spreadLabel}}" class="menuList {{curIndex == index? 'active' : ''}}" bindtap="switchRightTab" data-index="{{index}}" data-id="{{item.id}}">{{item.name}}</view>
+            </view>
+        </view>
+        <scoll-view class="classRight" scroll-y="{{true}}" style="height: {{clientHeight?clientHeight+'px':'auto'}}" bindscrolltolower="onReachBottom">
+            <view class="goodsList" wx:for="{{products}}" bindtap="goDetails" data-id="{{item.id}}" data-index="{{index}}">
+                <view class="goodsImg">
+                    <image wx:if="{{item.imgUrl_main==undefined||item.imgUrl_main==''}}" src="../../../images/index/p1_shoplogo.png" alt=""></image>  
+                    <image wx:else src="{{item.imgUrl_main}}" alt=""></image>
+                </view>
+                <view class="goodsText">
+                    <view>{{item.title}}</view>
+                    <view>货号：{{item.productCode}}</view>
+                    <view><text>￥</text>{{item.sellPrice==undefined?0:item.sellPrice}}</view>
+                </view>
+                <view class="addShop">
+                    <image src="../../../images/index/p4_purchased.png" alt=""></image>
+                </view>
+            </view>
+            <view class="noneView">&nbsp;</view>
+        </scoll-view>
+    </view>
+    <view class="bottonFixed">
+        <view class="num">{{cartNum}}</view>
+        <image class="iconCar" src="../../../images/index/p2_shopping_cart.png" bindtap='goBuyCar' alt=""></image>
+        <view class="left">
+            <view wx:if="{{collectStatus==1}}" bindtap="cancelCollectStall">
+                <image src="../../../images/index/p1_love2.png" alt=""></image>
+                <view>取消收藏</view>
+            </view>
+            <view wx:else bindtap="collectStall">
+                <image src="../../../images/index/p1_love1.png" alt=""></image>
+                <view>收藏档口</view>
+            </view>
+        </view>
+        <view class="right {{cartNum > 0 ? '' : 'disabled'}}" bindtap="{{cartNum>0 ? 'goOrders' : ''}}">去结算</view>
+    </view>
+</view>

@@ -1,0 +1,39 @@
+<!--陈列订单信息的模版End-->
+<view class="my-container">
+    <view class="head-nav">
+        <block wx:for="{{navTabs}}" wx:key="*this">
+            <view class="{{activeIndex == item.type ? 'active-item':''}}" id="{{item.type}}" bindtap="tapNavItem">{{item.name}}</view>
+        </block>
+    </view>
+    <view class="listwrap" wx:if="{{activeIndex == 2}}">
+      <block wx:for="{{stallist}}" wx:key="*this">
+        <view class="list-item" bindtap="toStall" data-stall-Id="{{item.stallId}}" data-company-Id="{{item.companyId}}">
+            <view class="goodimgwrap">
+                <image src="../../../images/index/p1_banner.png"></image>
+            </view>
+            <view class="gooddetail">
+                <text class="title">{{item.stallName}}</text>
+                <text class="mainsell">主营: {{item.businessScopeName}}</text>
+                <text class="onsell">在售: {{item.sellProductNum}}</text>
+            </view>
+        </view>
+      </block>
+    </view>
+    <view class="sellgoodwrap" wx:else>
+      <block wx:for="{{goodslist}}" wx:key="*this">
+        <view class="list-item" bindtap="toProductDetail" data-id="{{item.productId}}" data-name="{{item.productStallId}}">
+            <view class="goodimgwrap">
+                <image wx:if="{{item.imgUrl_main == undefined}}" src="../../../images/index/p1_banner.png"></image>
+                <image wx:else src="{{item.imgUrl_main}}"></image>
+            </view>
+            <view class="gooddetail">
+                <text class="title">{{item.title}}</text>
+                <text class="mainsell">{{item.productCode}}</text>
+                <text class="price">￥{{item.sellPrice}}</text>
+            </view>
+        </view>
+      </block>
+        
+    </view>
+</view>
+

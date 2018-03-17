@@ -1,0 +1,134 @@
+.submitOrders{
+}
+.goodsWrap {
+    background:#fcf9fe;
+    margin-bottom: 20rpx;
+    height:100%;
+    overflow: auto;
+}
+.goodsWrap>.list{
+    background: #fff;
+    border-bottom: 20rpx solid #fcf9fe;
+}
+.goodsWrap>.list>.title{
+    display: flex;
+    align-items: center;
+    height:70rpx;
+    border-bottom: 1rpx solid #e5e5e5;
+    padding-left: 20rpx;
+}
+.goodsWrap>.list>.title>view{
+    padding-left: 10rpx;
+}
+.goodsWrap>.list>.title>image{
+    width:30rpx;
+    height:30rpx;
+}
+.list>.content{
+    padding-left: 20rpx;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height:190rpx;
+    border-bottom: 1rpx solid #e5e5e5;
+}
+.comImg>image{
+    width:140rpx;
+    height:140rpx;
+    border: 1rpx solid #e5e5e5;
+    border-radius: 10rpx;
+    margin-right:20rpx;
+}
+.second{
+    width:460rpx;
+}
+.second>view{
+    margin-bottom: 6rpx;
+}
+.second1{
+    color:#000;
+    font-size:34rpx;
+    display:block;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+.second2{
+    color:#aaa;
+    font-size: 26rpx;
+}
+.second3{
+    color:#da444f;
+    font-size: 28rpx;
+}
+.second3>text{
+    font-size: 15rpx;
+}
+.lastDelete{
+    font-size: 26rpx;
+    color:#353535;
+    text-align: right;
+    width:80rpx;
+    margin-top: 120rpx;
+    font-weight: bold;
+}
+.bottomList{
+    text-align: right;
+    color:#666;
+    font-size: 26rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    padding:0 30rpx;
+}
+.bottomList>view>text{
+    color:#da444f;
+}
+.shippingMethod{
+    font-size: 34rpx;
+    color:#000;
+    height:80rpx;
+    line-height: 80rpx;
+    padding: 0 20rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border-top: 1rpx solid #e5e5e5;
+    border-bottom: 1rpx solid #e5e5e5;
+}
+.shippingMethod>view:last-child{
+    color:#999;
+}
+.bottomFixed{
+    width:100%;
+    height:80rpx;
+    background: #fff;
+    position: fixed;
+    bottom:0;
+    display: flex;
+    border-top: 1rpx solid #ececec;
+    line-height: 80rpx;
+    text-align: center;
+}
+.bottomFixed>.first{
+    width:450rpx;
+    height:100%;
+    color:#999;
+    font-size: 28rpx;
+    text-align: right;
+    margin-right: 20rpx;
+}
+.bottomFixed>.first>text{
+    color:#da444f;
+}
+.bottomFixed>.two{
+    width:300rpx;
+    height:100%;
+    background: #da444f;
+    color:#fff;
+    font-size: 30rpx;
+}
+.bottomFixed>.disabled{
+    background: #A9A9A9;
+    color:#fff;
+}

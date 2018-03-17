@@ -1,0 +1,178 @@
+
+/** 
+  * 
+  * json转字符串 
+  */
+function stringToJson(data) {
+  return JSON.parse(data);
+}
+/** 
+*字符串转json 
+*/
+function jsonToString(data) {
+  return JSON.stringify(data);
+}
+/** 
+*map转换为json 
+*/
+function mapToJson(map) {
+  return JSON.stringify(strMapToObj(map));
+}
+/** 
+*json转换为map 
+*/
+function jsonToMap(jsonStr) {
+  //return objToStrMap(JSON.parse(jsonStr));
+   return objToStrMap(JSON.parse(JSON.stringify(jsonStr)));
+}
+/** 
+*map转化为对象（map所有键都是字符串，可以将其转换为对象） 
+*/
+function strMapToObj(strMap) {
+  let obj = Object.create(null);
+  for (let [k, v] of strMap) {
+    obj[k] = v;
+  }
+  return obj;
+}
+
+/** 
+*对象转换为Map 
+*/
+function objToStrMap(obj) {
+  let strMap = new Map();
+  for (let k of Object.keys(obj)) {
+    strMap.set(k, obj[k]);
+  }
+  return strMap;
+} 
+
+function map2UrlString(strMap){
+  var para='';
+  var i=0;
+  for (let [k, v] of strMap) {
+    if(i<1){
+      para = para + "?" + k + "=" + v;
+    }else{
+      para = para + "&" + k + "=" + v;
+    }
+  }
+  return para;
+}
+/**
+ * 判断一个元素是否存在于一个数组中
+ * @param {Object} arr 数组
+ * @param {Object} value 元素值
+ */
+function isInArray(arr, value) {
+  if (arr==null) return false;
+  for (var i = 0; i < arr.length; i++) {
+    if (value === arr[i]) {
+      return true;
+    }
+  }
+  return false;
+}
+
+
+/**
+ * array转map
+ */
+function arrayToMap(obj, key) {
+  let map = new Array();
+  for (let i in obj) {
+    map[obj[i][key]] = obj[i];
+  }
+  return map;
+}
+
+/**
+ * map转array
+ */
+function mapToArray(map) {
+  let arry = new Array();
+  for (let i in map) {
+    arry.push(map[i]);
+  }
+  return arry;
+}
+
+/**
+ * 复制属性
+ */
+function copyProperty(to, form) {
+  for (let i in form) {
+    to[i] = form[i];
+  }
+}
+
+/**
+ * 格式化时间
+ */
+function formatDate(date, fmt = 'Y-M-D h:m:s') {
+  if (date == null) {
+    return "";
+  }
+  if (typeof (date) == "number") {
+    date = new Date(date);
+  }
+  var formateArr = ['Y', 'M', 'D', 'h', 'm', 's'];
+  var returnArr = [];
+
+  returnArr.push(date.getFullYear());
+  returnArr.push(formatNumber(date.getMonth() + 1));
+  returnArr.push(formatNumber(date.getDate()));
+
+  returnArr.push(formatNumber(date.getHours()));
+  returnArr.push(formatNumber(date.getMinutes()));
+  returnArr.push(formatNumber(date.getSeconds()));
+
+  for (var i in returnArr) {
+    fmt = fmt.replace(formateArr[i], returnArr[i]);
+  }
+  return fmt;
+};
+
+function timestampToTime(timestamp,getHMS) {
+  console.log(typeof (timestamp));
+  console.log("999999999999999999999999999=");
+  if (typeof (timestamp) == "number") {
+    console.log("999999999999999999999999999");
+    var date = new Date(timestamp);
+    var Y = date.getFullYear() + '-';
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+    var D = date.getDate() < 10 ? ("0" + date.getDate() + ' ') : date.getDate() + ' ';
+    if(getHMS){
+      var h = date.getHours() + ':';
+      var m = date.getMinutes() + ':';
+      var s = date.getSeconds();
+      return Y + M + D + h + m + s;
+    }
+    return Y + M + D;
+  }
+ 
+}
+
+/**
+ * 数据转化  
+ */
+function formatNumber(n) {
+  n = n.toString()
+  return n[1] ? n : '0' + n
+}
+
+module.exports = {
+  stringToJson: stringToJson,
+  jsonToString: jsonToString,
+  mapToJson: mapToJson,
+  jsonToMap: jsonToMap,
+  strMapToObj: strMapToObj,
+  objToStrMap: objToStrMap,
+  map2UrlString: map2UrlString,
+  isInArray: isInArray,
+  arrayToMap:arrayToMap,
+  mapToArray:mapToArray,
+  copyProperty:copyProperty,
+  formatDate:formatDate,
+  timestampToTime: timestampToTime,
+} 

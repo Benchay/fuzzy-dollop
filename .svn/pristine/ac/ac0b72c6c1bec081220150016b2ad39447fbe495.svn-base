@@ -1,0 +1,406 @@
+//获取应用实例，请求数据的方法
+const app = getApp();
+const {http} = require("../../utils/util.js");
+const storage = require("../../utils/storage.js");
+const constant = require("../../utils/constant.js");
+const convert =require("../../utils/convert.js");
+const weatherUtil = require("../../utils/weather.js");
+const amap = require('../../libs/amap-wx.js');
+
+Page({
+  data: {
+    items: [{
+      name: "综合排序",
+        id:'0'
+    },{
+        name: "按销量",
+        id:'1'
+    },{
+        name: "筛选",
+        id:'2'
+    }],
+      curNav: 0,
+      curIndex: 0,
+      choseCollect:true,
+      stalls:[],
+      sortType:2,
+      cstatus:true,
+      pageIndex:1,
+      pageSize:10,
+      businessScope:'',
+      userId:'',
+      isSuccess:false
+  },
+    //横向导航切换点击
+    switchRightTab: function(e) {
+        let id = e.target.dataset.id,
+            index = parseInt(e.target.dataset.index);
+        this.setData({
+            curNav: id,
+            curIndex: index,
+            stalls:[],
+            pageIndex: 1
+        });
+        if (this.data.curIndex==0){
+          this.data.sortType = 2;//综合排序
+          this.setData({businessScope:null});
+        }else if(this.data.curIndex==1){
+          this.data.sortType = 1;//按销量排序
+          this.setData({ businessScope: null });
+        }
+        if(this.data.curIndex==2){
+            wx.navigateTo({
+                url: 'classSelect/classSelect'
+            });
+            return;
+        }else{
+          this.loadForData();
+        }
+        
+    },
+
+    screenChange:function(){
+    if(this.data.choseCollect == true){
+        this.data.choseCollect = false
+    }else{
+        this.data.choseCollect = true
+    }
+    },
+
+    toStore: function(e) {
+      let id = e.currentTarget.dataset.id,
+        index = parseInt(e.currentTarget.dataset.index);
+      console.log(this.data.stalls[index].companyId);
+    wx.navigateTo({
+      url: 'stallStore/stallStore?stallId=' + id + '&companyId=' + this.data.stalls[index].companyId
+    });
+},
+
+  /**
+   * 页面加载时
+   */
+  onLoad: function (options) {
+    const _this = this;
+    if (options.inviteUserId){
+      app.globalData.inviteUserId = options.inviteUserId;
+    }
+    _this.getUserInfo();
+    _this.loadForData(); 
+    
+  },
+  onShow:function(){
+    if (app.globalData.goUrl && app.globalData.goUrl.para){
+      this.setData({ businessScope: app.globalData.goUrl.para.businessScope});
+    }
+    this.setData({
+      pageIndex: 1
+    });
+    this.getUserInfo();
+    this.loadForData();
+  },
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    let path='/pages/index/index?inviteUserId=';
+    if (app.globalData.nabeiInfo != null && app.globalData.nabeiInfo.user !=null){
+      path = '/pages/index/index?inviteUserId=' + app.globalData.nabeiInfo.user.id;
+    }
+    return {
+      title: '拿呗',
+      desc: '让拿货更简单!',
+      path: path
+    }
+  },
+
+  //网络请求
+  loadForData:function() {
+    http({
+      url: "cws/stall/queryStall.do",
+      data: { stall: { status: 1, businessScope: this.data.businessScope }, createUserId: this.data.userId, pageIndex: this.data.pageIndex, pageSize: this.data.pageSize, sortType:this.data.sortType },
+      func: (data) => {
+        if (data.isSuccess){
+          this.setData({
+            stalls: data.result.stall.results
+          });
+        }else{
+          wx.showToast({
+            title: "获取数据失败",
+            icon: "fail",
+            duration: 1000
+          });
+        }
+      }
+    });
+    this.weather();
+  },
+  weather:function(){
+    var that = this;
+    var myAmapFun = new amap.AMapWX({ key: 'f1069d18ec0068803bd898dde5a5a2a7' });
+    myAmapFun.getWeather({
+      success: function (data) {
+        that.setData({
+          weatherData: {
+            currentCity: data.liveData.city,
+            temperature: data.liveData.temperature +'℃',
+            weatherDesc: data.liveData.weather,
+            weatherIcon: weatherUtil.getIconPath(data.liveData.weather)
+          }
+        });
+      },
+      fail: function (info) {
+        that.setData({
+          weatherData: {
+            currentCity: '未知',
+            weatherIcon: '../../images/weatherIcon/undefined.png'
+          }
+        });
+      }
+    })
+  },
+  /**
+   * 初始化页面
+   * @pram data--页面加载的数据
+   */
+  initPage: function (data) {
+    this.setData({
+      //products_data: data
+    });
+  },
+
+  //收藏店铺
+  collectStall:function(e){
+    if (app.globalData.nabeiInfo == null || app.globalData.nabeiInfo.user==null){
+      var obj = { "url": '../../index/index', "type": 2, "from": '' };
+      app.globalData.goUrl = obj;
+      wx.navigateTo({
+        url: '../userInfo/bind/bind?stallId=' + id
+      });
+      return;
+    }
+    let userid = app.globalData.nabeiInfo.user.id;
+    this.setData({
+      userId:userid
+    });
+
+    let id=e.currentTarget.dataset.id,
+        index = parseInt(e.currentTarget.dataset.index);
+    let stall = this.data.stalls[index];
+    if (stall.collectStatus!=undefined){
+      if (stall.collectStatus==1) {
+        stall.collectStatus = 0;
+        this.cancelCollectData({ id: stall.id, index: index, vo: stall });  //取消收藏接口
+      } else {
+        stall.collectStatus = 1;
+        this.storeCollectData({ id: stall.id, index: index, vo: stall });  //添加收藏接口
+      }
+    }else{
+      stall.collectStatus = 1;
+      this.storeCollectData({id:stall.id,index:index,vo:stall});  //添加收藏接口
+    }
+  },
+
+  /**
+   * 添加收藏数据
+   */
+  storeCollectData: function (param) {
+    http({
+      url: 'cws/api/addCollect.do',
+      data: { createUserId: this.data.userId,stallId: param.id, status: 2 },
+      func: (data) => {
+        if (data.isSuccess){
+          this.data.stalls.splice(param.index, 1, param.vo);
+          let vo = this.data.stalls;
+          this.setData({
+            stalls: vo
+          });
+        }
+      }
+    });
+  },
+
+/**
+ * 取消收藏
+ */
+cancelCollectData:function(param){
+  http({
+    url: 'cws/api/cancelCollect.do',
+    data: { createUserId: this.data.userId, stallId: param.id, status:2},
+    func:(data)=>{
+      if (data.isSuccess) {
+        this.data.stalls.splice(param.index, 1, param.vo);
+        let vo = this.data.stalls;
+        this.setData({
+          stalls: vo
+        });
+      }
+    }
+  });
+},
+
+
+  
+
+  /**
+   */
+  clickNum: function (e) {
+    //设置当前点击的项为选中样式
+    this.setData({
+      num: e.target.dataset.num
+    })
+  },
+
+  /**
+   * 点击searchbar进入搜索页面
+   */
+  goSearchPage: function () {
+    wx.navigateTo({
+      url: "search/search"
+    })
+  },
+
+/**
+ * 点击扫码事件 
+ */
+  bindScan:function() {
+    wx.scanCode({
+      success(res){
+        console.log(res)
+        let path = res.result;
+        console.log(res.result);
+        path = path.substring(path.indexOf("?"),path.length)
+        wx.navigateTo({
+          url: "stallStore/stallStore" + path
+        });
+      }
+    })
+  },
+
+  /**
+   * 点击商品进入商品对应的详情页
+   * @pram e--当前点击对象的属性集合
+   */
+  goDetail: (e) => {
+    wx.navigateTo({
+      //将该商品的id传到详情页
+      url: `../cart/goodsDetail/goodsDetail?product_id=${e.currentTarget.dataset.id}`
+    })
+  },
+
+  goCart:function(){
+    wx.navigateTo({
+      url: "../cart/cart"
+    })
+  },
+  goClassSelect:function(){
+    wx.navigateTo({
+      url: "../index/classSelect/classSelect"
+    })
+  },
+
+  /**
+   * 上拉加载更多
+   */
+  onReachBottom: function () {
+    //保存this对象
+    wx.showNavigationBarLoading();
+    const _this = this;
+    let num = this.data.pageIndex;
+    num++;
+    this.setData({
+      pageIndex:num
+    });
+    http({
+      url: "cws/stall/queryStall.do",
+      data: { stall: { status: 1, businessScope: this.data.businessScope }, createUserId:this.data.userId, pageIndex: this.data.pageIndex, pageSize: this.data.pageSize, sortType: this.data.sortType },
+      func: (data) => {
+        if (data.isSuccess) {
+            let table = this.data.stalls,
+            newTable = data.result.stall.results;
+            if(newTable.length==0){
+              wx.showToast({
+                title:"加载完毕",
+                icon:"success",
+                duration:1000
+              });
+              return;
+            }
+            for(let i = 0;i<newTable.length;i++){
+              table.push(newTable[i]);
+            }
+            this.setData({
+              stalls:table
+            });
+        }else{
+          wx.showToast({
+            title: "加载失败",
+            icon: "fail",
+            duration: 1000
+          });
+        }
+      },
+      complete:function(){
+        wx.hideNavigationBarLoading();
+      }
+    });
+          
+  },
+
+/**
+ * 下拉刷新
+ */
+  onPullDownRefresh:function(e){
+    wx.stopPullDownRefresh();
+    this.setData({
+      pageIndex:1
+    });
+    http({
+      url: "cws/stall/queryStall.do",
+      data: { stall: { status: 1, businessScope: this.data.businessScope }, createUserId:this.data.userId,pageIndex: this.data.pageIndex, pageSize: this.data.pageSize, sortType: this.data.sortType },
+      func: (data) => {
+        if (data.isSuccess) {
+            this.setData({
+              stalls:[],
+              stalls: data.result.stall.results
+            });
+            /*
+            wx.showToast({
+              title:'刷新成功',
+              icon:'success',
+              duration:1000
+            });*/
+        }else{
+          /*
+          wx.showToast({
+            title: '刷新失败',
+            icon: 'fail',
+            duration: 1000
+          });*/
+        }
+      }
+    });
+  },
+  
+  //点击商品图片
+  gotoProductDetail:function(e){ 
+    let id=e.currentTarget.dataset.id,
+        index = parseInt(e.currentTarget.dataset.index),
+        sId = e.currentTarget.dataset.name;
+        console.log("productId======"+id + "======sid========"+sId)
+    wx.navigateTo({
+      url: 'stallStoreDetails/stallStoreDetails?stallId=' + sId + '&productId=' + id,
+    });
+  },
+
+  getUserInfo:function(){
+    if (app.globalData.nabeiInfo == null) {
+      var data=storage.getStoreSync(constant.NABEI_AUTH_TOKEN);
+      if (data){
+          app.globalData.nabeiInfo = convert.stringToJson(data);
+          if (app.globalData.nabeiInfo && app.globalData.nabeiInfo.user) {
+            this.setData({ userId: app.globalData.nabeiInfo.user.id });
+          }
+        }
+    }
+  },
+});

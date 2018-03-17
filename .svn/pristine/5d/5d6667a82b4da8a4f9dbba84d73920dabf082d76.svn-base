@@ -1,0 +1,140 @@
+.my-container {
+    width: 100%;
+}
+
+.user-wechat-info {
+    width: 100%;
+    height: 340rpx;
+    background-color: #DA444F;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.order-details {
+    width: 100%;
+    background-color: white;
+    margin-top: 19rpx;
+}
+
+.order-detail {
+    width: 100%;
+    height: 85rpx;
+    background-color: white;
+}
+
+.order-detail:not(:last-child) {
+    border-bottom: 1rpx solid #e9e8ed;
+}
+
+.order-detail:last-child {
+    border-bottom: 1rpx solid #e9e8ed;
+}
+
+.discount-coupon {
+    width: 100%;
+    height: 85rpx;
+    background-color: white;
+    margin-top: 19rpx;
+}
+
+.detail_info {
+    width: 682rpx;
+    margin: 0 auto;
+}
+.user-wechat-info>.imgView{
+    width: 200rpx;
+    height:200rpx;
+    margin-top: 10rpx;
+}
+.user-wechat-info>.imgView>image {
+    width: 200rpx;
+    height:200rpx;
+    border: 4rpx solid #BA4356;
+    border-radius: 50%;
+}
+
+.words-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nick-name {
+    color: white;
+    margin-top: 20rpx;
+}
+.nick-num{
+    color: white;
+    margin-top: 50rpx;
+}
+.tipinfo {
+    color: #FFC7BC;
+    font-size: 24rpx;
+    margin-top: 22rpx;
+}
+
+.detail-info {
+    height: 40rpx;
+    padding: 22rpx 20rpx;
+}
+
+.message {
+    position: relative;
+}
+
+.message:after {
+    position: absolute;
+    content: '';
+    width: 10rpx;
+    height: 10rpx;
+    border-radius: 50%;
+    background: #DA444F;
+    right: -15rpx;
+    top: 0;
+}
+
+.order-icon {
+    width: 36rpx;
+    height: 36rpx;
+    display: block;
+    float: left;
+    margin-right: 24rpx;
+}
+
+.detail-info>.item-name {
+    display: block;
+    float: left;
+    line-height: 42rpx;
+}
+
+.right-array {
+    width: 16rpx;
+    height: 25rpx;
+    float: right;
+    margin-top: 10rpx;
+}
+
+.detail-info>.item-num {
+    display: block;
+    float: right;
+    line-height: 42rpx;
+    font-size: 24rpx;
+    color: #c81624;
+    margin-right: 28rpx;
+}
+
+
+/*按钮*/
+
+.loginBtnView {
+    margin: 60rpx 0 40rpx;
+}
+
+.loginBtn {
+    margin: 0 34rpx;
+    height: 88rpx;
+    line-height: 88rpx;
+    font-size: 36rpx;
+}

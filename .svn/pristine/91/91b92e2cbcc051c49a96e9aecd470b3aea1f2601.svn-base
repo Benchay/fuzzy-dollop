@@ -1,0 +1,138 @@
+.my-container {
+    width: 100%;
+}
+
+.info-items {
+    width: 100%;
+    height: 442rpx;
+    background-color: white;
+    margin-top: 19rpx;
+}
+
+.item-detail {
+    width: 100%;
+    background-color: white;
+}
+
+.item-pic-detail {
+    width: 100%;
+    height: 170rpx;
+    line-height: 170rpx;
+    background-color: white;
+    border-bottom: 1px solid #e5e5e5;
+    box-sizing: border-box;
+}
+
+.item-detail:not(:last-child) {
+    border-bottom: 1rpx solid #e9e8ed;
+}
+
+.item-detail:last-child {
+    border-bottom: 1rpx solid #e9e8ed;
+}
+
+.discount-coupon {
+    width: 100%;
+    height: 85rpx;
+    background-color: white;
+    margin-top: 19rpx;
+}
+
+.detail_info {
+    width: 682rpx;
+    margin: 0 auto;
+}
+
+.user-wechat-info>image {
+    width: 96rpx;
+    height: 96rpx;
+    margin: 30rpx 30rpx 42rpx -42rpx;
+    border: 4rpx solid #BA4356;
+    border-radius: 50%;
+    /*display: block;*/
+    display: inline-block;
+    text-align: center;
+    position: absolute;
+    left: 50%
+}
+
+.detail-info {
+    height: 88rpx;
+    line-height: 88rpx;
+    padding: 0rpx 20rpx 0 34rpx;
+}
+
+.detail-info-pic {
+    padding: 0rpx 20rpx 0rpx 34rpx;
+    overflow: hidden;
+}
+
+.order-icon {
+    width: 39rpx;
+    height: 41rpx;
+    display: block;
+    float: left;
+    margin-right: 24rpx;
+}
+
+.detail-info>.item-name {
+    display: block;
+    float: left;
+    color: #353535;
+    font-size: 34rpx;
+}
+
+.detail-info-pic>.item-name {
+    display: inline-block;
+    float: left;
+    color: #353535;
+    font-size: 34rpx;
+}
+
+.right-array {
+    width: 16rpx;
+    height: 25rpx;
+    float: right;
+}
+
+.right-picpath {
+    width: 120rpx;
+    height: 120rpx;
+    float: right;
+    margin-top: 25rpx;
+    border-radius: 50%;
+    border: 4rpx solid #b4b4b4;
+}
+
+.detail-info>.item-num {
+    display: block;
+    float: right;
+    font-size: 34rpx;
+    color: #353535;
+}
+
+.section {
+    padding: 0rpx 20rpx 0 34rpx;
+    height: 88rpx;
+    line-height: 88rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.section__title {
+    width: 200rpx;
+    color: #353535;
+    font-size: 34rpx;
+}
+
+picker {
+    flex: 1;
+    text-align: right;
+    margin-right: 20rpx;
+}
+
+.picker {
+    color: #353535;
+    font-size: 34rpx;
+}

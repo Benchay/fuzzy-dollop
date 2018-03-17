@@ -1,0 +1,74 @@
+<view class="my-container">
+
+    <view class="head-nav">
+        <block wx:for="{{navTabs}}" wx:key="*this">
+            <view class="{{activeIndex == index ? 'active-item':''}}" data-id="{{index}}" bindtap="tapNavItem">{{item.title}}</view>
+        </block>
+    </view>
+    <view class="search-title">
+        <view>
+            <view class="phone_one" bindtap="clickMarket">
+                <view class="phone_personal">{{marketName}}</view>
+            </view>
+            <view class="person_box">
+                <view class="phone_select" hidden="{{hideMarket}}">
+                    <view class="select_one" bindtap="selectMarket"  data-index="">全部</view>
+                    <view class="select_one" wx:for="{{markets}}" bindtap="selectMarket" bindblur='blurMarket' data-index="{{index}}">{{item.name}}</view>
+                </view>
+            </view>
+        </view>
+
+        <view>
+            <view class="phone_one" bindtap="clickFloor">
+                <view class="phone_personal">{{floorName}}</view>
+            </view>
+            <view class="person_box">
+                <view class="phone_select" hidden="{{hideFloor}}">
+                    <view class="select_one" bindtap="selectFloor"  data-index="">全部</view>
+                    <view class="select_one" wx:for="{{stalls}}" bindtap="selectFloor" data-index="{{index}}">{{item.floorNum + "楼"}}</view>
+                </view>
+            </view>
+        </view>
+
+        <view class="search-bar">
+            <icon type="search" size="16" class="search" bindtap="search"/>
+            <input placeholder="请输入关键词" placeholder-class="placeholder" bindinput="inputKeywords" value="{{keywords}}" />
+            <!-- 点击取消返回上一页 -->
+            <icon hidden="{{cancel_icon}}" type="cancel"  color="grey" size="16" class="cancel-icon" bindtap="clearInput"/>
+        </view>
+    </view>
+    <view>
+      <view>
+          <view class="goodsWrap">
+              <view class="list" wx:for="{{orders[activeIndex]}}" wx:for-item="citem">
+                  <view class="title">
+                      <view class="first">
+                          <image src="../../../images/index/p4_search_class1.png"></image>
+                          <view bindtap='goStallStore' data-stall-id="{{citem.stallId}}" data-company-id="{{citem.busiCompId}}">{{citem.marketName + citem.companyName}}</view>
+                      </view>
+                      <view hidden="{{activeIndex != 0}}" class="payment" data-id="{{citem.id}}" bindtap="goPay">去付款</view>
+                      <view hidden="{{activeIndex != 1}}" class="getGoods">待拿货</view>
+                      <view hidden="{{activeIndex != 2}}" class="finish">已完成</view>
+                  </view>
+                  <view hidden="{{activeIndex != 1}}" class="goodsCode">
+                      <view>提货码：{{citem.pickUpCode}}</view>
+                  </view>
+                  <view class="content" wx:for="{{citem.detailsVO}}" data-id="{{citem.id}}" bindtap="goOrderDetail">
+                      <view class="comImg"><image src="{{item.imgUrl_main}}"></image></view>
+                      <view class="second">
+                          <view class="second1">{{item.productName}}</view>
+                          <view class="second2">商品货号：{{item.productCode}}</view>
+                          <view class="second2">颜色：{{item.color}}；尺码：{{item.size}}</view>
+                          <view class="second3"><text>￥</text>{{item.price}}</view>
+                      </view>
+                      <view class="lastDelete">×{{item.orderNum}}</view>
+                  </view>
+                  <view class="bottomList">
+                      <view>共 <text>20</text>件商品，合计：<text>￥{{citem.totalFee}}</text></view>
+                  </view>
+              </view>
+          </view>
+      </view>
+    </view>
+</view>
+

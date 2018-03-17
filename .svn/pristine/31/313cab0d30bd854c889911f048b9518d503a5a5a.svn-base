@@ -1,0 +1,150 @@
+const app = getApp();
+const {http} = require('../../../utils/util.js');
+const {createOrderByWx} = require('../../../utils/date.js');
+const { payoff, getOpenId, xiadan, sign, requestPayment} = require('../../../utils/pay.js');
+
+
+Page({
+    data: {
+       companys:[],
+       totalFee: 0,
+       subing:false,
+       isCart:true   //是否从购物车中读取数据
+    },
+
+    /**
+     * 加载事件
+     */
+    onLoad: function (options) {
+//      this.getCompanysParams(options);
+    },
+
+    /**
+     * 显示页面
+    */
+    onShow: function () {
+      //加载档口商品信息
+      this.getCompanysData();
+    },
+
+    /**
+     * 直接通过url方式传来的参数
+     */
+    getCompanysParams(options) {
+      if (options.companys) {
+        let companys = JSON.parse(options.companys);
+        this.setData({
+          companys: companys,
+          isCart: false
+        });
+      }
+    },
+
+    /**
+     * 加载选中的商品信息
+     */
+    getCompanysData(){
+      //所有商品总价
+      let totalFee = 0;
+      //获取购物车中的商品信息
+      let companys;
+      if(this.data.isCart) {
+        companys = wx.getStorageSync("cart");
+      } else {
+        companys = this.data.companys;
+      }
+
+      for(let i = 0; i < companys.length; i++) {
+        let company = companys[i];
+        let products = company.products; //档口商品集合
+        let ctf = 0;      //档口所有商品总价
+        let ctn = 0;      //档口所有商品总数
+        //遍历商品移除非选中商品，并计算价格
+        for(let j = 0; j < products.length; j++) {
+          let product = products[j];
+          if (product.isSelected) {
+            ctf += product.orderNum * parseFloat(product.sellPrice);
+            ctn += parseInt(product.orderNum);
+          } else {    //移除购物车中非选中的商品
+            products.splice(j, 1);
+            j--;
+          }
+        }
+        //档口下没有选中商品,就移除档口
+        if(products.length == 0) {
+          companys.splice(i, 1);
+          i--;
+          continue;
+        }
+        totalFee += ctf;
+        company.totalFee = ctf.toFixed(2);
+        company.totalNum = ctn;
+      }
+      this.setData({
+        companys: companys,
+        totalFee: totalFee.toFixed(2)
+      });
+    },
+
+    /**
+     * 提交订单
+     */
+    submitOrder(){
+      //设置提交按钮失效
+      this.setData({
+        subing:true
+      });
+      
+      let nabeiInfo = app.globalData.nabeiInfo;
+      if (!nabeiInfo) {   //获取用户信息，
+        wx.navigateTo({
+          //跳转绑定页面
+          url: '../../userInfo/bind/bind'
+        })
+      }
+
+      //拼接订单提交数据
+      let orders = new Array();
+      let companys = this.data.companys;
+      for (let i in companys) {
+        let company = companys[i];
+        let products = company.products;
+        for (let j in products) {
+          let product = products[j];
+          let order = {
+            productVariantId:product.id,
+            price: product.sellPrice,     //价格传入后台验证
+            orderNum: product.orderNum,
+            companyId: nabeiInfo.compId,
+            busiCompId: product.companyId,
+            createUserId: nabeiInfo.user.id
+          }
+          orders.push(order);
+        }
+      }
+      let that = this;
+      //提交订单
+      http({
+        url: createOrderByWx,
+        data: orders,
+        func: (data) => {
+          console.log(data);
+          if(data.isSuccess) {
+            //移除购物车中的商品
+            wx.removeStorageSync("cart");
+            //弹出支付界面
+            that.orderids = data.result.orderIds//订单ids
+            that.orderTotalFee = data.result.totalFee// 传入订单金额
+            that.payoff(that);
+          } else {
+            wx.showToast({
+              title: '提交失败',
+              icon: 'fail',
+              duration: 2000
+            });
+          }
+        }
+      });
+    },
+    payoff, getOpenId, xiadan, sign, requestPayment
+})

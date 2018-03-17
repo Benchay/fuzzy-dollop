@@ -1,0 +1,14 @@
+<view class="my-container">
+  <view class="message">
+    <view wx:for="{{messages}}">
+      <view class="date">{{item.createTime}}</view>
+      <view class="second">
+        <view class="{{item.readFlag === 0 ? 'system' : ''}}">系统通知</view>
+        <view>{{item.content}}</view>
+      </view>
+    </view>
+    <view wx:if="messages.lenght==0" class="noneMessages">
+      <image src="../../../images/userInfo/p19.png"></image>
+    </view>
+  </view>
+</view>
