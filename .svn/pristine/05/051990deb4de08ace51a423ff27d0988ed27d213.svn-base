@@ -86,20 +86,10 @@ function http(options) {
           console.log(err);
           if (err && err.errMsg) {
             let error = err.errMsg;
-            var pages = getCurrentPages();
-            if (error.indexOf('request:fail timeout') >-1){
-
-            }else if (error.indexOf('request:fail')>-1){
-              if (pages.length>1){
-                wx.redirectTo({
-                  url: '/pages/system/netFail'
-                });
-              }else{
-                wx.navigateTo({
-                  url: '/pages/system/netFail'
-                });
-              }
-              
+            if (error.indexOf('request:fail')>-1){
+              wx.redirectTo({
+                url: '/pages/system/netFail'
+              });
             }
           }
         },

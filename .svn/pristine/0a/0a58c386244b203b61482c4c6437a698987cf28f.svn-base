@@ -74,7 +74,7 @@ Page({
       this.setData({
         nabeiInfo: app.globalData.nabeiInfo
       });
-      this.getOrder(this.data.activeIndex,true,true);
+      this.getOrder(this.data.activeIndex,true);
       this.findMarketSearch();
     },
 
@@ -228,18 +228,16 @@ Page({
           stalls: this.data.allFloor,
           hideMarket: true,
           hideFloor: false
-        });
+        })
       } else {  //选择某个市场，就列出该市场楼层
         let market = this.data.markets[index];
         this.setData({
           marketId:market.id,
           marketName: market.name,
-          floorNum: "",
-          floorName: "全部楼层",
           stalls: market.stallList,
           hideMarket: true,
           hideFloor:false  
-        });
+        })
       }
       //查询数据
       this.search();

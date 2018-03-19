@@ -149,10 +149,6 @@
                 </view>
             </view>
             <view class="gettingoods">
-                <text>付款方式:</text>
-                <text>微信支付</text>
-            </view>
-            <view class="gettingoods">
                 <text>拿货方式:</text>
                 <text>上门自提</text>
             </view>

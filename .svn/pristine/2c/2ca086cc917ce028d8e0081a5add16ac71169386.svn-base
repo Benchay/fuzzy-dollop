@@ -1,6 +1,5 @@
 .orderDetailwrap{
     overflow-x: hidden;
-    padding-bottom: 92rpx;
 }
  .header {
     width: 100%;

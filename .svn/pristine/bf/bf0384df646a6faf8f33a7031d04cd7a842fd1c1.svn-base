@@ -1,6 +1,6 @@
 <!--pages/cart/cart.wxml-->
 <view class="my-container">
-  <view class="errorwrap">
+  <view >
     <image src="/images/system/system_no_net.png"></image>
   </view>
 </view>

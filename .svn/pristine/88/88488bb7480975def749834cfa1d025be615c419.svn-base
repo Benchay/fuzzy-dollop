@@ -4,7 +4,6 @@ let { globalData: { baseUrl } } = getApp();
 
 function payoff (e) {
   console.log("payoff---------");
-  console.log(e);
   var that = e;
   if (getApp().globalData.openId){
     that.submitOrderAndSignBack(getApp().globalData.openId, e.orderids, e.orderTotalFee,e.succCall,e.failCall);

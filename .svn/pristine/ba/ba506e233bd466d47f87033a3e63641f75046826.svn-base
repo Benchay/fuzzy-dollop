@@ -46,9 +46,9 @@ Page({
   },
   onLoad: function (options) {
 
-      // options.q = "https:%3A%2F%2Fwx.nabei.net%2Fstallid%2Fsid%3Fid%3Dff8080816217ca850162180bbb9d0002-ff8080816217c9920162180bb86f0022";
-    console.log("begin options====================");
+    //  let url = "https:%3A%2F%2Fwx.nabei.net%2Fstallid%2Fsid%3Fid%3Dff8080816217ca850162180bbb9d0002-ff8080816217c9920162180bb86f0022";
     console.log(options);
+    console.log("q==========" + options.q);
     if (options.q != undefined && options.q!=""){
       //微信扫码跳转
       let url = options.q;
@@ -100,6 +100,9 @@ Page({
 
     //请求推广标签数据
     this.loadForSpreadLabel();
+
+    //默认查询热销商品
+    this.loadForProducts(null);
     
   },
 
@@ -129,16 +132,6 @@ Page({
             this.setData({
               spreadLabel: table
             });
-            //默认查询全部商品
-            this.loadForProducts(this.data.spreadLabel[0].id);
-          }else{
-            let tableError = [];
-            tableError.push({ id: "", name: "全部商品" });
-            this.setData({
-              spreadLabel: tableError
-            });
-            //默认查询全部商品
-            this.loadForProducts(this.data.spreadLabel[0].id);
           }
         }
       });
@@ -147,21 +140,15 @@ Page({
 
   //请求对应标签的商品数据
   loadForProducts: function (data) {
-    if (this.data.companyId){
-      if(data==undefined){
-        data = "";
+    http({
+      url: "stock/api/querySpreadLabelProduct.do",
+      data: { companyId: this.data.companyId, spreadLabelId: data, saleState: 1, pageIndex: this.data.pageIndex, pageSize: this.data.pageSize },
+      func: (data) => {
+        this.setData({
+          products: data.result.results
+        })
       }
-      http({
-        url: "stock/api/querySpreadLabelProduct.do",
-        data: { companyId: this.data.companyId, spreadLabelId: data, saleState: 1, pageIndex: this.data.pageIndex, pageSize: this.data.pageSize },
-        func: (data) => {
-          this.setData({
-            products: data.result.results
-          })
-        }
-      });
-    }
-   
+    });
   },
 
   collectStall: function () {
@@ -301,13 +288,9 @@ Page({
    */
   onPullDownRefresh: function () {
     if (this.data.curNav == undefined || this.data.curNav == "") {
-      if (this.data.spreadLabel && this.data.curIndex <= (this.data.spreadLabel.length - 1) && this.data.spreadLabel[this.data.curIndex]){
-        let nav = "";
-        if (this.data.spreadLabel[this.data.curIndex].id != undefined && this.data.spreadLabel[this.data.curIndex].id!=""){
-          nav = this.data.spreadLabel[this.data.curIndex].id;
-        }
+      if (this.data.spreadLabel){
         this.setData({
-          curNav: nav
+          curNav: this.data.spreadLabel[this.data.curIndex].id
         });
       }else{
         return;
@@ -332,14 +315,12 @@ Page({
     });
     let vo = this.data.products;
     if (this.data.curNav == undefined || this.data.curNav == "") {
-      if (this.data.spreadLabel && this.data.curIndex <= (this.data.spreadLabel.length - 1) && this.data.spreadLabel[this.data.curIndex]){
+      if (this.data.spreadLabel && this.data.curIndex <= (this.data.spreadLabel.length - 1) ){
         console.log("data=========");
-        let nav = "";
-        if (this.data.spreadLabel[this.data.curIndex].id != undefined && this.data.spreadLabel[this.data.curIndex].id != "") {
-          nav = this.data.spreadLabel[this.data.curIndex].id;
-        }
+        console.log(this.data.spreadLabel);
+        console.log(this.data.curIndex);
         this.setData({
-          curNav: nav
+          curNav: this.data.spreadLabel[this.data.curIndex].id
         });
       }else{
         return;

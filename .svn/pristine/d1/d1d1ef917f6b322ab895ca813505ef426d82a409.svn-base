@@ -92,6 +92,7 @@ Page({
       data: {mobile: phonev },
       func: (data) => {
         if (data.isSuccess) {
+          console.log(data);
           var currentTime = that.data.currentTime;
           that.setData({
             time: currentTime + '秒',
@@ -192,6 +193,7 @@ Page({
               'content-type': 'application/json',
             },
             func: function (res) {
+              console.log(res);
               if (res.isSuccess) {
                 openid = res.result.openid;
                 http({
@@ -219,10 +221,6 @@ Page({
               }
             }
           })
-        },
-        fail:function(errs){
-          commonFun.showToast({ title: errs.errMsg });
-          console.log(errs.errMsg);
         }
       })
     }

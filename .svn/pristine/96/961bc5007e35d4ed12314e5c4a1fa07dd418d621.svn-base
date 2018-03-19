@@ -1,0 +1,42 @@
+/* pages/cart/cart.wxss */
+
+/*page {
+  background-color: #f0f2f5;
+}*/
+
+.my-container {
+  border-top: 1rpx solid #e8e8e8;
+}
+.cartElseImg{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height:900rpx;
+}
+.cartElseImg>image{
+  width:430rpx;
+  height:430rpx;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

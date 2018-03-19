@@ -53,7 +53,6 @@ App({
                     func: function (data) {
                       if (data.isSuccess){
                         const openid = data.result.openid;
-                        // var openid="wx_test001";
                         if (openid) {
                           that.globalData.openId = openid;
                         }
@@ -66,8 +65,6 @@ App({
                             typeof callback == "function" && callback(that.globalData.userInfo);
                           }
                         })
-                      }else{
-                        that.globalData.openId = 'wx_test001';
                       }
                     }
                   })

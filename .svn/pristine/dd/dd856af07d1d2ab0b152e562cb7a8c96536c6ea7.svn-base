@@ -10,8 +10,7 @@ Page({
        totalFee: 0,
        orderids:[],//提交后的订单id集合
        isLocked:false,
-       cartType:0,      //订单来源，0购物车中，1临时结算中
-       isBack: 0    //需要优化？？？
+       cartType:0      //订单来源，0购物车中，1临时结算中
     },
 
     /**
@@ -21,28 +20,18 @@ Page({
       this.setData({
         cartType: options.cartType ? options.cartType : 0
       });
-      //加载档口商品信息
-      this.getCompanysData();
-      if (this.data.totalFee > 0) {
-        this.setData({
-          isLocked: false,
-          isBack: 0
-        });
-      }
     },
 
     /**
      * 显示页面
     */
     onShow: function () {
-      let isBack = this.data.isBack; 
-      console.log(isBack);
-      if (isBack>0){
-        if (isBack ++ > 1) {
-          wx.navigateBack({
-            delta: 1
-          });
-        }
+      //加载档口商品信息
+      this.getCompanysData();
+      if (this.data.totalFee > 0) {
+        this.setData({
+          isLocked: false
+        });
       }
     },
 
@@ -58,6 +47,13 @@ Page({
       } else {
         companys = wx.getStorageSync("cart"); //获取购物车中的商品信息
       }
+      if(companys.length == 0) {
+        wx.navigateBack({
+          delta: 1
+        })
+        return;
+      }
+
       for(let i = 0; i < companys.length; i++) {
         let company = companys[i];
         let products = company.products; //档口商品集合
@@ -117,7 +113,6 @@ Page({
         this.setData({
           isLocked:false
         });
-        this.data.isSucc = true;
         return;
       }
 
@@ -223,7 +218,6 @@ Page({
           url: '../../userInfo/myOrder/myOrder?activeIndex=1' //付款成功跳转到待拿货页面
         });
       }
-      this.data.isBack = 1;
     },
     //支付失败
     payFail({errorMsg}){
@@ -247,7 +241,6 @@ Page({
           },1500);
         }
       });
-      this.data.isBack = 1;
     },
     payoff, submitOrderAndSignBack, requestPayment
 })
